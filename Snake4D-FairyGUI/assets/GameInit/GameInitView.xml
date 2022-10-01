@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1080,1920">
+  <displayList>
+    <text id="n0_ppxs" name="Title" xy="248,346" size="584,129" fontSize="100" align="center" vAlign="middle" autoSize="none" text="Snake 4D"/>
+  </displayList>
+</component>

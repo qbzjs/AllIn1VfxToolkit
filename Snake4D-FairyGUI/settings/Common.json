@@ -1,0 +1,24 @@
+{
+  "font": "",
+  "fontSize": 12,
+  "textColor": "#000000",
+  "fontAdjustment": false,
+  "colorScheme": [
+    "Custom color #FF0000"
+  ],
+  "fontSizeScheme": [
+    "Custom font size 30"
+  ],
+  "fontScheme": [
+    "Default font"
+  ],
+  "scrollBars": {
+    "horizontal": "",
+    "vertical": "",
+    "defaultDisplay": "visible"
+  },
+  "tipsRes": "",
+  "buttonClickSound": "",
+  "pivot": "default",
+  "fileName": "Common"
+}
