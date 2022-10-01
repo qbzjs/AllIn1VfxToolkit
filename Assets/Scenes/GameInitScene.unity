@@ -227,8 +227,9 @@ GameObject:
   m_Component:
   - component: {fileID: 781604563}
   - component: {fileID: 781604564}
+  - component: {fileID: 781604565}
   m_Layer: 0
-  m_Name: GameInit
+  m_Name: SceneInit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,6 +270,18 @@ MonoBehaviour:
   defaultSpriteDPI: 96
   constantScaleFactor: 1
   ignoreOrientation: 0
+--- !u!114 &781604565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781604562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2c5e54cfab649d688627b2d0a55470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +339,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 23
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
