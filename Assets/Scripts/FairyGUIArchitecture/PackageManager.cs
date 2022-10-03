@@ -4,21 +4,28 @@ namespace FairyGUIArchitecture
 {
     public static class PackageManager
     {
+        /// <summary>
+        /// Binds all the packages published from FairyGUI.
+        /// </summary>
         public static void BindAllPackages()
         {
             GameInit.GameInitBinder.BindAll();
         }
 
         /// <summary>
-        /// Adds the published package in the Resources folder from FairyGUI into the Unity project.
+        /// Add a UI package from a path relative to Unity Resources path.
         /// </summary>
         /// <param name="packageName">The package name.</param>
-        /// <param name="path">The path from the Resource folder.</param>
+        /// <param name="path">The path relative to Unity Resources path..</param>
         public static void AddPackage(string packageName, string path = "FairyGUI/")
         {
             UIPackage.AddPackage($"{path}{packageName}");
         }
 
+        /// <summary>
+        /// Removes a package from the Unity project.
+        /// </summary>
+        /// <param name="packageName">The package name.</param>
         public static void RemovePackage(string packageName)
         {
             UIPackage.RemovePackage(packageName);
