@@ -57,5 +57,10 @@ namespace Snake4D
             Debug.LogError($"Utilities.GenerateRandomDirection(): Something went wrong. [Debug Info] dimension: {dimension}");
             return new Vector4Int();
         }
+
+        public static Vector3Int GameSpaceToWorldSpace(Vector3Int gameSpaceVector)
+        {
+            return new Vector3Int(gameSpaceVector.x, gameSpaceVector.z, gameSpaceVector.y);
+        }
     }
 }

@@ -17,10 +17,12 @@ namespace Snake4D
         {
             _parameters = parameters;
             _gameState = new SnakeGameState(_dimension, _size);
+        }
 
-            //! testing
-            Vector2 position = new Vector2(2, 0);
-            // position.magni
+        public Vector3Int GetSnakeHeadWorldSpacePosition()
+        {
+            Vector3Int gameSpacePosition = _gameState.SnakeHeadPosition.ToVector3Int();
+            return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
         }
 
         public void UpdateState()
@@ -28,14 +30,9 @@ namespace Snake4D
 
         }
 
-        private void SpawnSnakeHead()
-        {
-            Vector4Int snakeHeadPosition = Utilities.GenerateRandomPosition(_dimension, _size);
-        }
-
         private void SpawnFood()
         {
-            Vector4Int foodPosition = Utilities.GenerateRandomPosition(_dimension, _size);
+
         }
     }
 }

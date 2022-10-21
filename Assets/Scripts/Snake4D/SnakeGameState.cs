@@ -4,6 +4,8 @@ namespace Snake4D
 {
     public class SnakeGameState
     {
+        public Vector4Int SnakeHeadPosition => _snakeHead.Position;
+
         Dimension _dimension;
         Vector4Int _size;
 

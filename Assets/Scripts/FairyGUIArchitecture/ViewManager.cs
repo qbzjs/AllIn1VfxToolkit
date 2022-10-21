@@ -63,6 +63,7 @@ namespace FairyGUIArchitecture
         public void RemoveView(ViewID viewID)
         {
             ViewInfo viewInfo = GetViewInfo(viewID);
+            if (viewInfo == null) return;
 
             if (!_activeViews.ContainsKey(viewID))
             {

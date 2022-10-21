@@ -80,5 +80,10 @@ namespace Snake4D
 
         public static Vector4Int operator -(Vector4Int a, Vector4Int b)
             => new Vector4Int(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+
+        public Vector3Int ToVector3Int()
+        {
+            return new Vector3Int(x, y, z);
+        }
     }
 }

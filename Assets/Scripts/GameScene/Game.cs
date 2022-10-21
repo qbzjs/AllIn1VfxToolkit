@@ -7,6 +7,8 @@ namespace GameScene
 {
     public class Game : SceneInit
     {
+        [SerializeField] GameObject _cube;
+
         SnakeGame _snakeGame = null;
 
         private void Start()
@@ -14,10 +16,12 @@ namespace GameScene
             // TODO : Design UI
             // CreateView();
 
+            // TODO : The below should be in GameModel : Model, Model : IModel
+
             _snakeGame = new SnakeGame(new SnakeGameParameters
             {
                 Dimension = Dimension.DimensionTwo,
-                Size = new Vector4Int(5, 5)
+                Size = new Vector4Int(10, 10, 10, 10)
             });
 
             // TODO : create a space based on _snakeGame.Size
@@ -28,6 +32,9 @@ namespace GameScene
             // TODO : lerp snake head based on predicted state
 
             // TODO : Get user input (keyboard publish event / touch input publish event)
+
+            // ==========
+            _cube.transform.localPosition = _snakeGame.GetSnakeHeadWorldSpacePosition();
         }
     }
 }
