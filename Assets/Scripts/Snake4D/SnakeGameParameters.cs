@@ -1,16 +1,8 @@
 namespace Snake4D
 {
-    public enum GameMode
-    {
-        DimensionOne,
-        DimensionTwo,
-        DimensionThree,
-        DimensionFour
-    }
-
     public struct SnakeGameParameters
     {
-        public GameMode GameMode;
+        public Dimension Dimension;
         public Vector4Int Size;
     }
 }
