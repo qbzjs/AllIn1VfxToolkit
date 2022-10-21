@@ -7,9 +7,12 @@ namespace GameScene
 {
     public class Game : SceneInit
     {
+        [SerializeField] float _updateInterval;
         [SerializeField] GameObject _cube;
 
         SnakeGame _snakeGame = null;
+        WaitForSeconds _waitForUpdateInterval;
+        IEnumerator _updateCoroutine = null;
 
         private void Start()
         {
@@ -34,6 +37,31 @@ namespace GameScene
             // TODO : Get user input (keyboard publish event / touch input publish event)
 
             // ==========
+            UpdateVisuals();
+
+            _waitForUpdateInterval = new WaitForSeconds(_updateInterval);
+            _updateCoroutine = UpdateCoroutine();
+            StartCoroutine(_updateCoroutine);
+        }
+
+        private IEnumerator UpdateCoroutine()
+        {
+            while (true) // TODO : use a better boolean
+            {
+                yield return _waitForUpdateInterval;
+
+                _snakeGame.UpdateState();
+                UpdateVisuals();
+            }
+        }
+
+        private void UpdateVisuals()
+        {
+            UpdateSnakeHead();
+        }
+
+        private void UpdateSnakeHead()
+        {
             _cube.transform.localPosition = _snakeGame.GetSnakeHeadWorldSpacePosition();
         }
     }

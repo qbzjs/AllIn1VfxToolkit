@@ -27,7 +27,7 @@ namespace Snake4D
 
         public void UpdateState()
         {
-
+            _gameState.UpdateState();
         }
 
         private void SpawnFood()

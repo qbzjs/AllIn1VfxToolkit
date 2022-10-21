@@ -26,6 +26,11 @@ namespace Snake4D
             SpawnSnakeHead();
         }
 
+        public void UpdateState()
+        {
+            _snakeBody.UpdateSnakeBody();
+        }
+
         private void SpawnSnakeHead()
         {
             if (_snakeBody.Count > 0) _snakeBody.Clear();
