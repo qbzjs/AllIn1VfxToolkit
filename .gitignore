@@ -74,3 +74,6 @@ crashlytics-build.properties
 # FairyGUI
 /Snake4D-FairyGUI/.DS_Store
 /Snake4D-FairyGUI/.objs/
+
+#VSCode
+/.vscode/
