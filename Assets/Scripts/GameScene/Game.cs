@@ -61,6 +61,8 @@ namespace GameScene
 
         private void LerpSnakeHeadPosition(float interpolationRatio)
         {
+            // TODO : Warping handling
+
             Vector3 interpolatedPosition = Vector3.Lerp(_snakeHeadCurrentPosition, _snakeHeadPredictedPosition, interpolationRatio);
             _cube.transform.localPosition = interpolatedPosition;
         }
