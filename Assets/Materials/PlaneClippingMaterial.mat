@@ -77,6 +77,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_9a629f25d8084860ac49b22fedc8068e_Out_0:
+        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -96,13 +100,16 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _Clip_Y: 1
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
+    - _Flip_X: 1
     - _Flip_X_Min_Plane: 0
+    - _Flip_Y: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -127,8 +134,10 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _X_Max_Plane_Position: {r: 5, g: 0, b: 0, a: 0}
-    - _X_Min_Plane_Position: {r: -5, g: 0, b: 0, a: 0}
+    - _X_Max_Plane_Position: {r: -5, g: 0, b: 0, a: 0}
+    - _X_Min_Plane_Position: {r: 5, g: 0, b: 0, a: 0}
+    - _Y_Max_Plane_Position: {r: 0, g: 9.5, b: 0, a: 0}
+    - _Y_Min_Plane_Position: {r: 0, g: -0.5, b: 0, a: 0}
     - _mainColor: {r: 1, g: 0, b: 0, a: 0}
     - _xPlaneMinPosition: {r: -5, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
