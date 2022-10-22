@@ -101,6 +101,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Clip_Y: 1
+    - _Clip_Z: 1
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -110,6 +111,7 @@ Material:
     - _Flip_X: 1
     - _Flip_X_Min_Plane: 0
     - _Flip_Y: 0
+    - _Flip_Z: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -138,6 +140,8 @@ Material:
     - _X_Min_Plane_Position: {r: 5, g: 0, b: 0, a: 0}
     - _Y_Max_Plane_Position: {r: 0, g: 9.5, b: 0, a: 0}
     - _Y_Min_Plane_Position: {r: 0, g: -0.5, b: 0, a: 0}
+    - _Z_Max_Plane_Position: {r: 0, g: 0, b: -5, a: 0}
+    - _Z_Min_Plane_Position: {r: 0, g: 0, b: 5, a: 0}
     - _mainColor: {r: 1, g: 0, b: 0, a: 0}
     - _xPlaneMinPosition: {r: -5, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
