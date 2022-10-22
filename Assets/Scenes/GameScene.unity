@@ -439,8 +439,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _viewID: -1
-  _updateInterval: 0.5
+  _updateInterval: 0.2
+  _enableLerp: 0
   _cube: {fileID: 409376341}
+  _passThroughWalls: 1
 --- !u!1 &1188277107
 GameObject:
   m_ObjectHideFlags: 0

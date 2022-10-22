@@ -16,13 +16,19 @@ namespace Snake4D
         public SnakeGame(SnakeGameParameters parameters)
         {
             _parameters = parameters;
-            _gameState = new SnakeGameState(_dimension, _size);
+            _gameState = new SnakeGameState(parameters);
         }
 
         public Vector3Int GetSnakeHeadWorldSpacePosition()
         {
             Vector3Int gameSpacePosition = _gameState.SnakeHeadPosition.ToVector3Int();
             return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
+        }
+
+        public Vector3Int GetPredictedSnakeHeadWorldSpacePosition()
+        {
+            Vector3Int predictedPosition = _gameState.PredictedSnakeHeadPosition.ToVector3Int();
+            return Utilities.GameSpaceToWorldSpace(predictedPosition);
         }
 
         public void UpdateState()

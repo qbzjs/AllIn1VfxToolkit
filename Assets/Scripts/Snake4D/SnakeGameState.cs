@@ -5,22 +5,24 @@ namespace Snake4D
     public class SnakeGameState
     {
         public Vector4Int SnakeHeadPosition => _snakeHead.Position;
+        public Vector4Int PredictedSnakeHeadPosition => _snakeHead.GetPredictedPosition();
 
-        Dimension _dimension;
-        Vector4Int _size;
+        SnakeGameParameters _parameters;
+        Dimension _dimension => _parameters.Dimension;
+        Vector4Int _size => _parameters.Size;
+        bool _passThroughWalls => _parameters.PassThroughWalls;
 
         Vector4Int _currentInput;
 
         SnakeHead _snakeHead => _snakeBody.SnakeHead;
-        SnakeBody _snakeBody = new SnakeBody();
+        SnakeBody _snakeBody;
         List<Vector4Int> _foodPositions = new List<Vector4Int>();
 
-        public SnakeGameState(Dimension dimension, Vector4Int size)
+        public SnakeGameState(SnakeGameParameters parameters)
         {
-            _dimension = dimension;
-            _size = size;
+            _parameters = parameters;
 
-            _snakeBody.Clear();
+            _snakeBody = new SnakeBody(parameters);
             _foodPositions.Clear();
 
             SpawnSnakeHead();

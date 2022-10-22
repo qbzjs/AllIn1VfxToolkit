@@ -62,5 +62,41 @@ namespace Snake4D
         {
             return new Vector3Int(gameSpaceVector.x, gameSpaceVector.z, gameSpaceVector.y);
         }
+
+        public static bool IsPositionWithinSpace(Vector4Int position, Vector4Int sizeOfSpace)
+        {
+            if (position.x < 0) return false;
+            if (sizeOfSpace.x > 0 && position.x > sizeOfSpace.x - 1) return false;
+
+            if (position.y < 0) return false;
+            if (sizeOfSpace.y > 0 && position.y > sizeOfSpace.y - 1) return false;
+
+            if (position.z < 0) return false;
+            if (sizeOfSpace.z > 0 && position.z > sizeOfSpace.z - 1) return false;
+
+            if (position.w < 0) return false;
+            if (sizeOfSpace.w > 0 && position.w > sizeOfSpace.w - 1) return false;
+
+            return true;
+        }
+
+        public static Vector4Int WarpPositionWithinSpace(Vector4Int position, Vector4Int sizeOfSpace)
+        {
+            Vector4Int warpedPosition = position;
+
+            if (position.x < 0) warpedPosition.x = sizeOfSpace.x - Mathf.Abs(position.x);
+            if (sizeOfSpace.x > 0 && position.x > sizeOfSpace.x - 1) warpedPosition.x = position.x - sizeOfSpace.x;
+
+            if (position.y < 0) warpedPosition.y = sizeOfSpace.y - Mathf.Abs(position.y);
+            if (sizeOfSpace.y > 0 && position.y > sizeOfSpace.y - 1) warpedPosition.y = position.y - sizeOfSpace.y;
+
+            if (position.z < 0) warpedPosition.z = sizeOfSpace.z - Mathf.Abs(position.z);
+            if (sizeOfSpace.z > 0 && position.z > sizeOfSpace.z - 1) warpedPosition.z = position.z - sizeOfSpace.z;
+
+            if (position.w < 0) warpedPosition.w = sizeOfSpace.w - Mathf.Abs(position.w);
+            if (sizeOfSpace.w > 0 && position.w > sizeOfSpace.w - 1) warpedPosition.w = position.w - sizeOfSpace.w;
+
+            return warpedPosition;
+        }
     }
 }

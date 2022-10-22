@@ -4,5 +4,6 @@ namespace Snake4D
     {
         public Dimension Dimension;
         public Vector4Int Size;
+        public bool PassThroughWalls;
     }
 }
