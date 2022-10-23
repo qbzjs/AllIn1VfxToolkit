@@ -11,6 +11,14 @@ namespace Snake4D
 
         }
 
+        public void ChangeDirection(Vector4Int newDirection)
+        {
+            // POLISH : check if it is a direction vector [eg. (1 0 0 0) and its permutations]
+            if (newDirection.magnitude != 1) throw new System.InvalidOperationException("newDirection magnitude should be 1!");
+
+            _direction = newDirection;
+        }
+
         public override Vector4Int GetPredictedPosition()
         {
             Vector4Int predictedPosition = _position + _direction;

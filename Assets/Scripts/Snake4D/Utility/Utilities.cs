@@ -54,13 +54,17 @@ namespace Snake4D
                 else if (randomChoice == 3) return new Vector4Int(0, 0, 0, value);
             }
 
-            Debug.LogError($"Utilities.GenerateRandomDirection(): Something went wrong. [Debug Info] dimension: {dimension}");
-            return new Vector4Int();
+            throw new System.InvalidOperationException($"Utilities.GenerateRandomDirection(): Something went wrong. [Debug Info] dimension: {dimension}");
         }
 
-        public static Vector3Int GameSpaceToWorldSpace(Vector3Int gameSpaceVector)
+        public static Vector3Int GameSpaceToWorldSpace(Vector3Int gameSpaceVector3Int)
         {
-            return new Vector3Int(gameSpaceVector.x, gameSpaceVector.z, gameSpaceVector.y);
+            return new Vector3Int(gameSpaceVector3Int.x, gameSpaceVector3Int.z, gameSpaceVector3Int.y);
+        }
+
+        public static Vector3Int WorldSpaceToGameSpace(Vector3Int worldSpaceVector3Int)
+        {
+            return new Vector3Int(worldSpaceVector3Int.x, worldSpaceVector3Int.z, worldSpaceVector3Int.y);
         }
 
         public static bool IsPositionWithinSpace(Vector4Int position, Vector4Int sizeOfSpace)
@@ -97,6 +101,26 @@ namespace Snake4D
             if (sizeOfSpace.w > 0 && position.w > sizeOfSpace.w - 1) warpedPosition.w = position.w - sizeOfSpace.w;
 
             return warpedPosition;
+        }
+
+        public static Vector4Int ConvertUserInputToDirectionVector(UserInputType inputType)
+        {
+            switch (inputType)
+            {
+                case UserInputType.X_Positive: return new Vector4Int(1, 0, 0, 0);
+                case UserInputType.X_Negative: return new Vector4Int(-1, 0, 0, 0);
+
+                case UserInputType.Y_Positive: return new Vector4Int(0, 1, 0, 0);
+                case UserInputType.Y_Negative: return new Vector4Int(0, -1, 0, 0);
+
+                case UserInputType.Z_Positive: return new Vector4Int(0, 0, 1, 0);
+                case UserInputType.Z_Negative: return new Vector4Int(0, 0, -1, 0);
+
+                case UserInputType.W_Positive: return new Vector4Int(0, 0, 0, 1);
+                case UserInputType.W_Negative: return new Vector4Int(0, 0, 0, -1);
+            }
+
+            throw new System.InvalidOperationException();
         }
     }
 }

@@ -42,6 +42,11 @@ namespace Snake4D
             _gameState.UpdateState();
         }
 
+        public void OnUserInput(UserInputType inputType)
+        {
+            _gameState.OnUserInput(inputType);
+        }
+
         private void SpawnFood()
         {
 

@@ -73,6 +73,7 @@ namespace GameScene
             SubscribeToMessageHubEvent<UserInputEvent>((e) =>
             {
                 DebugLog($"Received input of type '{e.InputType}'");
+                _snakeGame.OnUserInput(e.InputType);
             });
         }
 
@@ -132,7 +133,7 @@ namespace GameScene
             _snakeHeadPredictedPosition = _snakeGame.GetPredictedSnakeHeadWorldSpacePosition();
 
             // Handling when warping
-            if (Vector3.Distance(_snakeHeadCurrentPosition, _snakeHeadPredictedPosition) != 1)
+            if (Vector3.Distance(_snakeHeadCurrentPosition, _snakeHeadPredictedPosition) != 1 && _enableLerp)
             {
                 Vector3 currentDirection = _snakeGame.GetCurrentSnakeHeadWorldSpaceDirection();
                 _snakeHeadCurrentPosition = _snakeHeadPredictedPosition - currentDirection;

@@ -716,10 +716,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de0ad1ff96954b0b9d906ebd09b8a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enableDebugLogs: 1
+  _enableDebugLogs: 0
   _viewID: -1
   _updateInterval: 0.2
-  _enableLerp: 1
+  _enableLerp: 0
   _cube: {fileID: 409376341}
   _passThroughWalls: 1
   _debugMode: 1
@@ -809,7 +809,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3f06bcc82c92f4471a27eb82a03467aa, type: 2}
+  - {fileID: 2100000, guid: 334f2d2b7f5b143fe9fb7e423be07681, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

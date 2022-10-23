@@ -35,6 +35,12 @@ namespace Snake4D
             _snakeBody.UpdateSnakeBody();
         }
 
+        public void OnUserInput(UserInputType inputType)
+        {
+            Vector4Int newDirection = Utilities.ConvertUserInputToDirectionVector(inputType);
+            _snakeHead.ChangeDirection(newDirection);
+        }
+
         private void SpawnSnakeHead()
         {
             if (_snakeBody.Count > 0) _snakeBody.Clear();
