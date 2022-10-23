@@ -10,8 +10,6 @@ namespace FairyGUIArchitecture
     {
         public static ViewManager Instance { get; private set; }
 
-        public enum ViewID { NONE = -1, GameInit, COUNT }
-
         [SerializeField] List<ViewInfo> _viewInfoList;
 
         Dictionary<ViewID, GComponent> _activeViews = new Dictionary<ViewID, GComponent>();

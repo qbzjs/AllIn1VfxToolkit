@@ -5,11 +5,11 @@ namespace FairyGUIArchitecture
 {
     public abstract class ViewModel : IViewModel
     {
-        public static ViewModel GetViewModel(ViewManager.ViewID viewID, GComponent view)
+        public static ViewModel GetViewModel(ViewID viewID, GComponent view)
         {
             switch (viewID)
             {
-                case ViewManager.ViewID.GameInit: return new GameInitViewModel(view);
+                case ViewID.GameInit: return new GameInitViewModel(view);
             }
             return null;
         }

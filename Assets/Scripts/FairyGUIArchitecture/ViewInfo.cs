@@ -8,11 +8,11 @@ namespace FairyGUIArchitecture
     [System.Serializable]
     public class ViewInfo
     {
-        public ViewManager.ViewID ViewID => _viewID;
+        public ViewID ViewID => _viewID;
         public string PackageName => _packageName;
         public string ViewName => _viewName;
 
-        [SerializeField] ViewManager.ViewID _viewID;
+        [SerializeField] ViewID _viewID;
         [SerializeField] string _packageName;
         [SerializeField] string _viewName;
     }
