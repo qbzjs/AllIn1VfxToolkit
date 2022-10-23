@@ -25,10 +25,12 @@ namespace GameScene
         IEnumerator _updateCoroutine = null;
 
         float _elapsedTimeBetweenUpdateInterval;
+        Vector3 _snakeHeadPreviousPosition;
         Vector3 _snakeHeadCurrentPosition;
         Vector3 _snakeHeadPredictedPosition;
 
         GameObject _clone;
+        Vector3 _clonePreviousPosition;
         Vector3 _cloneCurrentPosition;
         Vector3 _clonePredictedPosition;
 
@@ -88,12 +90,12 @@ namespace GameScene
 
         private void LerpSnakeHeadPosition(float interpolationRatio)
         {
-            Vector3 interpolatedPosition = Vector3.Lerp(_snakeHeadCurrentPosition, _snakeHeadPredictedPosition, interpolationRatio);
+            Vector3 interpolatedPosition = Vector3.Lerp(_snakeHeadPreviousPosition, _snakeHeadCurrentPosition, interpolationRatio);
             _cube.transform.localPosition = interpolatedPosition;
 
             if (_clone != null)
             {
-                Vector3 cloneInterpolatedPosition = Vector3.Lerp(_cloneCurrentPosition, _clonePredictedPosition, interpolationRatio);
+                Vector3 cloneInterpolatedPosition = Vector3.Lerp(_clonePreviousPosition, _cloneCurrentPosition, interpolationRatio);
                 _clone.transform.localPosition = cloneInterpolatedPosition;
             }
         }
@@ -129,21 +131,21 @@ namespace GameScene
                 _clone = null;
             }
 
+            _snakeHeadPreviousPosition = _snakeGame.GetPreviousSnakeHeadWorldSpacePosition();
             _snakeHeadCurrentPosition = _snakeGame.GetCurrentSnakeHeadWorldSpacePosition();
-            _snakeHeadPredictedPosition = _snakeGame.GetPredictedSnakeHeadWorldSpacePosition();
 
             // Handling when warping
-            if (Vector3.Distance(_snakeHeadCurrentPosition, _snakeHeadPredictedPosition) != 1 && _enableLerp)
+            if (Vector3.Distance(_snakeHeadPreviousPosition, _snakeHeadCurrentPosition) != 1 && _enableLerp)
             {
-                Vector3 currentDirection = _snakeGame.GetCurrentSnakeHeadWorldSpaceDirection();
-                _snakeHeadCurrentPosition = _snakeHeadPredictedPosition - currentDirection;
+                Vector3 pastDirection = _snakeGame.GetPreviousSnakeHeadWorldSpaceDirection();
+                _snakeHeadPreviousPosition = _snakeHeadCurrentPosition - pastDirection;
 
                 _clone = Instantiate(_cube);
                 _clone.transform.SetParent(_cube.transform.parent);
                 _clone.transform.localPosition = _cube.transform.localPosition;
 
-                _cloneCurrentPosition = _snakeGame.GetCurrentSnakeHeadWorldSpacePosition();
-                _clonePredictedPosition = _cloneCurrentPosition + currentDirection;
+                _clonePreviousPosition = _snakeGame.GetPreviousSnakeHeadWorldSpacePosition();
+                _cloneCurrentPosition = _clonePreviousPosition + pastDirection;
             }
         }
     }

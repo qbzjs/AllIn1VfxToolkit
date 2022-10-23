@@ -4,9 +4,11 @@ namespace Snake4D
 {
     public class SnakeGameState
     {
+        public Vector4Int PreviousSnakeHeadPosition => _snakeHead.GetPreviousPosition();
         public Vector4Int SnakeHeadPosition => _snakeHead.Position;
         public Vector4Int PredictedSnakeHeadPosition => _snakeHead.GetPredictedPosition();
 
+        public Vector4Int PreviousSnakeHeadDirection => _snakeHead.GetPreviousDirection();
         public Vector4Int SnakeHeadDirection => _snakeHead.Direction;
 
         SnakeGameParameters _parameters;

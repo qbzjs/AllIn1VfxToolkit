@@ -31,13 +31,8 @@ namespace Snake4D
 
         public override Vector4Int GetPredictedDirection()
         {
+            // By default the direction doesnt change until player input
             return _direction;
-        }
-
-        public override void UpdateSnakePart()
-        {
-            _position = GetPredictedPosition();
-            // TODO : Update direction from input
         }
 
         protected override bool WillSnakePartMove()

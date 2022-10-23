@@ -11,6 +11,8 @@ namespace Snake4D
         public void SetParentSnakeBody(SnakeBody snakeBody);
         public Vector4Int GetPredictedPosition();
         public Vector4Int GetPredictedDirection();
+        public Vector4Int GetPreviousPosition();
+        public Vector4Int GetPreviousDirection();
         public void UpdateSnakePart();
     }
 }

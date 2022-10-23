@@ -11,6 +11,8 @@ namespace Snake4D
         protected SnakeBody _parentSnakeBody;
         protected Vector4Int _position;
         protected Vector4Int _direction;
+        protected Vector4Int _previousPosition;
+        protected Vector4Int _previousDirection;
 
         ISnakePart _snakePartInFront;
 
@@ -18,6 +20,10 @@ namespace Snake4D
         {
             _position = position;
             _direction = direction;
+
+            _previousPosition = position;
+            _previousDirection = direction;
+
             _snakePartInFront = snakePartInFront;
         }
 
@@ -42,8 +48,14 @@ namespace Snake4D
             return Vector4Int.zero;
         }
 
+        public virtual Vector4Int GetPreviousPosition() => _previousPosition;
+        public virtual Vector4Int GetPreviousDirection() => _previousDirection;
+
         public virtual void UpdateSnakePart()
         {
+            _previousPosition = _position;
+            _previousDirection = _direction;
+
             _position = GetPredictedPosition();
             _direction = GetPredictedDirection();
         }
