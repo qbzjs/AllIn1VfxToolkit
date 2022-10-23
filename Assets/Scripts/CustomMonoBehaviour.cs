@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class CustomMonoBehaviour : MonoBehaviour
 {
+    [Header("Custom MonoBehaviour")]
+    [SerializeField] protected bool _enableDebugLogs;
+
     protected List<Guid> _tokenList = new List<Guid>();
 
     protected virtual void OnDestroy()
@@ -28,5 +31,15 @@ public abstract class CustomMonoBehaviour : MonoBehaviour
     protected void SubscribeToMessageHubEvent<T>(Action<T> action)
     {
         _tokenList.Add(MessageHubSingleton.Instance.Subscribe<T>(action));
+    }
+
+    protected void DebugLog(string message, bool forceLog = false)
+    {
+        if (_enableDebugLogs || forceLog) Debug.Log($"{GetType().ToString()}: {message}");
+    }
+
+    protected void DebugLogError(string message, bool forceLog = false)
+    {
+        if (_enableDebugLogs || forceLog) Debug.LogError($"{GetType().ToString()}: {message}");
     }
 }

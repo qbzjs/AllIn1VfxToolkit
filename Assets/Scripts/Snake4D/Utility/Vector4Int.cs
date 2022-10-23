@@ -65,21 +65,44 @@ namespace Snake4D
             this.w = w;
         }
 
-        private float CalculateMagnitude()
-        {
-            float x2 = x * x;
-            float y2 = y * y;
-            float z2 = z * z;
-            float w2 = w * w;
-
-            return Mathf.Sqrt(x2 + y2 + z2 + w2);
-        }
-
         public static Vector4Int operator +(Vector4Int a, Vector4Int b)
             => new Vector4Int(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
 
         public static Vector4Int operator -(Vector4Int a, Vector4Int b)
             => new Vector4Int(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+
+        public static bool operator ==(Vector4Int a, Vector4Int b) => a.Equals(b);
+        public static bool operator !=(Vector4Int a, Vector4Int b) => !(a == b);
+
+        public override bool Equals(object obj)
+        {
+            // Optimization for a common success case.
+            if (Object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            // If run-time types are not exactly the same, return false.
+            if (this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Vector4Int otherVector = (Vector4Int)obj;
+
+            if (this.x != otherVector.x) return false;
+            if (this.y != otherVector.y) return false;
+            if (this.z != otherVector.z) return false;
+            if (this.w != otherVector.w) return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Shorthand for writing Vector4Int(0, 0, 0, 0).
+        /// </summary>
+        /// <returns></returns>
+        public static Vector4Int zero => new Vector4Int(0, 0, 0, 0);
 
         /// <summary>
         /// Returns the distance between a and b.
@@ -102,6 +125,16 @@ namespace Snake4D
         public Vector3Int ToVector3Int()
         {
             return ToVector3Int(this);
+        }
+
+        private float CalculateMagnitude()
+        {
+            float x2 = x * x;
+            float y2 = y * y;
+            float z2 = z * z;
+            float w2 = w * w;
+
+            return Mathf.Sqrt(x2 + y2 + z2 + w2);
         }
     }
 }

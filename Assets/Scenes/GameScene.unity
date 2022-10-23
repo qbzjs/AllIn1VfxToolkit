@@ -716,11 +716,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de0ad1ff96954b0b9d906ebd09b8a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enableDebugLogs: 1
   _viewID: -1
   _updateInterval: 0.2
   _enableLerp: 1
   _cube: {fileID: 409376341}
   _passThroughWalls: 1
+  _debugMode: 1
+  _useCustomSeed: 1
+  _customSeed: 46
 --- !u!1 &1188277107
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29de6f88c4ef840c6bd1ce54b1d3c962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enableDebugLogs: 0
 --- !u!114 &1559913330
 MonoBehaviour:
   m_ObjectHideFlags: 0

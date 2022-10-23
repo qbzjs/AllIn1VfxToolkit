@@ -6,6 +6,7 @@ namespace Snake4D
         public Vector4Int Position => _position;
         public Vector4Int Direction => _direction;
         public ISnakePart SnakePartInFront => _snakePartInFront;
+        public bool WillMove => WillSnakePartMove();
 
         protected SnakeBody _parentSnakeBody;
         protected Vector4Int _position;
@@ -27,13 +28,32 @@ namespace Snake4D
 
         public virtual Vector4Int GetPredictedPosition()
         {
-            return _snakePartInFront.Position;
+            if (_snakePartInFront.WillMove)
+                return _snakePartInFront.Position;
+
+            return _position;
+        }
+
+        public virtual Vector4Int GetPredictedDirection()
+        {
+            if (_snakePartInFront.WillMove)
+                return _snakePartInFront.Direction;
+
+            return Vector4Int.zero;
         }
 
         public virtual void UpdateSnakePart()
         {
             _position = GetPredictedPosition();
-            _direction = _snakePartInFront.Direction;
+            _direction = GetPredictedDirection();
+        }
+
+        protected virtual bool WillSnakePartMove()
+        {
+            if (_snakePartInFront.WillMove)
+                return true;
+
+            return false;
         }
     }
 }

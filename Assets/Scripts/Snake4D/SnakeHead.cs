@@ -18,15 +18,26 @@ namespace Snake4D
             if (_canPassThroughWalls)
                 return Utilities.WarpPositionWithinSpace(predictedPosition, _sizeOfSpace);
 
-            // returns out of bounds position
-            // TODO : Handling on the game side!
             return predictedPosition;
+        }
+
+        public override Vector4Int GetPredictedDirection()
+        {
+            return _direction;
         }
 
         public override void UpdateSnakePart()
         {
             _position = GetPredictedPosition();
             // TODO : Update direction from input
+        }
+
+        protected override bool WillSnakePartMove()
+        {
+            if (_direction == Vector4Int.zero)
+                return false;
+
+            return true;
         }
     }
 }

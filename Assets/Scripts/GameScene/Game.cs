@@ -7,12 +7,18 @@ namespace GameScene
 {
     public class Game : SceneInit
     {
+        [Header("Game")]
         [SerializeField] float _updateInterval;
         [SerializeField] bool _enableLerp;
         [SerializeField] GameObject _cube;
 
         [Header("Snake Game Parameters")]
         [SerializeField] bool _passThroughWalls;
+
+        [Header("Debug")]
+        [SerializeField] bool _debugMode;
+        [SerializeField] bool _useCustomSeed;
+        [SerializeField] int _customSeed;
 
         SnakeGame _snakeGame = null;
         WaitForSeconds _waitForUpdateInterval;
@@ -28,6 +34,12 @@ namespace GameScene
 
         private void Start()
         {
+            int randomSeed = new System.Random().Next(0, 1000);
+            if (_useCustomSeed) randomSeed = _customSeed;
+
+            DebugLog($"Using Random Seed '{randomSeed}'");
+            Random.InitState(randomSeed);
+
             // TODO : Design UI
             // CreateView();
 
@@ -60,7 +72,7 @@ namespace GameScene
         {
             SubscribeToMessageHubEvent<UserInputEvent>((e) =>
             {
-                Debug.Log($"Game received input of type '{e.InputType}'");
+                DebugLog($"Received input of type '{e.InputType}'");
             });
         }
 
@@ -94,7 +106,8 @@ namespace GameScene
         {
             while (true) // TODO : use a better boolean
             {
-                yield return _waitForUpdateInterval;
+                if (_debugMode) yield return new WaitForSeconds(_updateInterval);
+                else yield return _waitForUpdateInterval;
 
                 _snakeGame.UpdateState();
                 UpdateVisuals();
@@ -126,6 +139,8 @@ namespace GameScene
 
                 _clone = Instantiate(_cube);
                 _clone.transform.SetParent(_cube.transform.parent);
+                _clone.transform.localPosition = _cube.transform.localPosition;
+
                 _cloneCurrentPosition = _snakeGame.GetCurrentSnakeHeadWorldSpacePosition();
                 _clonePredictedPosition = _cloneCurrentPosition + currentDirection;
             }
