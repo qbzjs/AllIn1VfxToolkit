@@ -7,6 +7,8 @@ namespace Snake4D
         public Vector4Int SnakeHeadPosition => _snakeHead.Position;
         public Vector4Int PredictedSnakeHeadPosition => _snakeHead.GetPredictedPosition();
 
+        public Vector4Int SnakeHeadDirection => _snakeHead.Direction;
+
         SnakeGameParameters _parameters;
         Dimension _dimension => _parameters.Dimension;
         Vector4Int _size => _parameters.Size;

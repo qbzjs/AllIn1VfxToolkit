@@ -22,6 +22,10 @@ namespace GameScene
         Vector3 _snakeHeadCurrentPosition;
         Vector3 _snakeHeadPredictedPosition;
 
+        GameObject _clone;
+        Vector3 _cloneCurrentPosition;
+        Vector3 _clonePredictedPosition;
+
         private void Start()
         {
             // TODO : Design UI
@@ -71,10 +75,14 @@ namespace GameScene
 
         private void LerpSnakeHeadPosition(float interpolationRatio)
         {
-            // TODO : Warping handling
-
             Vector3 interpolatedPosition = Vector3.Lerp(_snakeHeadCurrentPosition, _snakeHeadPredictedPosition, interpolationRatio);
             _cube.transform.localPosition = interpolatedPosition;
+
+            if (_clone != null)
+            {
+                Vector3 cloneInterpolatedPosition = Vector3.Lerp(_cloneCurrentPosition, _clonePredictedPosition, interpolationRatio);
+                _clone.transform.localPosition = cloneInterpolatedPosition;
+            }
         }
 
         private void SetSnakeHeadPosition()
@@ -101,8 +109,26 @@ namespace GameScene
 
         private void UpdateSnakeHead()
         {
-            _snakeHeadCurrentPosition = _snakeGame.GetSnakeHeadWorldSpacePosition();
+            if (_clone != null)
+            {
+                Destroy(_clone);
+                _clone = null;
+            }
+
+            _snakeHeadCurrentPosition = _snakeGame.GetCurrentSnakeHeadWorldSpacePosition();
             _snakeHeadPredictedPosition = _snakeGame.GetPredictedSnakeHeadWorldSpacePosition();
+
+            // Handling when warping
+            if (Vector3.Distance(_snakeHeadCurrentPosition, _snakeHeadPredictedPosition) != 1)
+            {
+                Vector3 currentDirection = _snakeGame.GetCurrentSnakeHeadWorldSpaceDirection();
+                _snakeHeadCurrentPosition = _snakeHeadPredictedPosition - currentDirection;
+
+                _clone = Instantiate(_cube);
+                _clone.transform.SetParent(_cube.transform.parent);
+                _cloneCurrentPosition = _snakeGame.GetCurrentSnakeHeadWorldSpacePosition();
+                _clonePredictedPosition = _cloneCurrentPosition + currentDirection;
+            }
         }
     }
 }

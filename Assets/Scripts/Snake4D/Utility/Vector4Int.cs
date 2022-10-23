@@ -81,9 +81,27 @@ namespace Snake4D
         public static Vector4Int operator -(Vector4Int a, Vector4Int b)
             => new Vector4Int(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
 
+        /// <summary>
+        /// Returns the distance between a and b.
+        /// </summary>
+        public static float Distance(Vector4Int a, Vector4Int b)
+        {
+            float x2 = Mathf.Pow((a.x - b.x), 2);
+            float y2 = Mathf.Pow((a.y - b.y), 2);
+            float z2 = Mathf.Pow((a.z - b.z), 2);
+            float w2 = Mathf.Pow((a.w - b.w), 2);
+
+            return Mathf.Abs(Mathf.Sqrt(x2 + y2 + z2 + w2));
+        }
+
+        public static Vector3Int ToVector3Int(Vector4Int a)
+        {
+            return new Vector3Int(a.x, a.y, a.z);
+        }
+
         public Vector3Int ToVector3Int()
         {
-            return new Vector3Int(x, y, z);
+            return ToVector3Int(this);
         }
     }
 }
