@@ -1,7 +1,7 @@
 using UnityEngine;
 using FairyGUIArchitecture;
 
-public abstract class SceneInit : MonoBehaviour
+public abstract class SceneInit : CustomMonoBehaviour
 {
     [SerializeField] protected ViewManager.ViewID _viewID;
 

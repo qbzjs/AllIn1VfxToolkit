@@ -10,5 +10,7 @@ namespace GameInitScene
         {
             CreateView();
         }
+
+        protected override void SubscribeToMessageHubEvents() { }
     }
 }

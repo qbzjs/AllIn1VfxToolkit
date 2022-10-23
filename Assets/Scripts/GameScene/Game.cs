@@ -48,6 +48,16 @@ namespace GameScene
             _waitForUpdateInterval = new WaitForSeconds(_updateInterval);
             _updateCoroutine = UpdateCoroutine();
             StartCoroutine(_updateCoroutine);
+
+            SubscribeToMessageHubEvents();
+        }
+
+        protected override void SubscribeToMessageHubEvents()
+        {
+            SubscribeToMessageHubEvent<UserInputEvent>((e) =>
+            {
+                Debug.Log($"Game received input of type '{e.InputType}'");
+            });
         }
 
         private void Update()

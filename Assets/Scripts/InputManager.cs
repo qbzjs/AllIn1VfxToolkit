@@ -1,8 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public enum UserInputType
 {
+    X_Positive,
+    X_Negative,
+    Y_Positive,
+    Y_Negative,
+    Z_Positive,
+    Z_Negative,
+    W_Positive,
+    W_Negative
+}
+
+public class InputManager : CustomMonoBehaviour
+{
+    protected override void SubscribeToMessageHubEvents() { }
+
     public void OnXYMove(InputAction.CallbackContext context)
     {
         if (context.performed) // On button press down
@@ -10,23 +24,27 @@ public class InputManager : MonoBehaviour
             Vector2 value = context.ReadValue<Vector2>();
             if (value == Vector2.up)
             {
-                Debug.Log("Forward (+Y) Pressed!");
-                // TODO : Publish message
+                PublishMessageHubEvent<UserInputEvent>(
+                    new UserInputEvent(UserInputType.Y_Positive)
+                );
             }
             else if (value == Vector2.down)
             {
-                Debug.Log("Backward (-Y) Pressed!");
-                // TODO : Publish message
+                PublishMessageHubEvent<UserInputEvent>(
+                    new UserInputEvent(UserInputType.Y_Negative)
+                );
             }
             else if (value == Vector2.left)
             {
-                Debug.Log("Left (-X) Pressed!");
-                // TODO : Publish message
+                PublishMessageHubEvent<UserInputEvent>(
+                    new UserInputEvent(UserInputType.X_Negative)
+                );
             }
             else if (value == Vector2.right)
             {
-                Debug.Log("Right (+X) Pressed!");
-                // TODO : Publish message
+                PublishMessageHubEvent<UserInputEvent>(
+                    new UserInputEvent(UserInputType.X_Positive)
+                );
             }
         }
     }
@@ -39,24 +57,37 @@ public class InputManager : MonoBehaviour
             Vector2 value = context.ReadValue<Vector2>();
             if (value == Vector2.up)
             {
-                Debug.Log("Up (+Z) Pressed!");
-                // TODO : Publish message
+                PublishMessageHubEvent<UserInputEvent>(
+                    new UserInputEvent(UserInputType.Z_Positive)
+                );
             }
             else if (value == Vector2.down)
             {
-                Debug.Log("Down (-Z) Pressed!");
-                // TODO : Publish message
+                PublishMessageHubEvent<UserInputEvent>(
+                    new UserInputEvent(UserInputType.Z_Negative)
+                );
             }
             else if (value == Vector2.left)
             {
-                Debug.Log("-W Pressed!");
-                // TODO : Publish message
+                PublishMessageHubEvent<UserInputEvent>(
+                    new UserInputEvent(UserInputType.W_Negative)
+                );
             }
             else if (value == Vector2.right)
             {
-                Debug.Log("+W Pressed!");
-                // TODO : Publish message
+                PublishMessageHubEvent<UserInputEvent>(
+                    new UserInputEvent(UserInputType.W_Positive)
+                );
             }
         }
+    }
+}
+
+public class UserInputEvent
+{
+    public UserInputType InputType;
+    public UserInputEvent(UserInputType inputType)
+    {
+        InputType = inputType;
     }
 }
