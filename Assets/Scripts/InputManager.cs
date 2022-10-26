@@ -1,17 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-public enum UserInputType
-{
-    X_Positive,
-    X_Negative,
-    Y_Positive,
-    Y_Negative,
-    Z_Positive,
-    Z_Negative,
-    W_Positive,
-    W_Negative
-}
+using Snake4D;
 
 public class InputManager : CustomMonoBehaviour
 {

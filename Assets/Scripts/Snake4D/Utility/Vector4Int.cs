@@ -117,6 +117,16 @@ namespace Snake4D
             return Mathf.Abs(Mathf.Sqrt(x2 + y2 + z2 + w2));
         }
 
+        public static float Dot(Vector4Int a, Vector4Int b)
+        {
+            float x = a.x * b.x;
+            float y = a.y * b.y;
+            float z = a.z * b.z;
+            float w = a.w * b.w;
+
+            return x + y + z + w;
+        }
+
         public static Vector3Int ToVector3Int(Vector4Int a)
         {
             return new Vector3Int(a.x, a.y, a.z);

@@ -56,6 +56,7 @@ namespace Snake4D
 
         public void OnUserInput(UserInputType inputType)
         {
+            if (inputType == UserInputType.NONE) return;
             _gameState.OnUserInput(inputType);
         }
 

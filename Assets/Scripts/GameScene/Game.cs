@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using FairyGUIArchitecture;
 using Snake4D;
@@ -10,6 +11,7 @@ namespace GameScene
         [Header("Game")]
         [SerializeField] float _updateInterval;
         [SerializeField] bool _enableLerp;
+        [SerializeField] int _bufferCapacity = 2;
         [SerializeField] GameObject _cube;
 
         [Header("Snake Game Parameters")]
@@ -27,12 +29,12 @@ namespace GameScene
         float _elapsedTimeBetweenUpdateInterval;
         Vector3 _snakeHeadPreviousPosition;
         Vector3 _snakeHeadCurrentPosition;
-        Vector3 _snakeHeadPredictedPosition;
 
         GameObject _clone;
         Vector3 _clonePreviousPosition;
         Vector3 _cloneCurrentPosition;
-        Vector3 _clonePredictedPosition;
+
+        InputBuffer _inputBuffer;
 
         private void Start()
         {
@@ -54,11 +56,11 @@ namespace GameScene
                 PassThroughWalls = _passThroughWalls
             });
 
+            _inputBuffer = new InputBuffer(_bufferCapacity);
+
             // TODO : create a space based on _snakeGame.Size
             // TODO : - need to zoom camera appropriately
             // TODO : - 1D and 2D needa be orthographic, 3D and 4D needa be perspective
-
-            // TODO : Get user input (keyboard publish event / touch input publish event)
 
             // ==========
             UpdateVisuals();
@@ -75,7 +77,10 @@ namespace GameScene
             SubscribeToMessageHubEvent<UserInputEvent>((e) =>
             {
                 DebugLog($"Received input of type '{e.InputType}'");
-                _snakeGame.OnUserInput(e.InputType);
+
+                DebugLog($"Before Add: {_inputBuffer}");
+                _inputBuffer.AddInput(e.InputType);
+                DebugLog($"After Add: {_inputBuffer}");
             });
         }
 
@@ -111,6 +116,10 @@ namespace GameScene
             {
                 if (_debugMode) yield return new WaitForSeconds(_updateInterval);
                 else yield return _waitForUpdateInterval;
+
+                DebugLog($"Before Get: {_inputBuffer}");
+                _snakeGame.OnUserInput(_inputBuffer.GetInput());
+                DebugLog($"After Get: {_inputBuffer}");
 
                 _snakeGame.UpdateState();
                 UpdateVisuals();

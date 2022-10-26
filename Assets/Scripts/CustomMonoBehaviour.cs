@@ -33,13 +33,13 @@ public abstract class CustomMonoBehaviour : MonoBehaviour
         _tokenList.Add(MessageHubSingleton.Instance.Subscribe<T>(action));
     }
 
-    protected void DebugLog(string message, bool forceLog = false)
+    protected void DebugLog(object message, bool forceLog = false)
     {
-        if (_enableDebugLogs || forceLog) Debug.Log($"{GetType().ToString()}: {message}");
+        if (_enableDebugLogs || forceLog) Debug.Log($"{GetType().ToString()}: {message.ToString()}");
     }
 
-    protected void DebugLogError(string message, bool forceLog = false)
+    protected void DebugLogError(object message, bool forceLog = false)
     {
-        if (_enableDebugLogs || forceLog) Debug.LogError($"{GetType().ToString()}: {message}");
+        if (_enableDebugLogs || forceLog) Debug.LogError($"{GetType().ToString()}: {message.ToString()}");
     }
 }

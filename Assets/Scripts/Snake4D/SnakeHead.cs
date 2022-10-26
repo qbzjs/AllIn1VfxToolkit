@@ -16,6 +16,10 @@ namespace Snake4D
             // POLISH : check if it is a direction vector [eg. (1 0 0 0) and its permutations]
             if (newDirection.magnitude != 1) throw new System.InvalidOperationException("newDirection magnitude should be 1!");
 
+            // Cannot go in the opposite direction.
+            // For normalized vectors, dot product == -1 => Opposite direction.
+            if (Vector4Int.Dot(_direction, newDirection) == -1) return;
+
             _direction = newDirection;
         }
 
