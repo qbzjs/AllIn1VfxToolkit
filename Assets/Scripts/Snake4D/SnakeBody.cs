@@ -14,6 +14,7 @@ namespace Snake4D
         public SnakeBody(SnakeGameParameters parameters)
         {
             _parameters = parameters;
+            SpawnSnakeHead();
         }
 
         public void Add(ISnakePart snakePart)
@@ -33,6 +34,27 @@ namespace Snake4D
             {
                 _snakeParts[i].UpdateSnakePart();
             }
+        }
+
+        public List<Vector4Int> GetOccupiedPositions()
+        {
+            List<Vector4Int> occupiedPositions = new List<Vector4Int>();
+            foreach (ISnakePart snakePart in _snakeParts)
+            {
+                occupiedPositions.Add(snakePart.Position);
+            }
+            return occupiedPositions;
+        }
+
+        private void SpawnSnakeHead()
+        {
+            if (_snakeParts.Count > 0) Clear();
+
+            Vector4Int randomPosition = Utilities.GenerateRandomPosition(_parameters.Dimension, _parameters.Size);
+            Vector4Int randomDirection = Utilities.GenerateRandomDirection(_parameters.Dimension);
+
+            SnakeHead snakeHead = new SnakeHead(randomPosition, randomDirection);
+            Add(snakeHead);
         }
     }
 }

@@ -98,6 +98,17 @@ namespace Snake4D
             return true;
         }
 
+        public override int GetHashCode()
+        {
+            // int hash_x = x.GetHashCode();
+            // int hash_y = y.GetHashCode();
+            // int hash_z = z.GetHashCode();
+            // int hash_w = w.GetHashCode();
+
+            // return (hash_x + hash_y + hash_z + hash_w).GetHashCode();
+            return base.GetHashCode();
+        }
+
         /// <summary>
         /// Shorthand for writing Vector4Int(0, 0, 0, 0).
         /// </summary>

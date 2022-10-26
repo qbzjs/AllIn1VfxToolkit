@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Snake4D
 {
     public sealed class SnakeHead : SnakePart

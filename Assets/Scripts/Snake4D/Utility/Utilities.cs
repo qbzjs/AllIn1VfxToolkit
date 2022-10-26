@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Snake4D
@@ -19,6 +20,50 @@ namespace Snake4D
             if (dimension == Dimension.DimensionFour) return new Vector4Int(x, y, z, w);
 
             return new Vector4Int();
+        }
+
+        public static Vector4Int GenerateRandomUnoccupiedPosition(Dimension dimension, Vector4Int size, SnakeBody snakeBody)
+        {
+            if (!CheckIfHaveUnoccupiedPosition(snakeBody, dimension, size)) throw new System.InvalidOperationException($"Utilities.GenerateRandomUnoccupiedPosition(): No unoccupied positions available!");
+
+            Vector4Int randomPosition = GenerateRandomPosition(dimension, size);
+            List<Vector4Int> occupiedPositions = snakeBody.GetOccupiedPositions();
+
+            int retryCount = 1;
+            int maxRetryCount = CalculateVolume(dimension, size);
+            while (occupiedPositions.Contains(randomPosition))
+            {
+                randomPosition = GenerateRandomPosition(dimension, size);
+
+                retryCount++;
+                if (retryCount >= maxRetryCount) throw new System.InvalidOperationException($"Utilities.GenerateRandomUnoccupiedPosition(): Exceeded retry count {maxRetryCount}");
+            }
+
+            return randomPosition;
+        }
+
+        public static bool CheckIfHaveUnoccupiedPosition(SnakeBody snakeBody, Dimension dimension, Vector4Int size)
+        {
+            int maximumPositions = CalculateVolume(dimension, size);
+            int occupiedPositions = snakeBody.GetOccupiedPositions().Count;
+
+            if (maximumPositions == occupiedPositions)
+                return false;
+
+            return true;
+        }
+
+        public static int CalculateVolume(Dimension dimension, Vector4Int size)
+        {
+            switch (dimension)
+            {
+                case Dimension.DimensionOne: return size.x;
+                case Dimension.DimensionTwo: return size.x * size.y;
+                case Dimension.DimensionThree: return size.x * size.y * size.z;
+                case Dimension.DimensionFour: return size.x * size.y * size.z * size.w;
+            }
+
+            throw new System.InvalidOperationException($"Utilities.CalculateVolume(): Unidentified dimension '{dimension}'");
         }
 
         public static Vector4Int GenerateRandomDirection(Dimension dimension)

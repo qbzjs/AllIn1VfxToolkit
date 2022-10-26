@@ -4,8 +4,7 @@ namespace Snake4D
 {
     public class SnakeGame
     {
-        public Dimension Dimension => _dimension;
-        public Vector4Int Size => _size;
+        public bool GameOver => _gameState.GameOver;
 
         SnakeGameParameters _parameters;
         Dimension _dimension => _parameters.Dimension;
@@ -47,6 +46,12 @@ namespace Snake4D
         {
             Vector3Int gameSpaceDirection = _gameState.SnakeHeadDirection.ToVector3Int();
             return Utilities.GameSpaceToWorldSpace(gameSpaceDirection);
+        }
+
+        public Vector3Int GetCurrentSnakeFoodWorldSpacePosition()
+        {
+            Vector3Int gameSpacePosition = _gameState.SnakeFoodPosition.ToVector3Int();
+            return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
         }
 
         public void UpdateState()

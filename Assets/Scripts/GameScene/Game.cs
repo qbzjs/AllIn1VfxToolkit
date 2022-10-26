@@ -13,6 +13,7 @@ namespace GameScene
         [SerializeField] bool _enableLerp;
         [SerializeField] int _bufferCapacity = 2;
         [SerializeField] GameObject _cube;
+        [SerializeField] GameObject _foodCube;
 
         [Header("Snake Game Parameters")]
         [SerializeField] bool _passThroughWalls;
@@ -27,12 +28,15 @@ namespace GameScene
         IEnumerator _updateCoroutine = null;
 
         float _elapsedTimeBetweenUpdateInterval;
+
         Vector3 _snakeHeadPreviousPosition;
         Vector3 _snakeHeadCurrentPosition;
 
-        GameObject _clone;
-        Vector3 _clonePreviousPosition;
-        Vector3 _cloneCurrentPosition;
+        GameObject _snakeHeadClone;
+        Vector3 _snakeHeadClonePreviousPosition;
+        Vector3 _snakeHeadCloneCurrentPosition;
+
+        Vector3 _snakeFoodCurrentPosition;
 
         InputBuffer _inputBuffer;
 
@@ -76,11 +80,8 @@ namespace GameScene
         {
             SubscribeToMessageHubEvent<UserInputEvent>((e) =>
             {
-                DebugLog($"Received input of type '{e.InputType}'");
-
-                DebugLog($"Before Add: {_inputBuffer}");
+                // DebugLog($"Received input of type '{e.InputType}'");
                 _inputBuffer.AddInput(e.InputType);
-                DebugLog($"After Add: {_inputBuffer}");
             });
         }
 
@@ -89,8 +90,15 @@ namespace GameScene
             _elapsedTimeBetweenUpdateInterval += Time.deltaTime;
             float interpolationRatio = _elapsedTimeBetweenUpdateInterval / _updateInterval;
 
-            if (_enableLerp) LerpSnakeHeadPosition(interpolationRatio);
-            else SetSnakeHeadPosition();
+            if (_enableLerp)
+            {
+                LerpSnakeHeadPosition(interpolationRatio);
+            }
+            else
+            {
+                SetSnakeHeadPosition();
+                SetSnakeFoodPosition();
+            }
         }
 
         private void LerpSnakeHeadPosition(float interpolationRatio)
@@ -98,10 +106,10 @@ namespace GameScene
             Vector3 interpolatedPosition = Vector3.Lerp(_snakeHeadPreviousPosition, _snakeHeadCurrentPosition, interpolationRatio);
             _cube.transform.localPosition = interpolatedPosition;
 
-            if (_clone != null)
+            if (_snakeHeadClone != null)
             {
-                Vector3 cloneInterpolatedPosition = Vector3.Lerp(_clonePreviousPosition, _cloneCurrentPosition, interpolationRatio);
-                _clone.transform.localPosition = cloneInterpolatedPosition;
+                Vector3 cloneInterpolatedPosition = Vector3.Lerp(_snakeHeadClonePreviousPosition, _snakeHeadCloneCurrentPosition, interpolationRatio);
+                _snakeHeadClone.transform.localPosition = cloneInterpolatedPosition;
             }
         }
 
@@ -110,17 +118,19 @@ namespace GameScene
             _cube.transform.localPosition = _snakeHeadCurrentPosition;
         }
 
+        private void SetSnakeFoodPosition()
+        {
+            _foodCube.transform.localPosition = _snakeFoodCurrentPosition;
+        }
+
         private IEnumerator UpdateCoroutine()
         {
-            while (true) // TODO : use a better boolean
+            while (!_snakeGame.GameOver)
             {
                 if (_debugMode) yield return new WaitForSeconds(_updateInterval);
                 else yield return _waitForUpdateInterval;
 
-                DebugLog($"Before Get: {_inputBuffer}");
                 _snakeGame.OnUserInput(_inputBuffer.GetInput());
-                DebugLog($"After Get: {_inputBuffer}");
-
                 _snakeGame.UpdateState();
                 UpdateVisuals();
             }
@@ -130,14 +140,15 @@ namespace GameScene
         {
             _elapsedTimeBetweenUpdateInterval = 0;
             UpdateSnakeHead();
+            UpdateSnakeFood();
         }
 
         private void UpdateSnakeHead()
         {
-            if (_clone != null)
+            if (_snakeHeadClone != null)
             {
-                Destroy(_clone);
-                _clone = null;
+                Destroy(_snakeHeadClone);
+                _snakeHeadClone = null;
             }
 
             _snakeHeadPreviousPosition = _snakeGame.GetPreviousSnakeHeadWorldSpacePosition();
@@ -149,13 +160,21 @@ namespace GameScene
                 Vector3 pastDirection = _snakeGame.GetPreviousSnakeHeadWorldSpaceDirection();
                 _snakeHeadPreviousPosition = _snakeHeadCurrentPosition - pastDirection;
 
-                _clone = Instantiate(_cube);
-                _clone.transform.SetParent(_cube.transform.parent);
-                _clone.transform.localPosition = _cube.transform.localPosition;
+                _snakeHeadClone = Instantiate(_cube);
+                _snakeHeadClone.transform.SetParent(_cube.transform.parent);
+                _snakeHeadClone.transform.localPosition = _cube.transform.localPosition;
 
-                _clonePreviousPosition = _snakeGame.GetPreviousSnakeHeadWorldSpacePosition();
-                _cloneCurrentPosition = _clonePreviousPosition + pastDirection;
+                _snakeHeadClonePreviousPosition = _snakeGame.GetPreviousSnakeHeadWorldSpacePosition();
+                _snakeHeadCloneCurrentPosition = _snakeHeadClonePreviousPosition + pastDirection;
             }
+        }
+
+        private void UpdateSnakeFood()
+        {
+            _snakeFoodCurrentPosition = _snakeGame.GetCurrentSnakeFoodWorldSpacePosition();
+
+            // TODO : When updating food, make food clone for the food being eaten, comparing past position of the food
+            // TODO : If game over, still make clone but also destroy the food
         }
     }
 }

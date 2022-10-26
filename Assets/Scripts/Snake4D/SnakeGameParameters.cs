@@ -1,6 +1,6 @@
 namespace Snake4D
 {
-    public struct SnakeGameParameters
+    public class SnakeGameParameters
     {
         public Dimension Dimension;
         public Vector4Int Size;

@@ -11,6 +11,10 @@ namespace Snake4D
         public Vector4Int PreviousSnakeHeadDirection => _snakeHead.GetPreviousDirection();
         public Vector4Int SnakeHeadDirection => _snakeHead.Direction;
 
+        public Vector4Int SnakeFoodPosition => _snakeFood.Position;
+
+        public bool GameOver { get; private set; }
+
         SnakeGameParameters _parameters;
         Dimension _dimension => _parameters.Dimension;
         Vector4Int _size => _parameters.Size;
@@ -20,38 +24,31 @@ namespace Snake4D
 
         SnakeHead _snakeHead => _snakeBody.SnakeHead;
         SnakeBody _snakeBody;
-        List<Vector4Int> _foodPositions = new List<Vector4Int>();
+
+        SnakeFood _snakeFood;
 
         public SnakeGameState(SnakeGameParameters parameters)
         {
             _parameters = parameters;
-
             _snakeBody = new SnakeBody(parameters);
-            _foodPositions.Clear();
-
-            SpawnSnakeHead();
+            _snakeFood = new SnakeFood(parameters, _snakeBody); // Must initiate snake body before initiating snake food
         }
 
         public void UpdateState()
         {
             _snakeBody.UpdateSnakeBody();
+            _snakeFood.UpdateSnakeFood(); // Must update snake body before updating snake food
+
+            if (!_snakeFood.HasSpawned)
+            {
+                GameOver = true;
+            }
         }
 
         public void OnUserInput(UserInputType inputType)
         {
             Vector4Int newDirection = Utilities.ConvertUserInputToDirectionVector(inputType);
             _snakeHead.ChangeDirection(newDirection);
-        }
-
-        private void SpawnSnakeHead()
-        {
-            if (_snakeBody.Count > 0) _snakeBody.Clear();
-
-            Vector4Int randomPosition = Utilities.GenerateRandomPosition(_dimension, _size);
-            Vector4Int randomDirection = Utilities.GenerateRandomDirection(_dimension);
-
-            SnakeHead snakeHead = new SnakeHead(randomPosition, randomDirection);
-            _snakeBody.Add(snakeHead);
         }
     }
 }
