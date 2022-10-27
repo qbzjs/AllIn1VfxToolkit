@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 1183626301}
   - component: {fileID: 1183626302}
   m_Layer: 0
-  m_Name: GameInit
+  m_Name: GameInitManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -555,6 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd1c13de33d64463a8a154a62a7a9de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enableDebugLogs: 0
   _viewID: 0
 --- !u!1001 &4057196039921203587
 PrefabInstance:

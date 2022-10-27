@@ -6,7 +6,7 @@ using Snake4D;
 
 namespace GameScene
 {
-    public class Game : SceneInit
+    public class GameManager : SceneInit
     {
         [Header("Game")]
         [SerializeField] float _updateInterval;

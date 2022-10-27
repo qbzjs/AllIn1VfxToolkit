@@ -4,7 +4,7 @@ using FairyGUIArchitecture;
 
 namespace GameInitScene
 {
-    public class GameInit : SceneInit
+    public class GameInitManager : SceneInit
     {
         private void Start()
         {
