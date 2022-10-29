@@ -726,7 +726,7 @@ MonoBehaviour:
   _bodyCubePrefab: {fileID: 8290799120260657568, guid: 2f4b4a4911dcd4af986e999295435714, type: 3}
   _foodCube: {fileID: 1368047418}
   _enableLerp: 1
-  _maxScale: {x: 0.9, y: 0.9, z: 0.9}
+  _maxScale: {x: 1, y: 1, z: 1}
   _passThroughWalls: 1
   _debugMode: 1
   _useCustomSeed: 0

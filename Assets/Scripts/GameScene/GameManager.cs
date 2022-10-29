@@ -239,7 +239,7 @@ namespace GameScene
                 }
 
                 // TODO : Handling when turning corners
-                if (currentDirection != previousDirection)
+                if (currentDirection != previousDirection && _enableLerp)
                 {
                     _snakePartCornerClones[i].SetActive(true);
                     _snakePartCornerClones[i].transform.localPosition = _snakeBodyCurrentPositions[i];
