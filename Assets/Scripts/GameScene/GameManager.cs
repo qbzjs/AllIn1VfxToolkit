@@ -15,7 +15,7 @@ namespace GameScene
         [SerializeField] GameObject _bodyCubePrefab;
         [SerializeField] GameObject _foodCube;
 
-        [Header("Visual Settins")]
+        [Header("Visual Settings")]
         [SerializeField] bool _enableLerp;
         [SerializeField] Vector3 _maxScale;
 
@@ -39,6 +39,8 @@ namespace GameScene
         List<GameObject> _snakePartClones = new List<GameObject>();
         List<Vector3Int> _snakePartClonePreviousPositions = new List<Vector3Int>();
         List<Vector3Int> _snakePartCloneCurrentPositions = new List<Vector3Int>();
+
+        List<GameObject> _snakePartCornerClones = new List<GameObject>();
 
         Vector3 _snakeFoodPreviousPosition;
         Vector3 _snakeFoodCurrentPosition;
@@ -170,11 +172,16 @@ namespace GameScene
 
         private void UpdateSnakeBodyVisuals()
         {
-            for (int i = 0; i < _snakePartClones.Count; i++)
+            for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
             {
                 if (_snakePartClones[i].activeSelf)
                 {
                     _snakePartClones[i].SetActive(false);
+                }
+
+                if (_snakePartCornerClones[i].activeSelf)
+                {
+                    _snakePartCornerClones[i].SetActive(false);
                 }
             }
 
@@ -204,24 +211,39 @@ namespace GameScene
                 _snakePartCloneCurrentPositions.Add(new Vector3Int());
             }
 
+            if (_snakePartCornerClones.Count < _snakeBodyCurrentPositions.Count)
+            {
+                GameObject newCorner = Instantiate(_bodyCubePrefab);
+                newCorner.transform.SetParent(_snakeBodyCubes[_snakeBodyCubes.Count - 1].transform.parent);
+                newCorner.transform.localScale = _maxScale;
+                newCorner.SetActive(false);
+                newCorner.name = "Corner";
+                _snakePartCornerClones.Add(newCorner);
+            }
+
             for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
             {
+                Vector3Int previousDirection = _snakeGame.GetPreviousSnakeBodyWorldSpaceDirections()[i];
+                Vector3Int currentDirection = _snakeGame.GetCurrentSnakeHeadWorldSpaceDirections()[i];
+
                 // Handling when warping
-                // TODO : Handling when more than one snake body part is warping at the same time!
                 if (Vector3.Distance(_snakeBodyPreviousPositions[i], _snakeBodyCurrentPositions[i]) > 1 && _enableLerp)
                 {
-                    Vector3Int pastDirection = _snakeGame.GetPreviousSnakeBodyWorldSpaceDirections()[i];
-                    _snakeBodyPreviousPositions[i] = _snakeBodyCurrentPositions[i] - pastDirection;
+                    _snakeBodyPreviousPositions[i] = _snakeBodyCurrentPositions[i] - previousDirection;
 
                     _snakePartClones[i].SetActive(true);
                     _snakePartClones[i].transform.localPosition = _snakeBodyCubes[i].transform.localPosition;
 
                     _snakePartClonePreviousPositions[i] = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions()[i];
-                    _snakePartCloneCurrentPositions[i] = _snakePartClonePreviousPositions[i] + pastDirection;
+                    _snakePartCloneCurrentPositions[i] = _snakePartClonePreviousPositions[i] + previousDirection;
                 }
 
                 // TODO : Handling when turning corners
-                // if (Vector3)
+                if (currentDirection != previousDirection)
+                {
+                    _snakePartCornerClones[i].SetActive(true);
+                    _snakePartCornerClones[i].transform.localPosition = _snakeBodyCurrentPositions[i];
+                }
             }
         }
 

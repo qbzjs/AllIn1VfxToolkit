@@ -37,7 +37,7 @@ namespace Snake4D
             return Utilities.Convert4DVectorsToWorldSpace(positions);
         }
 
-        public List<Vector3Int> GetCurrentSnakeHeadWorldSpaceDirection()
+        public List<Vector3Int> GetCurrentSnakeHeadWorldSpaceDirections()
         {
             List<Vector4Int> positions = _gameState.CurrentSnakeBodyDirections;
             return Utilities.Convert4DVectorsToWorldSpace(positions);
