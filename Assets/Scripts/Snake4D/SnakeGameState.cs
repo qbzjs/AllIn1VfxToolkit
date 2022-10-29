@@ -4,12 +4,11 @@ namespace Snake4D
 {
     public class SnakeGameState
     {
-        public Vector4Int PreviousSnakeHeadPosition => _snakeHead.GetPreviousPosition();
-        public Vector4Int SnakeHeadPosition => _snakeHead.Position;
-        public Vector4Int PredictedSnakeHeadPosition => _snakeHead.GetPredictedPosition();
+        public List<Vector4Int> PreviousSnakeBodyPositions => _snakeBody.GetPreviousPositions();
+        public List<Vector4Int> CurrentSnakeBodyPositions => _snakeBody.GetCurrentPositions();
 
-        public Vector4Int PreviousSnakeHeadDirection => _snakeHead.GetPreviousDirection();
-        public Vector4Int SnakeHeadDirection => _snakeHead.Direction;
+        public List<Vector4Int> PreviousSnakeBodyDirections => _snakeBody.GetPreviousDirections();
+        public List<Vector4Int> CurrentSnakeBodyDirections => _snakeBody.GetCurrentDirections();
 
         public Vector4Int PreviousSnakeFoodPosition => _snakeFood.GetPreviousPosition();
         public Vector4Int SnakeFoodPosition => _snakeFood.Position;
@@ -38,12 +37,15 @@ namespace Snake4D
         public void UpdateState()
         {
             _snakeBody.UpdateSnakeBody();
-            _snakeFood.UpdateSnakeFood(); // Must update snake body before updating snake food
+            bool foodHasSpawned = _snakeFood.UpdateSnakeFood(); // Must update snake body before updating snake food
 
-            if (!_snakeFood.HasSpawned)
+            if (foodHasSpawned)
             {
-                GameOver = true;
+                // TODO : Add Tail
+                // _snakeBody.GrowTail();
             }
+
+            // TODO : Game Over handling when snake food cannot spawn
         }
 
         public void OnUserInput(UserInputType inputType)

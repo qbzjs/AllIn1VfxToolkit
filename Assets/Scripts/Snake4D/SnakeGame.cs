@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Snake4D
@@ -18,34 +19,28 @@ namespace Snake4D
             _gameState = new SnakeGameState(parameters);
         }
 
-        public Vector3Int GetPreviousSnakeHeadWorldSpacePosition()
+        public List<Vector3Int> GetPreviousSnakeBodyWorldSpacePositions()
         {
-            Vector3Int gameSpacePosition = _gameState.PreviousSnakeHeadPosition.ToVector3Int();
-            return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
+            List<Vector4Int> positions = _gameState.PreviousSnakeBodyPositions;
+            return Utilities.Convert4DVectorsToWorldSpace(positions);
         }
 
-        public Vector3Int GetCurrentSnakeHeadWorldSpacePosition()
+        public List<Vector3Int> GetCurrentSnakeBodyWorldSpacePositions()
         {
-            Vector3Int gameSpacePosition = _gameState.SnakeHeadPosition.ToVector3Int();
-            return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
+            List<Vector4Int> positions = _gameState.CurrentSnakeBodyPositions;
+            return Utilities.Convert4DVectorsToWorldSpace(positions);
         }
 
-        public Vector3Int GetPredictedSnakeHeadWorldSpacePosition()
+        public List<Vector3Int> GetPreviousSnakeBodyWorldSpaceDirections()
         {
-            Vector3Int predictedPosition = _gameState.PredictedSnakeHeadPosition.ToVector3Int();
-            return Utilities.GameSpaceToWorldSpace(predictedPosition);
+            List<Vector4Int> positions = _gameState.PreviousSnakeBodyDirections;
+            return Utilities.Convert4DVectorsToWorldSpace(positions);
         }
 
-        public Vector3Int GetPreviousSnakeHeadWorldSpaceDirection()
+        public List<Vector3Int> GetCurrentSnakeHeadWorldSpaceDirection()
         {
-            Vector3Int gameSpaceDirection = _gameState.PreviousSnakeHeadDirection.ToVector3Int();
-            return Utilities.GameSpaceToWorldSpace(gameSpaceDirection);
-        }
-
-        public Vector3Int GetCurrentSnakeHeadWorldSpaceDirection()
-        {
-            Vector3Int gameSpaceDirection = _gameState.SnakeHeadDirection.ToVector3Int();
-            return Utilities.GameSpaceToWorldSpace(gameSpaceDirection);
+            List<Vector4Int> positions = _gameState.CurrentSnakeBodyDirections;
+            return Utilities.Convert4DVectorsToWorldSpace(positions);
         }
 
         public Vector3Int GetCurrentSnakeFoodWorldSpacePosition()

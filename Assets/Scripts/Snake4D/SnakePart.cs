@@ -16,7 +16,7 @@ namespace Snake4D
 
         ISnakePart _snakePartInFront;
 
-        public SnakePart(Vector4Int position, Vector4Int direction, SnakePart snakePartInFront)
+        public SnakePart(Vector4Int position, Vector4Int direction, ISnakePart snakePartInFront)
         {
             _position = position;
             _direction = direction;

@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlaneClippingMaterial
+  m_Name: HeadMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 9a6c1eac5e4a64ece92e54e3c9a8db2d, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []

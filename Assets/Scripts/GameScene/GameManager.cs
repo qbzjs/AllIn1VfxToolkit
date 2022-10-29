@@ -12,7 +12,7 @@ namespace GameScene
         [SerializeField] float _updateInterval;
         [SerializeField] bool _enableLerp;
         [SerializeField] int _bufferCapacity = 2;
-        [SerializeField] GameObject _cube;
+        [SerializeField] List<GameObject> _snakeBodyCubes;
         [SerializeField] GameObject _foodCube;
 
         [Header("Snake Game Parameters")]
@@ -29,12 +29,12 @@ namespace GameScene
 
         float _elapsedTimeBetweenUpdateInterval;
 
-        Vector3 _snakeHeadPreviousPosition;
-        Vector3 _snakeHeadCurrentPosition;
+        List<Vector3Int> _snakeBodyPreviousPositions = new List<Vector3Int>();
+        List<Vector3Int> _snakeBodyCurrentPositions = new List<Vector3Int>();
 
-        GameObject _snakeHeadClone;
-        Vector3 _snakeHeadClonePreviousPosition;
-        Vector3 _snakeHeadCloneCurrentPosition;
+        List<GameObject> _snakePartClones = new List<GameObject>();
+        List<Vector3Int> _snakePartClonePreviousPositions = new List<Vector3Int>();
+        List<Vector3Int> _snakePartCloneCurrentPositions = new List<Vector3Int>();
 
         Vector3 _snakeFoodPreviousPosition;
         Vector3 _snakeFoodCurrentPosition;
@@ -106,13 +106,16 @@ namespace GameScene
 
         private void LerpSnakeHeadPosition(float interpolationRatio)
         {
-            Vector3 interpolatedPosition = Vector3.Lerp(_snakeHeadPreviousPosition, _snakeHeadCurrentPosition, interpolationRatio);
-            _cube.transform.localPosition = interpolatedPosition;
-
-            if (_snakeHeadClone != null)
+            for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
             {
-                Vector3 cloneInterpolatedPosition = Vector3.Lerp(_snakeHeadClonePreviousPosition, _snakeHeadCloneCurrentPosition, interpolationRatio);
-                _snakeHeadClone.transform.localPosition = cloneInterpolatedPosition;
+                Vector3 interpolatedPosition = Vector3.Lerp(_snakeBodyPreviousPositions[i], _snakeBodyCurrentPositions[i], interpolationRatio);
+                _snakeBodyCubes[i].transform.localPosition = interpolatedPosition;
+
+                if (_snakePartClones[i] != null)
+                {
+                    Vector3 cloneInterpolatedPosition = Vector3.Lerp(_snakePartClonePreviousPositions[i], _snakePartCloneCurrentPositions[i], interpolationRatio);
+                    _snakePartClones[i].transform.localPosition = cloneInterpolatedPosition;
+                }
             }
         }
 
@@ -129,7 +132,10 @@ namespace GameScene
 
         private void SetSnakeHeadPosition()
         {
-            _cube.transform.localPosition = _snakeHeadCurrentPosition;
+            for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
+            {
+                _snakeBodyCubes[i].transform.localPosition = _snakeBodyCurrentPositions[i];
+            }
         }
 
         private IEnumerator UpdateCoroutine()
@@ -148,37 +154,55 @@ namespace GameScene
         private void UpdateVisuals()
         {
             _elapsedTimeBetweenUpdateInterval = 0;
-            UpdateSnakeHead();
-            UpdateSnakeFood();
+            UpdateSnakeBodyVisuals();
+            UpdateSnakeFoodVisuals();
         }
 
-        private void UpdateSnakeHead()
+        private void UpdateSnakeBodyVisuals()
         {
-            if (_snakeHeadClone != null)
+            for (int i = 0; i < _snakePartClones.Count; i++)
             {
-                Destroy(_snakeHeadClone);
-                _snakeHeadClone = null;
+                if (_snakePartClones[i] != null)
+                {
+                    Destroy(_snakePartClones[i]);
+                    _snakePartClones[i] = null;
+                }
             }
 
-            _snakeHeadPreviousPosition = _snakeGame.GetPreviousSnakeHeadWorldSpacePosition();
-            _snakeHeadCurrentPosition = _snakeGame.GetCurrentSnakeHeadWorldSpacePosition();
+            _snakeBodyPreviousPositions = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions();
+            _snakeBodyCurrentPositions = _snakeGame.GetCurrentSnakeBodyWorldSpacePositions();
 
-            // Handling when warping
-            if (Vector3.Distance(_snakeHeadPreviousPosition, _snakeHeadCurrentPosition) != 1 && _enableLerp)
+            // TODO : Checking if the count of _snakeBodyCubes and _snakePartClones matches _snakeBodyCurrentPositions
+            // TODO : If less than, then instantiate and add to the _snakeBodyCubes, with position set
+            // TODO : Add null to the list of _snakePartClones
+
+            if (_snakePartClones.Count < _snakeBodyCurrentPositions.Count)
             {
-                Vector3 pastDirection = _snakeGame.GetPreviousSnakeHeadWorldSpaceDirection();
-                _snakeHeadPreviousPosition = _snakeHeadCurrentPosition - pastDirection;
+                _snakePartClones.Add(null);
+                _snakePartClonePreviousPositions.Add(new Vector3Int());
+                _snakePartCloneCurrentPositions.Add(new Vector3Int());
+            }
 
-                _snakeHeadClone = Instantiate(_cube);
-                _snakeHeadClone.transform.SetParent(_cube.transform.parent);
-                _snakeHeadClone.transform.localPosition = _cube.transform.localPosition;
+            for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
+            {
+                // Handling when warping
+                // TODO : Handling when more than one snake body part is warping at the same time!
+                if (Vector3.Distance(_snakeBodyPreviousPositions[i], _snakeBodyCurrentPositions[i]) > 1 && _enableLerp)
+                {
+                    Vector3Int pastDirection = _snakeGame.GetPreviousSnakeBodyWorldSpaceDirections()[i];
+                    _snakeBodyPreviousPositions[i] = _snakeBodyCurrentPositions[i] - pastDirection;
 
-                _snakeHeadClonePreviousPosition = _snakeGame.GetPreviousSnakeHeadWorldSpacePosition();
-                _snakeHeadCloneCurrentPosition = _snakeHeadClonePreviousPosition + pastDirection;
+                    _snakePartClones[i] = Instantiate(_snakeBodyCubes[i]);
+                    _snakePartClones[i].transform.SetParent(_snakeBodyCubes[i].transform.parent);
+                    _snakePartClones[i].transform.localPosition = _snakeBodyCubes[i].transform.localPosition;
+
+                    _snakePartClonePreviousPositions[i] = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions()[i];
+                    _snakePartCloneCurrentPositions[i] = _snakePartClonePreviousPositions[i] + pastDirection;
+                }
             }
         }
 
-        private void UpdateSnakeFood()
+        private void UpdateSnakeFoodVisuals()
         {
             if (_snakeFoodClone != null)
             {
@@ -198,9 +222,12 @@ namespace GameScene
                 // TODO : Clone and lerp the size to show being eaten
                 // TODO : Lerp size of food small to big to show it spawned
 
-                _snakeFoodClone = Instantiate(_foodCube);
-                _snakeFoodClone.transform.SetParent(_foodCube.transform.parent);
-                _snakeFoodClone.transform.localPosition = _snakeFoodPreviousPosition;
+                if (_enableLerp)
+                {
+                    _snakeFoodClone = Instantiate(_foodCube);
+                    _snakeFoodClone.transform.SetParent(_foodCube.transform.parent);
+                    _snakeFoodClone.transform.localPosition = _snakeFoodPreviousPosition;
+                }
             }
         }
     }

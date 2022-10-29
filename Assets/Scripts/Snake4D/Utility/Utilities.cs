@@ -27,7 +27,7 @@ namespace Snake4D
             if (!CheckIfHaveUnoccupiedPosition(snakeBody, dimension, size)) throw new System.InvalidOperationException($"Utilities.GenerateRandomUnoccupiedPosition(): No unoccupied positions available!");
 
             Vector4Int randomPosition = GenerateRandomPosition(dimension, size);
-            List<Vector4Int> occupiedPositions = snakeBody.GetOccupiedPositions();
+            List<Vector4Int> occupiedPositions = snakeBody.GetCurrentPositions();
 
             int retryCount = 1;
             int maxRetryCount = CalculateVolume(dimension, size);
@@ -45,7 +45,7 @@ namespace Snake4D
         public static bool CheckIfHaveUnoccupiedPosition(SnakeBody snakeBody, Dimension dimension, Vector4Int size)
         {
             int maximumPositions = CalculateVolume(dimension, size);
-            int occupiedPositions = snakeBody.GetOccupiedPositions().Count;
+            int occupiedPositions = snakeBody.GetCurrentPositions().Count;
 
             if (maximumPositions == occupiedPositions)
                 return false;
@@ -166,6 +166,18 @@ namespace Snake4D
             }
 
             throw new System.InvalidOperationException();
+        }
+
+        public static List<Vector3Int> Convert4DVectorsToWorldSpace(List<Vector4Int> positions)
+        {
+            List<Vector3Int> worldSpacePositions = new List<Vector3Int>();
+            foreach (Vector4Int position in positions)
+            {
+                Vector3Int gameSpacePosition = position.ToVector3Int();
+                worldSpacePositions.Add(Utilities.GameSpaceToWorldSpace(gameSpacePosition));
+            }
+
+            return worldSpacePositions;
         }
     }
 }

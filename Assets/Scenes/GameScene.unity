@@ -722,7 +722,8 @@ MonoBehaviour:
   _updateInterval: 0.15
   _enableLerp: 1
   _bufferCapacity: 3
-  _cube: {fileID: 409376341}
+  _snakeBodyCubes:
+  - {fileID: 409376341}
   _foodCube: {fileID: 1368047418}
   _passThroughWalls: 1
   _debugMode: 1
