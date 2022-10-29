@@ -42,7 +42,7 @@ namespace Snake4D
             if (foodHasSpawned)
             {
                 // TODO : Add Tail
-                // _snakeBody.GrowTail();
+                _snakeBody.GrowTail();
             }
 
             // TODO : Game Over handling when snake food cannot spawn

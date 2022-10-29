@@ -724,6 +724,7 @@ MonoBehaviour:
   _bufferCapacity: 3
   _snakeBodyCubes:
   - {fileID: 409376341}
+  _bodyCubePrefab: {fileID: 8290799120260657568, guid: 2f4b4a4911dcd4af986e999295435714, type: 3}
   _foodCube: {fileID: 1368047418}
   _passThroughWalls: 1
   _debugMode: 1

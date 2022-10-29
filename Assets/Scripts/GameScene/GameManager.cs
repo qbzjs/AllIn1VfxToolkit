@@ -13,6 +13,7 @@ namespace GameScene
         [SerializeField] bool _enableLerp;
         [SerializeField] int _bufferCapacity = 2;
         [SerializeField] List<GameObject> _snakeBodyCubes;
+        [SerializeField] GameObject _bodyCubePrefab;
         [SerializeField] GameObject _foodCube;
 
         [Header("Snake Game Parameters")]
@@ -175,6 +176,14 @@ namespace GameScene
             // TODO : Checking if the count of _snakeBodyCubes and _snakePartClones matches _snakeBodyCurrentPositions
             // TODO : If less than, then instantiate and add to the _snakeBodyCubes, with position set
             // TODO : Add null to the list of _snakePartClones
+
+            if (_snakeBodyCubes.Count < _snakeBodyCurrentPositions.Count)
+            {
+                GameObject newBodyCube = Instantiate(_bodyCubePrefab);
+                newBodyCube.transform.SetParent(_snakeBodyCubes[0].transform.parent);
+                newBodyCube.transform.localPosition = _snakeBodyPreviousPositions[_snakeBodyPreviousPositions.Count - 1];
+                _snakeBodyCubes.Add(newBodyCube);
+            }
 
             if (_snakePartClones.Count < _snakeBodyCurrentPositions.Count)
             {
