@@ -11,6 +11,7 @@ namespace Snake4D
         public Vector4Int PreviousSnakeHeadDirection => _snakeHead.GetPreviousDirection();
         public Vector4Int SnakeHeadDirection => _snakeHead.Direction;
 
+        public Vector4Int PreviousSnakeFoodPosition => _snakeFood.GetPreviousPosition();
         public Vector4Int SnakeFoodPosition => _snakeFood.Position;
 
         public bool GameOver { get; private set; }

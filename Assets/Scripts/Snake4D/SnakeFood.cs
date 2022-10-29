@@ -10,13 +10,16 @@ namespace Snake4D
         SnakeGameParameters _parameters;
         SnakeBody _snakeBody;
         Vector4Int _position;
+        Vector4Int _previousPosition;
         bool _hasSpawned = false;
 
         public SnakeFood(SnakeGameParameters parameters, SnakeBody snakeBody)
         {
             _parameters = parameters;
             _snakeBody = snakeBody;
+
             AttemptToSpawn();
+            _previousPosition = _position;
         }
 
         public void UpdateSnakeFood()
@@ -24,20 +27,31 @@ namespace Snake4D
             // "Spawn" food when eaten, meaning the snake head position is over the food
             if (_snakeBody.SnakeHead.Position == _position)
             {
+                _previousPosition = _position;
                 AttemptToSpawn();
             }
         }
 
-        private void AttemptToSpawn()
+        public Vector4Int GetPreviousPosition()
+        {
+            return _previousPosition;
+        }
+
+        /// <summary>
+        /// Returns true if successfully spawned.
+        /// </summary>
+        /// <returns></returns>
+        private bool AttemptToSpawn()
         {
             if (!Utilities.CheckIfHaveUnoccupiedPosition(_snakeBody, _parameters.Dimension, _parameters.Size))
             {
                 _hasSpawned = false;
-                return;
+                return false;
             }
 
             SetPositionToRandomUnoccupiedPosition();
             _hasSpawned = true;
+            return true;
         }
 
         private void SetPositionToRandomUnoccupiedPosition()

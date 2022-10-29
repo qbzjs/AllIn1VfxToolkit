@@ -54,6 +54,13 @@ namespace Snake4D
             return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
         }
 
+        public Vector3Int GetPreviousSnakeFoodWorldSpacePosition()
+        {
+            Vector3Int gameSpacePosition = _gameState.PreviousSnakeFoodPosition.ToVector3Int();
+            return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
+        }
+
+
         public void UpdateState()
         {
             _gameState.UpdateState();

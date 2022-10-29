@@ -8,7 +8,7 @@ namespace GameScene
 {
     public class GameManager : SceneInit
     {
-        [Header("Game")]
+        [Header("Game Manager")]
         [SerializeField] float _updateInterval;
         [SerializeField] bool _enableLerp;
         [SerializeField] int _bufferCapacity = 2;
@@ -36,7 +36,10 @@ namespace GameScene
         Vector3 _snakeHeadClonePreviousPosition;
         Vector3 _snakeHeadCloneCurrentPosition;
 
+        Vector3 _snakeFoodPreviousPosition;
         Vector3 _snakeFoodCurrentPosition;
+
+        GameObject _snakeFoodClone;
 
         InputBuffer _inputBuffer;
 
@@ -93,11 +96,11 @@ namespace GameScene
             if (_enableLerp)
             {
                 LerpSnakeHeadPosition(interpolationRatio);
+                LerpSnakeFoodSize(interpolationRatio);
             }
             else
             {
                 SetSnakeHeadPosition();
-                SetSnakeFoodPosition();
             }
         }
 
@@ -113,14 +116,20 @@ namespace GameScene
             }
         }
 
+        private void LerpSnakeFoodSize(float interpolationRatio)
+        {
+            if (_snakeFoodClone == null) return;
+
+            Vector3 interpolatedSize = Vector3.Lerp(new Vector3(0.5f, 0.5f, 0.5f), Vector3.one, interpolationRatio);
+            _foodCube.transform.localScale = interpolatedSize;
+
+            interpolatedSize = Vector3.Lerp(Vector3.one, new Vector3(0.5f, 0.5f, 0.5f), interpolationRatio);
+            _snakeFoodClone.transform.localScale = interpolatedSize;
+        }
+
         private void SetSnakeHeadPosition()
         {
             _cube.transform.localPosition = _snakeHeadCurrentPosition;
-        }
-
-        private void SetSnakeFoodPosition()
-        {
-            _foodCube.transform.localPosition = _snakeFoodCurrentPosition;
         }
 
         private IEnumerator UpdateCoroutine()
@@ -171,10 +180,28 @@ namespace GameScene
 
         private void UpdateSnakeFood()
         {
-            _snakeFoodCurrentPosition = _snakeGame.GetCurrentSnakeFoodWorldSpacePosition();
+            if (_snakeFoodClone != null)
+            {
+                Destroy(_snakeFoodClone);
+                _snakeFoodClone = null;
+            }
 
             // TODO : When updating food, make food clone for the food being eaten, comparing past position of the food
             // TODO : If game over, still make clone but also destroy the food
+            _snakeFoodCurrentPosition = _snakeGame.GetCurrentSnakeFoodWorldSpacePosition();
+            _snakeFoodPreviousPosition = _snakeGame.GetPreviousSnakeFoodWorldSpacePosition();
+
+            if (_foodCube.transform.localPosition != _snakeFoodCurrentPosition)
+            {
+                _foodCube.transform.localPosition = _snakeFoodCurrentPosition;
+
+                // TODO : Clone and lerp the size to show being eaten
+                // TODO : Lerp size of food small to big to show it spawned
+
+                _snakeFoodClone = Instantiate(_foodCube);
+                _snakeFoodClone.transform.SetParent(_foodCube.transform.parent);
+                _snakeFoodClone.transform.localPosition = _snakeFoodPreviousPosition;
+            }
         }
     }
 }
