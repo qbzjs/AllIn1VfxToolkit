@@ -37,8 +37,14 @@ namespace Snake4D
         public void UpdateState()
         {
             _snakeBody.UpdateSnakeBody();
-            bool foodHasSpawned = _snakeFood.UpdateSnakeFood(); // Must update snake body before updating snake food
+            // Check if snake head has crashed into tail
+            if (_snakeBody.HasBitenItself())
+            {
+                GameOver = true;
+                return;
+            }
 
+            bool foodHasSpawned = _snakeFood.UpdateSnakeFood(); // Must update snake body before updating snake food
             if (foodHasSpawned)
             {
                 // TODO : Add Tail

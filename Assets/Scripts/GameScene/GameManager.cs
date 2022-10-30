@@ -152,15 +152,22 @@ namespace GameScene
 
         private IEnumerator UpdateCoroutine()
         {
-            while (!_snakeGame.GameOver)
+            while (true)
             {
                 if (_debugMode) yield return new WaitForSeconds(_updateInterval);
                 else yield return _waitForUpdateInterval;
 
                 _snakeGame.OnUserInput(_inputBuffer.GetInput());
                 _snakeGame.UpdateState();
+
+                // Current handling when bite its own tail
+                if (_snakeGame.GameOver) // TODO : Instead of bool GameOver, should be enum State (Running, GameOver, GameWon)
+                    break;
+
                 UpdateVisuals();
             }
+
+            DebugLog("Game Over!");
         }
 
         private void UpdateVisuals()

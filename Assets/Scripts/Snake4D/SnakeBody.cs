@@ -4,12 +4,13 @@ namespace Snake4D
 {
     public class SnakeBody
     {
-        public SnakeHead SnakeHead => _snakeParts.Count > 0 ? _snakeParts[0] as SnakeHead : null;
+        public SnakeHead SnakeHead => _snakeHead;
         public int Count => _snakeParts.Count;
         public SnakeGameParameters Parameters => _parameters;
 
         List<ISnakePart> _snakeParts = new List<ISnakePart>();
         SnakeGameParameters _parameters;
+        SnakeHead _snakeHead => _snakeParts.Count > 0 ? _snakeParts[0] as SnakeHead : null;
 
         public SnakeBody(SnakeGameParameters parameters)
         {
@@ -72,6 +73,18 @@ namespace Snake4D
             ISnakePart currentTail = _snakeParts[_snakeParts.Count - 1];
             SnakePart newTail = new SnakePart(currentTail.GetPreviousPosition(), currentTail.GetPreviousDirection(), currentTail);
             AddSnakePartToBody(newTail);
+        }
+
+        public bool HasBitenItself()
+        {
+            for (int i = 1; i < _snakeParts.Count; i++)
+            {
+                ISnakePart snakePartToCheck = _snakeParts[i];
+                if (_snakeHead.Position == snakePartToCheck.Position)
+                    return true;
+            }
+
+            return false;
         }
 
         private void SpawnSnakeHead()
