@@ -17,6 +17,7 @@ namespace GameScene
 
         [Header("Visual Settings")]
         [SerializeField] bool _enableLerp;
+        [SerializeField] bool _enableCornerClones;
         [SerializeField] Vector3 _maxScale;
 
         [Header("Snake Game Parameters")]
@@ -35,6 +36,9 @@ namespace GameScene
 
         List<Vector3Int> _snakeBodyPreviousPositions = new List<Vector3Int>();
         List<Vector3Int> _snakeBodyCurrentPositions = new List<Vector3Int>();
+
+        List<Vector3Int> _snakeBodyPreviousDirections = new List<Vector3Int>();
+        List<Vector3Int> _snakeBodyCurrentDirections = new List<Vector3Int>();
 
         List<GameObject> _snakePartClones = new List<GameObject>();
         List<Vector3Int> _snakePartClonePreviousPositions = new List<Vector3Int>();
@@ -107,16 +111,19 @@ namespace GameScene
 
             if (_enableLerp)
             {
-                LerpSnakeHeadPosition(interpolationRatio);
+                LerpSnakeBodyPositions(interpolationRatio);
+                // TODO : LerpSnakeBodyDirections()
+
                 LerpSnakeFoodSize(interpolationRatio);
             }
             else
             {
-                SetSnakeHeadPosition();
+                SetSnakeBodyPositions();
+                SetSnakeBodyDirections();
             }
         }
 
-        private void LerpSnakeHeadPosition(float interpolationRatio)
+        private void LerpSnakeBodyPositions(float interpolationRatio)
         {
             for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
             {
@@ -142,11 +149,20 @@ namespace GameScene
             _snakeFoodClone.transform.localScale = interpolatedSize;
         }
 
-        private void SetSnakeHeadPosition()
+        private void SetSnakeBodyPositions()
         {
             for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
             {
                 _snakeBodyCubes[i].transform.localPosition = _snakeBodyCurrentPositions[i];
+            }
+        }
+
+        private void SetSnakeBodyDirections()
+        {
+            for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
+            {
+                // _snakeBodyCubes[i].transform.LookAt(_snakeBodyCurrentPositions[i] + _snakeBodyCurrentDirections[i]);
+                _snakeBodyCubes[i].transform.LookAt(_snakeBodyCubes[i].transform.position + _snakeBodyCurrentDirections[i]);
             }
         }
 
@@ -195,6 +211,9 @@ namespace GameScene
             _snakeBodyPreviousPositions = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions();
             _snakeBodyCurrentPositions = _snakeGame.GetCurrentSnakeBodyWorldSpacePositions();
 
+            _snakeBodyPreviousDirections = _snakeGame.GetPreviousSnakeBodyWorldSpaceDirections();
+            _snakeBodyCurrentDirections = _snakeGame.GetCurrentSnakeBodyWorldSpaceDirections();
+
             // TODO : Checking if the count of _snakeBodyCubes and _snakePartClones matches _snakeBodyCurrentPositions
             // TODO : If less than, then instantiate and add to the _snakeBodyCubes, with position set
             // TODO : Add null to the list of _snakePartClones
@@ -230,8 +249,8 @@ namespace GameScene
 
             for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
             {
-                Vector3Int previousDirection = _snakeGame.GetPreviousSnakeBodyWorldSpaceDirections()[i];
-                Vector3Int currentDirection = _snakeGame.GetCurrentSnakeHeadWorldSpaceDirections()[i];
+                Vector3Int previousDirection = _snakeBodyPreviousDirections[i];
+                Vector3Int currentDirection = _snakeBodyCurrentDirections[i];
 
                 // Handling when warping
                 if (Vector3.Distance(_snakeBodyPreviousPositions[i], _snakeBodyCurrentPositions[i]) > 1 && _enableLerp)
@@ -245,8 +264,8 @@ namespace GameScene
                     _snakePartCloneCurrentPositions[i] = _snakePartClonePreviousPositions[i] + previousDirection;
                 }
 
-                // TODO : Handling when turning corners
-                if (currentDirection != previousDirection && _enableLerp)
+                // Handling when turning corners
+                if (currentDirection != previousDirection && _enableLerp && _enableCornerClones)
                 {
                     _snakePartCornerClones[i].SetActive(true);
                     _snakePartCornerClones[i].transform.localPosition = _snakeBodyCurrentPositions[i];
