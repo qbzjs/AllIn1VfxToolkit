@@ -47,7 +47,7 @@ namespace Snake4D
             bool foodHasSpawned = _snakeFood.UpdateSnakeFood(); // Must update snake body before updating snake food
             if (foodHasSpawned)
             {
-                // TODO : Add Tail
+                // TODO : SHOULD GROW TAIL BEFORE SPAWN FOOD, or else food may spawn at the snake tail
                 _snakeBody.GrowTail();
             }
 
@@ -57,7 +57,7 @@ namespace Snake4D
         public void OnUserInput(UserInputType inputType)
         {
             Vector4Int newDirection = Utilities.ConvertUserInputToDirectionVector(inputType);
-            _snakeHead.ChangeDirection(newDirection);
+            _snakeHead.ChangeUserInputDirection(newDirection);
         }
     }
 }

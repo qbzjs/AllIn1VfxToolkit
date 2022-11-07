@@ -7,27 +7,29 @@ namespace Snake4D
         Vector4Int _sizeOfSpace => _parentSnakeBody.Parameters.Size;
         bool _canPassThroughWalls => _parentSnakeBody.Parameters.PassThroughWalls;
 
-        public SnakeHead(Vector4Int position, Vector4Int direction) :
-        base(position, direction, null)
-        {
+        Vector4Int _userInputDirection;
 
+        public SnakeHead(Vector4Int position, Vector4Int userInputDirection) :
+        base(position, userInputDirection, null)
+        {
+            _userInputDirection = userInputDirection;
         }
 
-        public void ChangeDirection(Vector4Int newDirection)
+        public void ChangeUserInputDirection(Vector4Int newDirection)
         {
-            // POLISH : check if it is a direction vector [eg. (1 0 0 0) and its permutations]
+            // Already covers all possible cases as Vector4Int is limited to integers only
             if (newDirection.magnitude != 1) throw new System.InvalidOperationException("newDirection magnitude should be 1!");
 
             // Cannot go in the opposite direction.
             // For normalized vectors, dot product == -1 => Opposite direction.
-            if (Vector4Int.Dot(_direction, newDirection) == -1) return;
+            if (Vector4Int.Dot(_userInputDirection, newDirection) == -1) return;
 
-            _direction = newDirection;
+            _userInputDirection = newDirection;
         }
 
         public override Vector4Int GetPredictedPosition()
         {
-            Vector4Int predictedPosition = _position + _direction;
+            Vector4Int predictedPosition = _position + _userInputDirection;
 
             if (_canPassThroughWalls)
                 return Utilities.WarpPositionWithinSpace(predictedPosition, _sizeOfSpace);
@@ -35,15 +37,9 @@ namespace Snake4D
             return predictedPosition;
         }
 
-        public override Vector4Int GetPredictedDirection()
-        {
-            // By default the direction doesnt change until player input
-            return _direction;
-        }
-
         protected override bool WillSnakePartMove()
         {
-            if (_direction == Vector4Int.zero)
+            if (_userInputDirection == Vector4Int.zero)
                 return false;
 
             return true;

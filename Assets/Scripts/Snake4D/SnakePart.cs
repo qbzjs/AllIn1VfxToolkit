@@ -40,14 +40,6 @@ namespace Snake4D
             return _position;
         }
 
-        public virtual Vector4Int GetPredictedDirection()
-        {
-            if (_snakePartInFront.WillMove)
-                return _snakePartInFront.Direction;
-
-            return Vector4Int.zero;
-        }
-
         public virtual Vector4Int GetPreviousPosition() => _previousPosition;
         public virtual Vector4Int GetPreviousDirection() => _previousDirection;
 
@@ -57,7 +49,24 @@ namespace Snake4D
             _previousDirection = _direction;
 
             _position = GetPredictedPosition();
-            _direction = GetPredictedDirection();
+
+            // Regular non-warped movement
+            if ((_position - _previousPosition).magnitude == 1)
+            {
+                _direction = (_position - _previousPosition);
+            }
+
+            // Warped movement
+            else
+            {
+                // Assumes always warp to the opposite side
+                Vector4Int direction = _position - _previousPosition;
+                direction.x = -1 * UnityEngine.Mathf.RoundToInt(direction.x / direction.magnitude);
+                direction.y = -1 * UnityEngine.Mathf.RoundToInt(direction.y / direction.magnitude);
+                direction.z = -1 * UnityEngine.Mathf.RoundToInt(direction.z / direction.magnitude);
+                direction.w = -1 * UnityEngine.Mathf.RoundToInt(direction.w / direction.magnitude);
+                _direction = direction;
+            }
         }
 
         protected virtual bool WillSnakePartMove()
