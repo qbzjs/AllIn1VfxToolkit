@@ -768,9 +768,9 @@ MonoBehaviour:
   _foodCube: {fileID: 1368047418}
   _enableLerpPosition: 1
   _enableLerpDirection: 1
-  _onlyLerpHeadDirection: 1
-  _enableCornerClones: 1
-  _maxScale: {x: 1, y: 1, z: 1}
+  _onlyLerpHeadDirection: 0
+  _enableCornerClones: 0
+  _maxScale: {x: 0.6, y: 1, z: 0.2}
   _passThroughWalls: 1
   _debugMode: 1
   _useCustomSeed: 0
