@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HeadMaterialUnlit
+  m_Name: BackfaceMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 4e986110b64ed4fb09d240cb9a38e662, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -142,6 +142,6 @@ Material:
     - _Y_Min_Plane_Position: {r: 0, g: -0.5, b: 0, a: 0}
     - _Z_Max_Plane_Position: {r: 0, g: 0, b: -5, a: 0}
     - _Z_Min_Plane_Position: {r: 0, g: 0, b: 5, a: 0}
-    - _mainColor: {r: 0.48235297, g: 0.03529412, b: 0.039215688, a: 0}
+    - _mainColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 0}
     - _xPlaneMinPosition: {r: -5, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

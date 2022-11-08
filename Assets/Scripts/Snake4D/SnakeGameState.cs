@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Snake4D
 {
@@ -37,21 +38,27 @@ namespace Snake4D
         public void UpdateState()
         {
             _snakeBody.UpdateSnakeBody();
+
             // Check if snake head has crashed into tail
             if (_snakeBody.HasBitenItself())
             {
+                Debug.Log("Snake has biten itself!");
                 GameOver = true;
                 return;
             }
 
-            bool foodHasSpawned = _snakeFood.UpdateSnakeFood(); // Must update snake body before updating snake food
-            if (foodHasSpawned)
+            bool hasSnakeAteFood = _snakeFood.HasSnakeAteFood(); // Must update snake body before updating snake food
+            if (hasSnakeAteFood)
             {
-                // TODO : SHOULD GROW TAIL BEFORE SPAWN FOOD, or else food may spawn at the snake tail
                 _snakeBody.GrowTail();
-            }
 
-            // TODO : Game Over handling when snake food cannot spawn
+                bool hasFoodSpawned = _snakeFood.AttemptToSpawn();
+                if (!hasFoodSpawned)
+                {
+                    Debug.Log("Snake food has nowhere to spawn!");
+                    GameOver = true;
+                }
+            }
         }
 
         public void OnUserInput(UserInputType inputType)

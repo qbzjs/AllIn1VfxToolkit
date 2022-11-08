@@ -171,11 +171,11 @@ namespace GameScene
         {
             if (!_snakeFoodClone.activeSelf) return;
 
-            Vector3 interpolatedSize = Vector3.Lerp(new Vector3(0.5f, 0.5f, 0.5f), _maxScale, interpolationRatio);
+            Vector3 interpolatedSize = Vector3.Lerp(_maxScale / 2, _maxScale, interpolationRatio);
             _foodCube.transform.localScale = interpolatedSize;
 
-            interpolatedSize = Vector3.Lerp(_maxScale, new Vector3(0.5f, 0.5f, 0.5f), interpolationRatio);
-            _snakeFoodClone.transform.localScale = interpolatedSize;
+            Vector3 cloneInterpolatedSize = Vector3.Lerp(_maxScale, _maxScale / 2, interpolationRatio);
+            _snakeFoodClone.transform.localScale = cloneInterpolatedSize;
         }
 
         private void SetSnakeBodyPositions()
@@ -241,10 +241,6 @@ namespace GameScene
 
             _snakeBodyPreviousDirections = _snakeGame.GetPreviousSnakeBodyWorldSpaceDirections();
             _snakeBodyCurrentDirections = _snakeGame.GetCurrentSnakeBodyWorldSpaceDirections();
-
-            // TODO : Checking if the count of _snakeBodyCubes and _snakePartClones matches _snakeBodyCurrentPositions
-            // TODO : If less than, then instantiate and add to the _snakeBodyCubes, with position set
-            // TODO : Add null to the list of _snakePartClones
 
             if (_snakeBodyCubes.Count < _snakeBodyCurrentPositions.Count)
             {
