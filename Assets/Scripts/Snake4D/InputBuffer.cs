@@ -12,8 +12,12 @@ namespace Snake4D
             _bufferCapacity = bufferCapacity;
         }
 
-        public void AddInput(UserInputType input)
+        public void AddInput(UserInputType input, Dimension dimension)
         {
+            if (dimension == Dimension.DimensionOne && (int)input > (int)UserInputType.X_Negative) return;
+            if (dimension == Dimension.DimensionTwo && (int)input > (int)UserInputType.Y_Negative) return;
+            if (dimension == Dimension.DimensionThree && (int)input > (int)UserInputType.Z_Negative) return;
+
             if (_inputQueue.Count == _bufferCapacity)
             {
                 _inputQueue.Dequeue();

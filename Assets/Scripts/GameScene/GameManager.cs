@@ -102,7 +102,7 @@ namespace GameScene
             SubscribeToMessageHubEvent<UserInputEvent>((e) =>
             {
                 // DebugLog($"Received input of type '{e.InputType}'");
-                _inputBuffer.AddInput(e.InputType);
+                _inputBuffer.AddInput(e.InputType, _snakeGame.GameDimension);
             });
         }
 
