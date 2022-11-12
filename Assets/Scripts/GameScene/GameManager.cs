@@ -23,6 +23,8 @@ namespace GameScene
         [SerializeField] Vector3 _maxScale;
 
         [Header("Snake Game Parameters")]
+        [SerializeField] Dimension _snakeGameDimension;
+        [SerializeField] Vector4IntWrapper _snakeGameSize;
         [SerializeField] bool _passThroughWalls;
 
         [Header("Debug")]
@@ -70,8 +72,8 @@ namespace GameScene
 
             _snakeGame = new SnakeGame(new SnakeGameParameters
             {
-                Dimension = Dimension.DimensionTwo,
-                Size = new Vector4Int(10, 10, 10, 10),
+                Dimension = _snakeGameDimension,
+                Size = _snakeGameSize.ToVector4Int(),
                 PassThroughWalls = _passThroughWalls
             });
 

@@ -2,6 +2,20 @@ using UnityEngine;
 
 namespace Snake4D
 {
+    [System.Serializable]
+    public class Vector4IntWrapper
+    {
+        public int x = 0;
+        public int y = 0;
+        public int z = 0;
+        public int w = 0;
+
+        public Vector4Int ToVector4Int()
+        {
+            return new Vector4Int(x, y, z, w);
+        }
+    }
+
     public struct Vector4Int
     {
         public int x;
