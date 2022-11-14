@@ -24,33 +24,50 @@ namespace Snake4D
 
         public static Vector4Int GenerateRandomUnoccupiedPosition(Dimension dimension, Vector4Int size, SnakeBody snakeBody)
         {
-            if (!CheckIfHaveUnoccupiedPosition(snakeBody, dimension, size)) throw new System.InvalidOperationException($"Utilities.GenerateRandomUnoccupiedPosition(): No unoccupied positions available!");
+            if (NumberOfUnoccupiedPositions(snakeBody, dimension, size) == 0) throw new System.InvalidOperationException($"Utilities.GenerateRandomUnoccupiedPosition(): No unoccupied positions available!");
 
             Vector4Int randomPosition = GenerateRandomPosition(dimension, size);
             List<Vector4Int> occupiedPositions = snakeBody.GetCurrentPositions();
 
-            int retryCount = 1;
             int maxRetryCount = CalculateVolume(dimension, size);
+            List<Vector4Int> attemptedPositions = new List<Vector4Int>();
             while (occupiedPositions.Contains(randomPosition))
             {
                 randomPosition = GenerateRandomPosition(dimension, size);
+                while (attemptedPositions.Contains(randomPosition))
+                {
+                    randomPosition = GenerateRandomPosition(dimension, size);
+                }
+                attemptedPositions.Add(randomPosition);
 
-                retryCount++;
-                if (retryCount >= maxRetryCount) throw new System.InvalidOperationException($"Utilities.GenerateRandomUnoccupiedPosition(): Exceeded retry count {maxRetryCount}");
+                #region Debug
+                if (attemptedPositions.Count > maxRetryCount)
+                {
+                    Debug.LogError("Occupied Positions:");
+                    foreach (var position in occupiedPositions)
+                    {
+                        Debug.LogError(position);
+                    }
+
+                    Debug.LogError("Attempted Positions:");
+                    foreach (var position in attemptedPositions)
+                    {
+                        Debug.LogError(position);
+                    }
+                    throw new System.InvalidOperationException($"Utilities.GenerateRandomUnoccupiedPosition(): Exceeded retry count {maxRetryCount}");
+                }
+                #endregion
             }
 
             return randomPosition;
         }
 
-        public static bool CheckIfHaveUnoccupiedPosition(SnakeBody snakeBody, Dimension dimension, Vector4Int size)
+        public static int NumberOfUnoccupiedPositions(SnakeBody snakeBody, Dimension dimension, Vector4Int size)
         {
             int maximumPositions = CalculateVolume(dimension, size);
             int occupiedPositions = snakeBody.GetCurrentPositions().Count;
 
-            if (maximumPositions == occupiedPositions)
-                return false;
-
-            return true;
+            return (maximumPositions - occupiedPositions);
         }
 
         public static int CalculateVolume(Dimension dimension, Vector4Int size)

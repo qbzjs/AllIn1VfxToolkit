@@ -49,7 +49,7 @@ namespace Snake4D
         /// <returns></returns>
         public bool AttemptToSpawn()
         {
-            if (!Utilities.CheckIfHaveUnoccupiedPosition(_snakeBody, _parameters.Dimension, _parameters.Size))
+            if (Utilities.NumberOfUnoccupiedPositions(_snakeBody, _parameters.Dimension, _parameters.Size) == 0)
             {
                 return false;
             }

@@ -208,11 +208,16 @@ namespace GameScene
                 _snakeGame.OnUserInput(_inputBuffer.GetInput());
                 _snakeGame.UpdateState();
 
-                // Current handling when bite its own tail
-                if (_snakeGame.GameOver) // TODO : Instead of bool GameOver, should be enum State (Running, GameOver, GameWon)
-                    break;
-
                 UpdateVisuals();
+
+                // Current handling when bite its own tail
+                if (_snakeGame.GameOver)
+                {
+                    if (_debugMode) yield return new WaitForSeconds(_updateInterval);
+                    else yield return _waitForUpdateInterval;
+
+                    break;
+                }
             }
 
             DebugLog("Game Over!");

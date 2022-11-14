@@ -10,7 +10,7 @@ namespace GameScene
 
         void Start()
         {
-            float position = (_gameManager.GameSize - 1f) / 2f; // TODO : still not correct
+            float position = (_gameManager.GameSize - 1f) / 2f;
             float scale = _gameManager.GameSize / 10f;
 
             transform.localPosition = new Vector3(position, transform.localPosition.y, position);

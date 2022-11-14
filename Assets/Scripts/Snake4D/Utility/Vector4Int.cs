@@ -157,6 +157,11 @@ namespace Snake4D
             return new Vector3Int(a.x, a.y, a.z);
         }
 
+        public override string ToString()
+        {
+            return $"({x}, {y}, {z}, {w})";
+        }
+
         public Vector3Int ToVector3Int()
         {
             return ToVector3Int(this);
