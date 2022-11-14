@@ -8,6 +8,8 @@ namespace GameScene
 {
     public class GameManager : SceneInit
     {
+        public int GameSize => _snakeGameSize;
+
         [Header("Game Manager")]
         [SerializeField] float _updateInterval;
         [SerializeField] int _bufferCapacity;
@@ -24,7 +26,7 @@ namespace GameScene
 
         [Header("Snake Game Parameters")]
         [SerializeField] Dimension _snakeGameDimension;
-        [SerializeField] Vector4IntWrapper _snakeGameSize;
+        [SerializeField] int _snakeGameSize;
         [SerializeField] bool _passThroughWalls;
 
         [Header("Debug")]
@@ -73,7 +75,7 @@ namespace GameScene
             _snakeGame = new SnakeGame(new SnakeGameParameters
             {
                 Dimension = _snakeGameDimension,
-                Size = _snakeGameSize.ToVector4Int(),
+                Size = new Vector4Int(_snakeGameSize, _snakeGameSize, _snakeGameSize, _snakeGameSize),
                 PassThroughWalls = _passThroughWalls
             });
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class CustomMonoBehaviour : MonoBehaviour
 {
     [Header("Custom MonoBehaviour")]
-    [SerializeField] protected bool _enableDebugLogs;
+    [SerializeField] protected bool _enableDebugLogs = true;
 
     protected List<Guid> _tokenList = new List<Guid>();
 
