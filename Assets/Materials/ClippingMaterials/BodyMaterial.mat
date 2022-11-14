@@ -137,11 +137,11 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _X_Max_Plane_Position: {r: -5, g: 0, b: 0, a: 0}
-    - _X_Min_Plane_Position: {r: 1, g: 0, b: 0, a: 0}
-    - _Y_Max_Plane_Position: {r: 0, g: 5.5, b: 0, a: 0}
+    - _X_Min_Plane_Position: {r: 5, g: 0, b: 0, a: 0}
+    - _Y_Max_Plane_Position: {r: 0, g: 9.5, b: 0, a: 0}
     - _Y_Min_Plane_Position: {r: 0, g: -0.5, b: 0, a: 0}
     - _Z_Max_Plane_Position: {r: 0, g: 0, b: -5, a: 0}
-    - _Z_Min_Plane_Position: {r: 0, g: 0, b: 1, a: 0}
+    - _Z_Min_Plane_Position: {r: 0, g: 0, b: 5, a: 0}
     - _mainColor: {r: 1, g: 0.5813668, b: 0, a: 0}
     - _xPlaneMinPosition: {r: -5, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
