@@ -12,11 +12,11 @@ namespace GameScene
 
         private void Start()
         {
-            Vector3 lowerLeftPoint = _mainCamera.WorldToScreenPoint(new Vector3(-5, -0.5f, -5));
-            Vector3 lowerRightPoint = _mainCamera.WorldToScreenPoint(new Vector3(5, -0.5f, -5));
+            // Vector3 lowerLeftPoint = _mainCamera.WorldToScreenPoint(new Vector3(-5, -0.5f, -5));
+            // Vector3 lowerRightPoint = _mainCamera.WorldToScreenPoint(new Vector3(5, -0.5f, -5));
 
-            DebugLog(lowerLeftPoint);
-            DebugLog(lowerRightPoint);
+            // DebugLog(lowerLeftPoint);
+            // DebugLog(lowerRightPoint);
         }
 
         private void LateUpdate()
@@ -29,8 +29,7 @@ namespace GameScene
                 _mainCamera.transform.position = cameraPosition;
 
                 // Calculate camera orthgraphic size
-                // TODO: temporarily arbitrarily set to the game size
-                _mainCamera.orthographicSize = _gameManager.GameSize;
+                _mainCamera.orthographicSize = _gameManager.GameSize; // temporarily set to the game size
 
                 _isCameraSet = true;
             }
