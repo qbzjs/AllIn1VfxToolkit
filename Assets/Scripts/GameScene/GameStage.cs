@@ -13,9 +13,6 @@ namespace GameScene
         [SerializeField] bool _onlyLerpHeadDirection;
         [SerializeField] bool _enableCornerClones;
 
-        [Header("Debug")]
-        [SerializeField] bool _debugMode;
-
         SnakeGame _snakeGame => GameManager.Instance.SnakeGameInfo;
         float _updateInterval => GameManager.Instance.UpdateInterval;
         float _elapsedTimeBetweenUpdateInterval = 0;
