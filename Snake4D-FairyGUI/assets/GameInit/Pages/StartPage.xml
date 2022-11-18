@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1080,1920" bgColorEnabled="true" bgColor="#faedcd">
+  <displayList>
+    <text id="n0_m9z9" name="Title" xy="156,1100" size="767,154" font="ui://weqbl269m9z9a" fontSize="120" color="#6c4b2c" align="center" vAlign="middle" autoSize="shrink" singleLine="true" text="Snake 4D">
+      <relation target="" sidePair="width-width%,center-center,bottom-bottom"/>
+    </text>
+  </displayList>
+</component>

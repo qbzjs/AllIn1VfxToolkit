@@ -8,6 +8,7 @@ namespace GameInit
     {
         public static void BindAll()
         {
+            UIObjectFactory.SetPackageItemExtension(UI_StartPage.URL, typeof(UI_StartPage));
             UIObjectFactory.SetPackageItemExtension(UI_GameInitView.URL, typeof(UI_GameInitView));
         }
     }

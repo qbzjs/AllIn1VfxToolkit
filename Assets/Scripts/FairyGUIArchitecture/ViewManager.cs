@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using FairyGUI;
 
 namespace FairyGUIArchitecture
@@ -10,7 +11,12 @@ namespace FairyGUIArchitecture
     {
         public static ViewManager Instance { get; private set; }
 
+        [Header("Packages")]
         [SerializeField] List<ViewInfo> _viewInfoList;
+
+        [Header("Fonts")]
+        [SerializeField] FontInfo _defaultFont;
+        [SerializeField] List<FontInfo> _otherFonts;
 
         Dictionary<ViewID, GComponent> _activeViews = new Dictionary<ViewID, GComponent>();
         Dictionary<ViewID, IViewModel> _activeViewModels = new Dictionary<ViewID, IViewModel>();
@@ -25,7 +31,25 @@ namespace FairyGUIArchitecture
             Instance = this;
             DontDestroyOnLoad(this);
 
+            InitFonts();
             PackageManager.BindAllPackages();
+        }
+
+        private void InitFonts()
+        {
+            RegisterFont(_defaultFont);
+            UIConfig.defaultFont = _defaultFont.FontName;
+
+            foreach (FontInfo otherFontInfo in _otherFonts)
+            {
+                RegisterFont(otherFontInfo);
+            }
+        }
+
+        private void RegisterFont(FontInfo fontInfo)
+        {
+            Font font = Resources.Load<Font>(fontInfo.ResourcePath);
+            FontManager.RegisterFont(new DynamicFont(fontInfo.FontName, font), fontInfo.FontName);
         }
 
         /// <summary>

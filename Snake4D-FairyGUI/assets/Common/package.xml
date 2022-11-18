@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="weqbl269">
+  <resources>
+    <font id="m9z90" name="Roboto-Medium.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z92" name="Roboto-Light.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z93" name="Roboto-Regular.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z94" name="Roboto-MediumItalic.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z95" name="Roboto-ThinItalic.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z96" name="Roboto-BoldItalic.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z97" name="Roboto-LightItalic.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z98" name="Roboto-Italic.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z99" name="Roboto-BlackItalic.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z9a" name="Roboto-Bold.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z9b" name="Roboto-Thin.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+    <font id="m9z9c" name="Roboto-Black.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>

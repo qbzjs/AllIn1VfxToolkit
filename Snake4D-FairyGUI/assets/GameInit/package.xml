@@ -2,6 +2,7 @@
 <packageDescription id="qha20o7x">
   <resources>
     <component id="t2dr0" name="GameInitView.xml" path="/" exported="true"/>
+    <component id="m9z92" name="StartPage.xml" path="/Pages/" exported="true"/>
   </resources>
   <publish name="" genCode="true"/>
 </packageDescription>

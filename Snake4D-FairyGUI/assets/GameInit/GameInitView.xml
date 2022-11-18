@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="1080,1920">
+<component size="1080,1920" bgColorEnabled="true" bgColor="#faedcd">
+  <controller name="Page" homePageType="specific" homePage="0" pages="0,StartPage,1,PlayPage" selected="0">
+    <action type="play_transition" fromPage="0" toPage="" transition="StartPage_Hide"/>
+    <action type="play_transition" fromPage="" toPage="0" transition="StartPage_Show"/>
+  </controller>
   <displayList>
-    <text id="n0_ppxs" name="Title" xy="248,346" size="584,129" fontSize="100" align="center" vAlign="middle" autoSize="none" text="Snake 4D"/>
+    <graph id="n2_m9z9" name="bg" xy="0,0" size="1080,1920" type="rect" fillColor="#fffaedcd"/>
+    <component id="n1_m9z9" name="StartPage" src="m9z92" fileName="Pages/StartPage.xml" xy="0,0" size="1080,1920">
+      <relation target="" sidePair="width-width,height-height"/>
+    </component>
   </displayList>
+  <transition name="StartPage_Hide">
+    <item time="0" type="Alpha" target="n1_m9z9" tween="true" startValue="1" endValue="0" duration="12"/>
+  </transition>
+  <transition name="StartPage_Show">
+    <item time="0" type="Alpha" target="n1_m9z9" tween="true" startValue="0" endValue="1" duration="12"/>
+  </transition>
 </component>
