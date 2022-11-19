@@ -18,6 +18,6 @@ namespace FairyGUIArchitecture
             return null;
         }
 
-        public abstract void OnDestroy();
+        public virtual void OnDestroy() { }
     }
 }

@@ -7,17 +7,9 @@ namespace GameScene
         [SerializeField] Camera _mainCamera;
         [SerializeField] GameManager _gameManager;
         [SerializeField] MeshRenderer _platformMeshRenderer;
+        [SerializeField] float _orthographicSizeFactor = 1;
 
         bool _isCameraSet = false;
-
-        private void Start()
-        {
-            // Vector3 lowerLeftPoint = _mainCamera.WorldToScreenPoint(new Vector3(-5, -0.5f, -5));
-            // Vector3 lowerRightPoint = _mainCamera.WorldToScreenPoint(new Vector3(5, -0.5f, -5));
-
-            // DebugLog(lowerLeftPoint);
-            // DebugLog(lowerRightPoint);
-        }
 
         private void LateUpdate()
         {
@@ -29,15 +21,10 @@ namespace GameScene
                 _mainCamera.transform.position = cameraPosition;
 
                 // Calculate camera orthgraphic size
-                _mainCamera.orthographicSize = _gameManager.GameSize; // temporarily set to the game size
+                _mainCamera.orthographicSize = _gameManager.GameSize * _orthographicSizeFactor;
 
                 _isCameraSet = true;
             }
-        }
-
-        protected override void SubscribeToMessageHubEvents()
-        {
-
         }
     }
 }

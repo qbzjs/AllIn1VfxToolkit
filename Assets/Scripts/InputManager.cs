@@ -4,8 +4,6 @@ using Snake4D;
 
 public class InputManager : CustomMonoBehaviour
 {
-    protected override void SubscribeToMessageHubEvents() { }
-
     public void OnXYMove(InputAction.CallbackContext context)
     {
         if (context.performed) // On button press down

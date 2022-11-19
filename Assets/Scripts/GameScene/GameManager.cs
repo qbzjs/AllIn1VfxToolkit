@@ -53,7 +53,7 @@ namespace GameScene
             Instance = this;
         }
 
-        private void Start()
+        protected override void Start()
         {
             int randomSeed = new System.Random().Next(0, 1000);
             if (_useCustomSeed) randomSeed = _customSeed;
@@ -76,7 +76,7 @@ namespace GameScene
             _updateCoroutine = UpdateCoroutine();
             StartCoroutine(_updateCoroutine);
 
-            SubscribeToMessageHubEvents();
+            base.Start();
         }
 
         protected override void SubscribeToMessageHubEvents()

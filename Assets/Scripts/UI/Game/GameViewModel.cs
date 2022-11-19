@@ -12,10 +12,11 @@ public class GameViewModel : ViewModel
     : base(view, viewParameters)
     {
         _gameView = view as UI_GameView;
-    }
 
-    public override void OnDestroy()
-    {
-        // TODO : Unsubscribe from message hub subscriptions
+        Texture leftMapTexture = (Texture)viewParameters["leftMapTexture"];
+        Texture rightMapTexture = (Texture)viewParameters["rightMapTexture"];
+
+        _gameView.m_MainPage.m_MapView.m_LeftMap.texture = new NTexture(leftMapTexture);
+        _gameView.m_MainPage.m_MapView.m_RightMap.texture = new NTexture(rightMapTexture);
     }
 }

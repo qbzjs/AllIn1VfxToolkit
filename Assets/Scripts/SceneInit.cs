@@ -7,7 +7,15 @@ public abstract class SceneInit : CustomMonoBehaviour
     [Header("Scene Init")]
     [SerializeField] protected ViewID _viewID;
 
-    protected virtual void CreateView(Dictionary<string, object> viewParameters = null)
+    protected Dictionary<string, object> _viewParameters;
+
+    protected override void Start()
+    {
+        base.Start();
+        CreateView(_viewParameters);
+    }
+
+    protected virtual void CreateView(Dictionary<string, object> viewParameters)
     {
         ViewManager.Instance.CreateView(_viewID, viewParameters);
     }

@@ -13,9 +13,4 @@ public class GameInitViewModel : ViewModel
     {
         _gameInitView = view as UI_GameInitView;
     }
-
-    public override void OnDestroy()
-    {
-        // TODO : Unsubscribe from message hub subscriptions
-    }
 }

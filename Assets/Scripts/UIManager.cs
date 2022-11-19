@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class UIManager : SceneInit
 {
-    void Start()
-    {
-        CreateView();
-    }
+    [SerializeField] Texture _leftMapTexture;
+    [SerializeField] Texture _rightMapTexture;
 
-    protected override void SubscribeToMessageHubEvents()
+    private void Awake()
     {
-        throw new System.NotImplementedException();
+        _viewParameters = new Dictionary<string, object>()
+        {
+            {"leftMapTexture", _leftMapTexture},
+            {"rightMapTexture", _rightMapTexture}
+        };
     }
 }

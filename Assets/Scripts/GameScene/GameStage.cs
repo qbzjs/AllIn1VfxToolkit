@@ -39,9 +39,9 @@ namespace GameScene
 
         bool _isInit = false;
 
-        void Start()
+        protected override void Start()
         {
-            SubscribeToMessageHubEvents();
+            base.Start();
         }
 
         protected override void SubscribeToMessageHubEvents()
@@ -55,15 +55,19 @@ namespace GameScene
             GameObject snakeHead = Instantiate(GameManager.Instance.HeadPrefab, Vector3.zero, Quaternion.identity);
             snakeHead.transform.parent = this.transform;
             snakeHead.transform.localPosition = Vector3.zero;
+            snakeHead.layer = snakeHead.transform.parent.gameObject.layer;
             _snakeBodyCubes.Add(snakeHead);
 
             _snakeFood = Instantiate(GameManager.Instance.FoodPrefab, Vector3.zero, Quaternion.identity);
             _snakeFood.transform.parent = this.transform;
             _snakeFood.transform.localPosition = Vector3.one; // Arbitrary position
+            _snakeFood.layer = _snakeFood.transform.parent.gameObject.layer;
 
             _snakeFoodClone = Instantiate(GameManager.Instance.FoodPrefab, Vector3.zero, Quaternion.identity);
             _snakeFoodClone.transform.parent = this.transform;
             _snakeFoodClone.transform.localPosition = Vector3.one; // Arbitrary position
+            _snakeFoodClone.layer = _snakeFoodClone.transform.parent.gameObject.layer;
+
 
             _isInit = true;
         }
@@ -191,6 +195,7 @@ namespace GameScene
                 GameObject newBodyCube = Instantiate(GameManager.Instance.BodyPrefab);
                 newBodyCube.transform.SetParent(_snakeBodyCubes[0].transform.parent);
                 newBodyCube.transform.localPosition = _snakeBodyPreviousPositions[_snakeBodyPreviousPositions.Count - 1];
+                newBodyCube.layer = newBodyCube.transform.parent.gameObject.layer;
                 _snakeBodyCubes.Add(newBodyCube);
             }
 
@@ -198,6 +203,7 @@ namespace GameScene
             {
                 GameObject newClone = Instantiate(_snakeBodyCubes[_snakeBodyCubes.Count - 1]);
                 newClone.transform.SetParent(_snakeBodyCubes[_snakeBodyCubes.Count - 1].transform.parent);
+                newClone.layer = newClone.transform.parent.gameObject.layer;
                 newClone.SetActive(false);
                 _snakePartClones.Add(newClone);
                 _snakePartClonePreviousPositions.Add(new Vector3Int());
@@ -208,6 +214,7 @@ namespace GameScene
             {
                 GameObject newCorner = Instantiate(GameManager.Instance.BodyPrefab);
                 newCorner.transform.SetParent(_snakeBodyCubes[_snakeBodyCubes.Count - 1].transform.parent);
+                newCorner.layer = newCorner.transform.parent.gameObject.layer;
                 newCorner.SetActive(false);
                 newCorner.name = "Corner";
                 _snakePartCornerClones.Add(newCorner);

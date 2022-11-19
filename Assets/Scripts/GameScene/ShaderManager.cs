@@ -21,9 +21,10 @@ namespace GameScene
         // [SerializeField] Vector3 _zMaxPlane;
 
 
-        // Start is called before the first frame update
-        void Start()
+        protected override void Start()
         {
+            base.Start();
+
             foreach (Material clippingMaterial in _clippingMaterials)
             {
                 clippingMaterial.SetVector("_X_Min_Plane_Position", new Vector3(-5 + _gameManager.GameSize, 0, 0));
@@ -43,17 +44,6 @@ namespace GameScene
                 clippingMaterial.SetVector("_Y_Max_Plane_Position", _yMaxPlane);
                 clippingMaterial.SetVector("_Z_Min_Plane_Position", _zMinPlane);
             }
-        }
-
-        protected override void SubscribeToMessageHubEvents()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
     }
 }
