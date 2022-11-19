@@ -12,6 +12,8 @@ namespace FairyGUIArchitecture
         public static ViewManager Instance { get; private set; }
 
         [Header("Packages")]
+        [Tooltip("Shared packages contains assets which are shared across the whole project. These packages will be added at the very beginning of the game and never removed.")]
+        [SerializeField] List<string> _sharedPackages;
         [SerializeField] List<ViewInfo> _viewInfoList;
 
         [Header("Fonts")]
@@ -32,7 +34,7 @@ namespace FairyGUIArchitecture
             DontDestroyOnLoad(this);
 
             InitFonts();
-            PackageManager.BindAllPackages();
+            InitPackages();
         }
 
         private void InitFonts()
@@ -52,12 +54,22 @@ namespace FairyGUIArchitecture
             FontManager.RegisterFont(new DynamicFont(fontInfo.FontName, font), fontInfo.FontName);
         }
 
+        private void InitPackages()
+        {
+            foreach (string packageName in _sharedPackages)
+            {
+                PackageManager.AddPackage(packageName);
+            }
+
+            PackageManager.BindAllPackages();
+        }
+
         /// <summary>
         /// Creates and initializes the corresponding view and view model.
         /// </summary>
         /// <param name="viewID">The view ID of the view.</param>
         /// <returns>The created view component.</returns>
-        public GComponent CreateView(ViewID viewID)
+        public GComponent CreateView(ViewID viewID, Dictionary<string, object> viewParameters)
         {
             ViewInfo viewInfo = GetViewInfo(viewID);
             if (_activeViews.ContainsKey(viewID))
@@ -72,7 +84,7 @@ namespace FairyGUIArchitecture
             _activeViews.Add(viewID, view);
             FitScreen(view);
 
-            IViewModel viewModel = ViewModel.GetViewModel(viewID, view);
+            IViewModel viewModel = ViewModel.InitViewModel(viewID, view, viewParameters);
             _activeViewModels.Add(viewID, viewModel);
 
             return view;

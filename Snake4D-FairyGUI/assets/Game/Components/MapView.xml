@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1080,450">
+  <displayList>
+    <graph id="n1_m9z9" name="bg" xy="0,0" size="1080,450" type="rect" fillColor="#ff333333">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <loader id="n0_m9z9" name="LeftMap" xy="58,0" size="450,450" url="ui://weqbl269m9z9d" fill="scaleFree">
+      <relation target="" sidePair="height-height,center-center,middle-middle"/>
+    </loader>
+    <loader id="n2_m9z9" name="RightMap" xy="571,0" size="450,450" aspect="true" url="ui://weqbl269m9z9d" fill="scaleFree">
+      <relation target="" sidePair="height-height,center-center,middle-middle"/>
+    </loader>
+  </displayList>
+</component>

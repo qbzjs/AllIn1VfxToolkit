@@ -2,16 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using FairyGUI;
 using FairyGUIArchitecture;
-using GameInit;
+using Game;
 
-public class GameInitViewModel : ViewModel
+public class GameViewModel : ViewModel
 {
-    UI_GameInitView _gameInitView;
+    UI_GameView _gameView;
 
-    public GameInitViewModel(GComponent view, Dictionary<string, object> viewParameters)
+    public GameViewModel(GComponent view, Dictionary<string, object> viewParameters)
     : base(view, viewParameters)
     {
-        _gameInitView = view as UI_GameInitView;
+        _gameView = view as UI_GameView;
     }
 
     public override void OnDestroy()

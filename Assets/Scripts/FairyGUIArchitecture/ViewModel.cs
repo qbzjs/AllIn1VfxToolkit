@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using FairyGUI;
 
@@ -5,11 +6,14 @@ namespace FairyGUIArchitecture
 {
     public abstract class ViewModel : IViewModel
     {
-        public static ViewModel GetViewModel(ViewID viewID, GComponent view)
+        public ViewModel(GComponent view, Dictionary<string, object> viewParameters) { }
+
+        public static ViewModel InitViewModel(ViewID viewID, GComponent view, Dictionary<string, object> viewParameters)
         {
             switch (viewID)
             {
-                case ViewID.GameInit: return new GameInitViewModel(view);
+                case ViewID.GameInit: return new GameInitViewModel(view, viewParameters);
+                case ViewID.Game: return new GameViewModel(view, viewParameters);
             }
             return null;
         }

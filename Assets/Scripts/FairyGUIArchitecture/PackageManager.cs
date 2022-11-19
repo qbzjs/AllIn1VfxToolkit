@@ -9,7 +9,9 @@ namespace FairyGUIArchitecture
         /// </summary>
         public static void BindAllPackages()
         {
+            Common.CommonBinder.BindAll();
             GameInit.GameInitBinder.BindAll();
+            Game.GameBinder.BindAll();
         }
 
         /// <summary>

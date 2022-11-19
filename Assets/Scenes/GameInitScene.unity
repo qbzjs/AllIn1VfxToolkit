@@ -612,25 +612,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: ViewManager
       objectReference: {fileID: 0}
-    - target: {fileID: 4057196039408037718, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
-      propertyPath: _defaultFont.FontName
-      value: Roboto-Regular
-      objectReference: {fileID: 0}
-    - target: {fileID: 4057196039408037718, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
-      propertyPath: _otherFonts.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4057196039408037718, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
-      propertyPath: _defaultFont.ResourcePath
-      value: Fonts/Roboto/Roboto-Regular
-      objectReference: {fileID: 0}
-    - target: {fileID: 4057196039408037718, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
-      propertyPath: _otherFonts.Array.data[0].FontName
-      value: Roboto-Bold
-      objectReference: {fileID: 0}
-    - target: {fileID: 4057196039408037718, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
-      propertyPath: _otherFonts.Array.data[0].ResourcePath
-      value: Fonts/Roboto/Roboto-Bold
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}

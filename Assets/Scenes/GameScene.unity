@@ -306,6 +306,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4779572517319391041, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _gameManager
+      value: 
+      objectReference: {fileID: 1177546312}
     - target: {fileID: 4779572518245150330, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: m_Name
       value: GameStage (1)
@@ -677,7 +681,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
-  _viewID: -1
+  _viewID: 1
+  _imageShader: {fileID: 4800000, guid: 263c97191482b3649ac7bf0810cc4f77, type: 3}
 --- !u!4 &539788841
 Transform:
   m_ObjectHideFlags: 0
@@ -730,8 +735,6 @@ MonoBehaviour:
   m_CameraType: 0
   m_Cameras:
   - {fileID: 1868477718}
-  - {fileID: 1584219244}
-  - {fileID: 1866880260}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -787,7 +790,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 87
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1115,7 +1118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1584219243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1131,7 +1134,7 @@ MonoBehaviour:
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 1
+  m_CameraType: 0
   m_Cameras:
   - {fileID: 1868477718}
   - {fileID: 822022395}
@@ -1530,7 +1533,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1866880259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1546,7 +1549,7 @@ MonoBehaviour:
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 1
+  m_CameraType: 0
   m_Cameras:
   - {fileID: 1868477718}
   - {fileID: 822022395}
