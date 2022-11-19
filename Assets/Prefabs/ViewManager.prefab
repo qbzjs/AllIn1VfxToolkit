@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4057196039408037712}
   - component: {fileID: 4057196039408037718}
   - component: {fileID: 4057196039408037719}
+  - component: {fileID: 740525042}
   m_Layer: 0
   m_Name: ViewManager
   m_TagString: Untagged
@@ -80,3 +81,26 @@ MonoBehaviour:
   defaultSpriteDPI: 96
   constantScaleFactor: 1
   ignoreOrientation: 0
+--- !u!114 &740525042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4057196039408037713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace51c3cbb5309547a7029cadaaa20ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items:
+  - valid: 0
+    s: 
+    i: 0
+    f: 0
+    b: 0
+    c: {r: 0, g: 0, b: 0, a: 1}
+  PreloadPackages:
+  - FairyGUI/Common
+  - FairyGUI/Game
+  - FairyGUI/GameInit

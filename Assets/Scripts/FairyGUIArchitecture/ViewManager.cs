@@ -34,7 +34,7 @@ namespace FairyGUIArchitecture
             DontDestroyOnLoad(this);
 
             InitFonts();
-            InitPackages();
+            PackageManager.BindAllPackages();
         }
 
         private void InitFonts()
@@ -54,16 +54,6 @@ namespace FairyGUIArchitecture
             FontManager.RegisterFont(new DynamicFont(fontInfo.FontName, font), fontInfo.FontName);
         }
 
-        private void InitPackages()
-        {
-            foreach (string packageName in _sharedPackages)
-            {
-                PackageManager.AddPackage(packageName);
-            }
-
-            PackageManager.BindAllPackages();
-        }
-
         /// <summary>
         /// Creates and initializes the corresponding view and view model.
         /// </summary>
@@ -77,8 +67,6 @@ namespace FairyGUIArchitecture
                 Debug.LogError($"ViewManager.CreateView(): The view '{viewID.ToString()}' is already active!");
                 return null;
             }
-
-            PackageManager.AddPackage(viewInfo.PackageName);
 
             GComponent view = InstantiateView(viewInfo.PackageName, viewInfo.ViewName);
             _activeViews.Add(viewID, view);
@@ -104,8 +92,6 @@ namespace FairyGUIArchitecture
                 Debug.LogError($"ViewManager.RemoveView(): The view '{viewID.ToString()}' is not active!");
                 return;
             }
-
-            PackageManager.RemovePackage(viewInfo.PackageName);
 
             GComponent view;
             _activeViews.Remove(viewID, out view);
