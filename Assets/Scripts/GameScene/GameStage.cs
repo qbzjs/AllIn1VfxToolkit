@@ -63,12 +63,12 @@ namespace GameScene
             _snakeFood = Instantiate(GameManager.Instance.FoodPrefab, Vector3.zero, Quaternion.identity);
             _snakeFood.transform.parent = this.transform;
             _snakeFood.transform.localPosition = Vector3.one; // Arbitrary position
-            _snakeFood.layer = _snakeFood.transform.parent.gameObject.layer;
+            SetupLayer(_snakeFood);
 
             _snakeFoodClone = Instantiate(GameManager.Instance.FoodPrefab, Vector3.zero, Quaternion.identity);
             _snakeFoodClone.transform.parent = this.transform;
             _snakeFoodClone.transform.localPosition = Vector3.one; // Arbitrary position
-            _snakeFoodClone.layer = _snakeFoodClone.transform.parent.gameObject.layer;
+            SetupLayer(_snakeFoodClone);
 
             _isInit = true;
         }
@@ -140,10 +140,12 @@ namespace GameScene
         {
             if (!_snakeFoodClone.activeSelf) return;
 
-            Vector3 interpolatedSize = Vector3.Lerp(Vector3.one / 2, Vector3.one, interpolationRatio);
+            Vector3 originalScale = GameManager.Instance.FoodPrefab.transform.localScale;
+
+            Vector3 interpolatedSize = Vector3.Lerp(originalScale / 2, originalScale, interpolationRatio);
             _snakeFood.transform.localScale = interpolatedSize;
 
-            Vector3 cloneInterpolatedSize = Vector3.Lerp(Vector3.one, Vector3.one / 2, interpolationRatio);
+            Vector3 cloneInterpolatedSize = Vector3.Lerp(originalScale, originalScale / 2, interpolationRatio);
             _snakeFoodClone.transform.localScale = cloneInterpolatedSize;
         }
 
