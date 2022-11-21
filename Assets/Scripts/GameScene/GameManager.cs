@@ -57,6 +57,7 @@ namespace GameScene
         {
             int randomSeed = new System.Random().Next(0, 1000);
             if (_useCustomSeed) randomSeed = _customSeed;
+            else _customSeed = randomSeed;
 
             Debug.Log($"Using Random Seed '{randomSeed}'");
             Random.InitState(randomSeed);
@@ -68,7 +69,8 @@ namespace GameScene
                 PassThroughWalls = _passThroughWalls
             });
 
-            PublishMessageHubEvent<GameStage.RequestInitEvent>(null);
+            InitGameStage();
+            UpdateGameStageVisuals();
 
             _inputBuffer = new InputBuffer(_bufferCapacity);
 
@@ -95,6 +97,8 @@ namespace GameScene
                 if (_debugMode) yield return new WaitForSeconds(_updateInterval);
                 else yield return _waitForUpdateInterval;
 
+                // DebugLog(_snakeGame.DebugState());
+
                 _snakeGame.OnUserInput(_inputBuffer.GetInput());
                 _snakeGame.UpdateState();
 
@@ -111,6 +115,11 @@ namespace GameScene
             }
 
             DebugLog("Game Over!");
+        }
+
+        private void InitGameStage()
+        {
+            PublishMessageHubEvent<GameStage.RequestInitEvent>(null);
         }
 
         private void UpdateGameStageVisuals()

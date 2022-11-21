@@ -56,6 +56,20 @@ namespace Snake4D
             return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
         }
 
+        public string DebugState()
+        {
+            string output = "";
+
+            output += "Snake Positions: ";
+            foreach (Vector4Int snakePosition in _gameState.CurrentSnakeBodyPositions)
+            {
+                output += snakePosition;
+            }
+
+            output += $" Snake Food Position: {_gameState.SnakeFoodPosition}";
+
+            return output;
+        }
 
         public void UpdateState()
         {
