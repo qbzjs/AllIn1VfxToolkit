@@ -55,7 +55,9 @@ namespace GameScene
             GameObject snakeHead = Instantiate(GameManager.Instance.HeadPrefab, Vector3.zero, Quaternion.identity);
             snakeHead.transform.parent = this.transform;
             snakeHead.transform.localPosition = Vector3.zero;
-            snakeHead.layer = snakeHead.transform.parent.gameObject.layer;
+            SetupLayer(snakeHead);
+            SetupMaterialClipping(snakeHead);
+
             _snakeBodyCubes.Add(snakeHead);
 
             _snakeFood = Instantiate(GameManager.Instance.FoodPrefab, Vector3.zero, Quaternion.identity);
@@ -67,7 +69,6 @@ namespace GameScene
             _snakeFoodClone.transform.parent = this.transform;
             _snakeFoodClone.transform.localPosition = Vector3.one; // Arbitrary position
             _snakeFoodClone.layer = _snakeFoodClone.transform.parent.gameObject.layer;
-
 
             _isInit = true;
         }
@@ -195,7 +196,9 @@ namespace GameScene
                 GameObject newBodyCube = Instantiate(GameManager.Instance.BodyPrefab);
                 newBodyCube.transform.SetParent(_snakeBodyCubes[0].transform.parent);
                 newBodyCube.transform.localPosition = _snakeBodyPreviousPositions[_snakeBodyPreviousPositions.Count - 1];
-                newBodyCube.layer = newBodyCube.transform.parent.gameObject.layer;
+                SetupLayer(newBodyCube);
+                SetupMaterialClipping(newBodyCube);
+
                 _snakeBodyCubes.Add(newBodyCube);
             }
 
@@ -203,7 +206,9 @@ namespace GameScene
             {
                 GameObject newClone = Instantiate(_snakeBodyCubes[_snakeBodyCubes.Count - 1]);
                 newClone.transform.SetParent(_snakeBodyCubes[_snakeBodyCubes.Count - 1].transform.parent);
-                newClone.layer = newClone.transform.parent.gameObject.layer;
+                SetupLayer(newClone);
+                SetupMaterialClipping(newClone);
+
                 newClone.SetActive(false);
                 _snakePartClones.Add(newClone);
                 _snakePartClonePreviousPositions.Add(new Vector3Int());
@@ -214,7 +219,9 @@ namespace GameScene
             {
                 GameObject newCorner = Instantiate(GameManager.Instance.BodyPrefab);
                 newCorner.transform.SetParent(_snakeBodyCubes[_snakeBodyCubes.Count - 1].transform.parent);
-                newCorner.layer = newCorner.transform.parent.gameObject.layer;
+                SetupLayer(newCorner);
+                SetupMaterialClipping(newCorner);
+
                 newCorner.SetActive(false);
                 newCorner.name = "Corner";
                 _snakePartCornerClones.Add(newCorner);
@@ -247,6 +254,35 @@ namespace GameScene
                         _snakePartCornerClones[i].transform.localPosition = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions()[i];
                     }
                 }
+            }
+        }
+
+        private void SetupLayer(GameObject gameObjectToSetup)
+        {
+            foreach (Transform transformComponent in gameObjectToSetup.GetComponentsInChildren<Transform>())
+            {
+                transformComponent.gameObject.layer = gameObjectToSetup.transform.parent.gameObject.layer;
+            }
+        }
+
+        private void SetupMaterialClipping(GameObject gameObjectToSetup)
+        {
+            Renderer[] renderers = gameObjectToSetup.GetComponentsInChildren<Renderer>();
+
+            foreach (Renderer renderer in renderers)
+            {
+                Material materialInstance = renderer.material;
+
+                // Assumed a material that has "_X_Max_Plane_Position" will also have the rest of the parameters
+                if (!materialInstance.HasVector("_X_Max_Plane_Position")) continue;
+
+                materialInstance.SetVector("_X_Max_Plane_Position", new Vector3(transform.position.x - 0.5f, 0, 0));
+                materialInstance.SetVector("_X_Min_Plane_Position", new Vector3(transform.position.x - 0.5f + GameManager.Instance.GameSize, 0, 0));
+
+                materialInstance.SetVector("_Y_Max_Plane_Position", new Vector3(0, -0.5f + GameManager.Instance.GameSize, 0));
+
+                materialInstance.SetVector("_Z_Max_Plane_Position", new Vector3(0, 0, transform.position.z - 0.5f));
+                materialInstance.SetVector("_Z_Min_Plane_Position", new Vector3(0, 0, transform.position.z - 0.5f + GameManager.Instance.GameSize));
             }
         }
 

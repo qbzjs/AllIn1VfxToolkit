@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace Game
 {
-    public class UIManager : SceneInit
+    public class GameSceneUIManager : SceneInit
     {
+        [Header("GameScene UI Settings")]
         [SerializeField] Texture _leftMapTexture;
         [SerializeField] Texture _rightMapTexture;
 
