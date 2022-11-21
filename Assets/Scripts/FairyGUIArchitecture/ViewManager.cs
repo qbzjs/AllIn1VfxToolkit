@@ -12,8 +12,6 @@ namespace FairyGUIArchitecture
         public static ViewManager Instance { get; private set; }
 
         [Header("Packages")]
-        [Tooltip("Shared packages contains assets which are shared across the whole project. These packages will be added at the very beginning of the game and never removed.")]
-        [SerializeField] List<string> _sharedPackages;
         [SerializeField] List<ViewInfo> _viewInfoList;
 
         [Header("Fonts")]
