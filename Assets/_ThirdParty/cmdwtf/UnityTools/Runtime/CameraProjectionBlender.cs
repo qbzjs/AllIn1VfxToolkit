@@ -291,7 +291,7 @@ namespace cmdwtf.UnityTools
         /// Gathers the camera on this game object,
         /// and stores all of the initial values used to blend between.
         /// </summary>
-        private void UpdateInitialFields()
+        public void UpdateInitialFields()
         {
             _camera = GetComponent<Camera>();
             _initialProjection = _camera.projectionMatrix;
