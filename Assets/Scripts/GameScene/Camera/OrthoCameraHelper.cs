@@ -7,11 +7,11 @@ namespace GameScene
     /// </summary>
     public class OrthoCameraHelper : CustomMonoBehaviour
     {
-        [SerializeField] GameManager _gameManager;
         [SerializeField] MeshRenderer _platformMeshRenderer;
         [SerializeField] float _cameraHeight = 20f; // The intended fixed y position
         [SerializeField] float _orthographicSizeFactor = 1; // Converts game size to orthographic size
 
+        GameManager _gameManager => GameManager.Instance;
         Camera _mainCamera;
 
         private void Awake()
@@ -26,16 +26,16 @@ namespace GameScene
 
         private void InitOrthoCamera()
         {
-            transform.position = CalculateFlatCameraWorldPosition(_platformMeshRenderer, _cameraHeight);
+            transform.position = CalculateFlatCameraWorldPosition(_platformMeshRenderer, _cameraHeight, _gameManager.GameSize);
 
             if (_mainCamera != null)
                 _mainCamera.orthographicSize = CalculateFlatCameraOrthographicize(_gameManager.GameSize, _orthographicSizeFactor);
         }
 
-        public static Vector3 CalculateFlatCameraWorldPosition(MeshRenderer platformMeshRenderer, float cameraHeight)
+        public static Vector3 CalculateFlatCameraWorldPosition(MeshRenderer platformMeshRenderer, float cameraHeight, int gameSize)
         {
             Vector3 cameraPosition = platformMeshRenderer.bounds.center;
-            cameraPosition.y = cameraHeight; // TODO : This should scale with game size
+            cameraPosition.y = cameraHeight * gameSize / GameManager.SizeReference; // TODO : This should scale with game size
             return cameraPosition;
         }
 
