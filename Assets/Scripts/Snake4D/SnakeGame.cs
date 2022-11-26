@@ -20,40 +20,40 @@ namespace Snake4D
             _gameState = new SnakeGameState(parameters);
         }
 
-        public List<Vector3Int> GetPreviousSnakeBodyWorldSpacePositions()
+        public List<Vector3Int> GetPreviousSnakeBodyWorldSpacePositions(RenderPlane renderPlane)
         {
             List<Vector4Int> positions = _gameState.PreviousSnakeBodyPositions;
-            return Utilities.Convert4DVectorsToWorldSpace(positions);
+            return Utilities.Convert4DVectorsToWorldSpace(positions, renderPlane);
         }
 
-        public List<Vector3Int> GetCurrentSnakeBodyWorldSpacePositions()
+        public List<Vector3Int> GetCurrentSnakeBodyWorldSpacePositions(RenderPlane renderPlane)
         {
             List<Vector4Int> positions = _gameState.CurrentSnakeBodyPositions;
-            return Utilities.Convert4DVectorsToWorldSpace(positions);
+            return Utilities.Convert4DVectorsToWorldSpace(positions, renderPlane);
         }
 
-        public List<Vector3Int> GetPreviousSnakeBodyWorldSpaceDirections()
+        public List<Vector3Int> GetPreviousSnakeBodyWorldSpaceDirections(RenderPlane renderPlane)
         {
             List<Vector4Int> positions = _gameState.PreviousSnakeBodyDirections;
-            return Utilities.Convert4DVectorsToWorldSpace(positions);
+            return Utilities.Convert4DVectorsToWorldSpace(positions, renderPlane);
         }
 
-        public List<Vector3Int> GetCurrentSnakeBodyWorldSpaceDirections()
+        public List<Vector3Int> GetCurrentSnakeBodyWorldSpaceDirections(RenderPlane renderPlane)
         {
             List<Vector4Int> positions = _gameState.CurrentSnakeBodyDirections;
-            return Utilities.Convert4DVectorsToWorldSpace(positions);
+            return Utilities.Convert4DVectorsToWorldSpace(positions, renderPlane);
         }
 
-        public Vector3Int GetCurrentSnakeFoodWorldSpacePosition()
+        public Vector3Int GetCurrentSnakeFoodWorldSpacePosition(RenderPlane renderPlane)
         {
-            Vector3Int gameSpacePosition = _gameState.SnakeFoodPosition.ToVector3Int();
-            return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
+            Vector4Int gameSpacePosition = _gameState.SnakeFoodPosition;
+            return Utilities.GameSpaceToWorldSpace(gameSpacePosition, renderPlane);
         }
 
-        public Vector3Int GetPreviousSnakeFoodWorldSpacePosition()
+        public Vector3Int GetPreviousSnakeFoodWorldSpacePosition(RenderPlane renderPlane)
         {
-            Vector3Int gameSpacePosition = _gameState.PreviousSnakeFoodPosition.ToVector3Int();
-            return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
+            Vector4Int gameSpacePosition = _gameState.PreviousSnakeFoodPosition;
+            return Utilities.GameSpaceToWorldSpace(gameSpacePosition, renderPlane);
         }
 
         public int GetSnakeTailLength()

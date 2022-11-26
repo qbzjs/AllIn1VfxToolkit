@@ -152,6 +152,10 @@ namespace Snake4D
             return x + y + z + w;
         }
 
+        /// <summary>
+        /// Drops the w position and returns a Vector3Int.
+        /// </summary>
+        /// <returns></returns>
         public static Vector3Int ToVector3Int(Vector4Int a)
         {
             return new Vector3Int(a.x, a.y, a.z);
@@ -162,6 +166,10 @@ namespace Snake4D
             return $"({x}, {y}, {z}, {w})";
         }
 
+        /// <summary>
+        /// Drops the w position and returns a Vector3Int.
+        /// </summary>
+        /// <returns></returns>
         public Vector3Int ToVector3Int()
         {
             return ToVector3Int(this);

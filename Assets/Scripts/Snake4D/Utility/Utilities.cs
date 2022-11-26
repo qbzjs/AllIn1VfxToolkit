@@ -119,14 +119,34 @@ namespace Snake4D
             throw new System.InvalidOperationException($"Utilities.GenerateRandomDirection(): Something went wrong. [Debug Info] dimension: {dimension}");
         }
 
-        public static Vector3Int GameSpaceToWorldSpace(Vector3Int gameSpaceVector3Int)
+        /// <summary>
+        /// In Unity world space, the 2D XY plane in the game is represented in the XZ plane.
+        /// This method converts the XYZW coordinates to the XYZ world space in Unity.
+        /// <para>
+        /// Render plane determines which conversion is desired.
+        /// All => X->X, Y->Z, Z->Y
+        /// XY => X->X, Y->Z
+        /// ZW => Z->Z, W->X
+        /// </para>
+        /// </summary>
+        /// <param name="gameSpacePosition"></param>
+        /// <param name="renderPlane"></param>
+        /// <returns></returns>
+        public static Vector3Int GameSpaceToWorldSpace(Vector4Int gameSpacePosition, RenderPlane renderPlane)
         {
-            return new Vector3Int(gameSpaceVector3Int.x, gameSpaceVector3Int.z, gameSpaceVector3Int.y);
-        }
+            switch (renderPlane)
+            {
+                case RenderPlane.All:
+                    return new Vector3Int(gameSpacePosition.x, gameSpacePosition.z, gameSpacePosition.y);
 
-        public static Vector3Int WorldSpaceToGameSpace(Vector3Int worldSpaceVector3Int)
-        {
-            return new Vector3Int(worldSpaceVector3Int.x, worldSpaceVector3Int.z, worldSpaceVector3Int.y);
+                case RenderPlane.XY:
+                    return new Vector3Int(gameSpacePosition.x, 0, gameSpacePosition.y);
+
+                case RenderPlane.ZW:
+                    return new Vector3Int(gameSpacePosition.w, 0, gameSpacePosition.z);
+            }
+
+            throw new System.InvalidOperationException();
         }
 
         public static bool IsPositionWithinSpace(Vector4Int position, Vector4Int sizeOfSpace)
@@ -185,13 +205,12 @@ namespace Snake4D
             throw new System.InvalidOperationException();
         }
 
-        public static List<Vector3Int> Convert4DVectorsToWorldSpace(List<Vector4Int> positions)
+        public static List<Vector3Int> Convert4DVectorsToWorldSpace(List<Vector4Int> positions, RenderPlane renderPlane)
         {
             List<Vector3Int> worldSpacePositions = new List<Vector3Int>();
             foreach (Vector4Int position in positions)
             {
-                Vector3Int gameSpacePosition = position.ToVector3Int();
-                worldSpacePositions.Add(Utilities.GameSpaceToWorldSpace(gameSpacePosition));
+                worldSpacePositions.Add(Utilities.GameSpaceToWorldSpace(position, renderPlane));
             }
 
             return worldSpacePositions;

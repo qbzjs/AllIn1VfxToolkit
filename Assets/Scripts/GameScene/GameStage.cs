@@ -7,6 +7,9 @@ namespace GameScene
 {
     public class GameStage : CustomMonoBehaviour
     {
+        [Header("Game Stage Settings")]
+        [SerializeField] RenderPlane _renderPlane = RenderPlane.All;
+
         [Header("Visual Settings")]
         [SerializeField] bool _enableLerpPosition;
         [SerializeField] bool _enableLerpDirection;
@@ -184,11 +187,11 @@ namespace GameScene
                 }
             }
 
-            _snakeBodyPreviousPositions = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions();
-            _snakeBodyCurrentPositions = _snakeGame.GetCurrentSnakeBodyWorldSpacePositions();
+            _snakeBodyPreviousPositions = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions(_renderPlane);
+            _snakeBodyCurrentPositions = _snakeGame.GetCurrentSnakeBodyWorldSpacePositions(_renderPlane);
 
-            _snakeBodyPreviousDirections = _snakeGame.GetPreviousSnakeBodyWorldSpaceDirections();
-            _snakeBodyCurrentDirections = _snakeGame.GetCurrentSnakeBodyWorldSpaceDirections();
+            _snakeBodyPreviousDirections = _snakeGame.GetPreviousSnakeBodyWorldSpaceDirections(_renderPlane);
+            _snakeBodyCurrentDirections = _snakeGame.GetCurrentSnakeBodyWorldSpaceDirections(_renderPlane);
 
             if (_snakeBodyCubes.Count < _snakeBodyCurrentPositions.Count)
             {
@@ -239,7 +242,7 @@ namespace GameScene
                     _snakePartClones[i].SetActive(true);
                     _snakePartClones[i].transform.localPosition = _snakeBodyCubes[i].transform.localPosition;
 
-                    _snakePartClonePreviousPositions[i] = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions()[i];
+                    _snakePartClonePreviousPositions[i] = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions(_renderPlane)[i];
                     _snakePartCloneCurrentPositions[i] = _snakePartClonePreviousPositions[i] + currentDirection;
                 }
 
@@ -250,7 +253,7 @@ namespace GameScene
                     if (i != _snakeBodyCurrentPositions.Count - 1)
                     {
                         _snakePartCornerClones[i].SetActive(true);
-                        _snakePartCornerClones[i].transform.localPosition = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions()[i];
+                        _snakePartCornerClones[i].transform.localPosition = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions(_renderPlane)[i];
                     }
                 }
             }
@@ -293,8 +296,8 @@ namespace GameScene
             }
 
             // TODO : If game over, still make clone but also destroy the food
-            _snakeFoodCurrentPosition = _snakeGame.GetCurrentSnakeFoodWorldSpacePosition();
-            _snakeFoodPreviousPosition = _snakeGame.GetPreviousSnakeFoodWorldSpacePosition();
+            _snakeFoodCurrentPosition = _snakeGame.GetCurrentSnakeFoodWorldSpacePosition(_renderPlane);
+            _snakeFoodPreviousPosition = _snakeGame.GetPreviousSnakeFoodWorldSpacePosition(_renderPlane);
 
             if (_snakeFood.transform.localPosition != _snakeFoodCurrentPosition)
             {
