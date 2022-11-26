@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GameScene
 {
     /// <summary>
-    /// Sets the local z position of the perspective camera reference, 
+    /// Sets the local z position of the perspective camera position reference, 
     /// assuming the parent game object is positioned at the lower far end vertex of the game platform.
     /// </summary>
     public class PerspectiveCameraHelper : CustomMonoBehaviour
@@ -18,10 +18,13 @@ namespace GameScene
         [Header("Perspective Camera Settings")]
         [SerializeField] float _zReference = -32f;
 
-        protected override void Start()
+        protected override void SubscribeToMessageHubEvents()
         {
-            base.Start();
+            SubscribeToMessageHubEvent<SetLocalZEvent>((e) => SetLocalZ());
+        }
 
+        private void SetLocalZ()
+        {
             float z = CalculateLocalZScaling(_zReference, _gameManager.GameSize);
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, z);
         }
@@ -30,6 +33,11 @@ namespace GameScene
         {
             return zReference * gameSize / SizeReference;
         }
+
+        /// <summary>
+        /// Event to set the local Z position of the perspective camera position reference.
+        /// </summary>
+        public class SetLocalZEvent { }
     }
 }
 

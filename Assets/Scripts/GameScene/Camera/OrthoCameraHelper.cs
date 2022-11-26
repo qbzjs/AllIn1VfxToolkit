@@ -14,24 +14,24 @@ namespace GameScene
 
         Camera _mainCamera;
 
-        bool _isCameraSet = false;
-
-        protected override void Start()
+        private void Awake()
         {
             _mainCamera = GetComponent<Camera>();
         }
 
-        private void LateUpdate()
+        protected override void SubscribeToMessageHubEvents()
         {
-            if (!_isCameraSet)
-            {
-                transform.position = CalculateFlatCameraWorldPosition(_platformMeshRenderer, _cameraHeight);
+            SubscribeToMessageHubEvent<InitOrthoCameraEvent>((e) => InitOrthoCamera());
+        }
 
-                if (_mainCamera != null)
-                    _mainCamera.orthographicSize = CalculateFlatCameraOrthographicize(_gameManager.GameSize, _orthographicSizeFactor);
+        private void InitOrthoCamera()
+        {
+            transform.position = CalculateFlatCameraWorldPosition(_platformMeshRenderer, _cameraHeight);
 
-                _isCameraSet = true;
-            }
+            if (_mainCamera != null)
+                _mainCamera.orthographicSize = CalculateFlatCameraOrthographicize(_gameManager.GameSize, _orthographicSizeFactor);
+
+            DebugLog(transform.position);
         }
 
         public static Vector3 CalculateFlatCameraWorldPosition(MeshRenderer platformMeshRenderer, float cameraHeight)
@@ -45,5 +45,10 @@ namespace GameScene
         {
             return gameSize * orthographicSizeFactor;
         }
+
+        /// <summary>
+        /// Event to initialize orthographic camera world position and orthographic size.
+        /// </summary>
+        public class InitOrthoCameraEvent { }
     }
 }

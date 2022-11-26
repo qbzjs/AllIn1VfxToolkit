@@ -39,11 +39,6 @@ namespace GameScene
 
         bool _isInit = false;
 
-        protected override void Start()
-        {
-            base.Start();
-        }
-
         protected override void SubscribeToMessageHubEvents()
         {
             SubscribeToMessageHubEvent<RequestInitEvent>((e) => Init());
@@ -52,6 +47,8 @@ namespace GameScene
 
         private void Init()
         {
+            PublishMessageHubEvent<PlatformScaling.SetPositionAndScaleEvent>(null);
+
             GameObject snakeHead = Instantiate(GameManager.Instance.HeadPrefab, Vector3.zero, Quaternion.identity);
             snakeHead.transform.parent = this.transform;
             snakeHead.transform.localPosition = Vector3.zero;

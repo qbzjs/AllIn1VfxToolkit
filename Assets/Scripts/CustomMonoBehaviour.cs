@@ -24,7 +24,7 @@ public abstract class CustomMonoBehaviour : MonoBehaviour
 
     /// <summary>
     /// Designed to hold multiple SubscribeToMessageHubEvent() method calls.
-    /// <para> Generally called in the Start() method. </para>
+    /// <para> Called in the Start() method. </para>
     /// </summary>
     protected virtual void SubscribeToMessageHubEvents() { }
 
@@ -40,11 +40,11 @@ public abstract class CustomMonoBehaviour : MonoBehaviour
 
     protected void DebugLog(object message, bool forceLog = false)
     {
-        if (_enableDebugLogs || forceLog) Debug.Log($"{GetType().ToString()}: {message.ToString()}");
+        if (_enableDebugLogs || forceLog) Debug.Log($"({gameObject.name}){GetType().ToString()}: {message.ToString()}");
     }
 
     protected void DebugLogError(object message, bool forceLog = false)
     {
-        if (_enableDebugLogs || forceLog) Debug.LogError($"{GetType().ToString()}: {message.ToString()}");
+        if (_enableDebugLogs || forceLog) Debug.LogError($"({gameObject.name}){GetType().ToString()}: {message.ToString()}");
     }
 }

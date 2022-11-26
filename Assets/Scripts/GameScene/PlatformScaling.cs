@@ -4,11 +4,16 @@ using UnityEngine;
 
 namespace GameScene
 {
-    public class PlatformScaling : MonoBehaviour
+    public class PlatformScaling : CustomMonoBehaviour
     {
         [SerializeField] GameManager _gameManager;
 
-        void Start()
+        protected override void SubscribeToMessageHubEvents()
+        {
+            SubscribeToMessageHubEvent<SetPositionAndScaleEvent>((e) => SetPositionAndScale());
+        }
+
+        private void SetPositionAndScale()
         {
             float position = (_gameManager.GameSize - 1f) / 2f;
             float scale = _gameManager.GameSize / 10f;
@@ -16,6 +21,8 @@ namespace GameScene
             transform.localPosition = new Vector3(position, transform.localPosition.y, position);
             transform.localScale = new Vector3(scale, transform.localScale.y, scale);
         }
+
+        public class SetPositionAndScaleEvent { }
     }
 }
 

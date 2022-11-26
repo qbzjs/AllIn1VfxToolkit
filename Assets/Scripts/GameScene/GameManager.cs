@@ -51,16 +51,23 @@ namespace GameScene
             }
 
             Instance = this;
-        }
 
-        protected override void Start()
-        {
             int randomSeed = new System.Random().Next(0, 1000);
             if (_useCustomSeed) randomSeed = _customSeed;
             else _customSeed = randomSeed;
 
             Debug.Log($"Using Random Seed '{randomSeed}'");
             Random.InitState(randomSeed);
+        }
+
+        protected override void Start()
+        {
+            StartCoroutine(Init());
+        }
+
+        private IEnumerator Init()
+        {
+            yield return null; // Give one frame time for other components to subscribe to message hub
 
             _snakeGame = new SnakeGame(new SnakeGameParameters
             {
@@ -70,6 +77,7 @@ namespace GameScene
             });
 
             InitGameStage();
+            InitCameras(); // Need to InitGameStage first as camera positions depend on game stage.
             UpdateGameStageVisuals();
 
             _inputBuffer = new InputBuffer(_bufferCapacity);
@@ -115,6 +123,13 @@ namespace GameScene
             }
 
             DebugLog("Game Over!");
+        }
+
+        private void InitCameras()
+        {
+            PublishMessageHubEvent<CameraHolder.SetPositionEvent>(null);
+            PublishMessageHubEvent<OrthoCameraHelper.InitOrthoCameraEvent>(null);
+            PublishMessageHubEvent<PerspectiveCameraHelper.SetLocalZEvent>(null);
         }
 
         private void InitGameStage()
