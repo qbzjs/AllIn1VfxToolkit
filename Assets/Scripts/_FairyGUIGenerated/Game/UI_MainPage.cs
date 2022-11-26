@@ -8,6 +8,7 @@ namespace Game
     public partial class UI_MainPage : GComponent
     {
         public UI_MapView m_MapView;
+        public GLoader m_MainMap;
         public const string URL = "ui://wdu27ktim9z92";
 
         public static UI_MainPage CreateInstance()
@@ -20,6 +21,7 @@ namespace Game
             base.ConstructFromXML(xml);
 
             m_MapView = (UI_MapView)GetChildAt(0);
+            m_MainMap = (GLoader)GetChildAt(1);
         }
     }
 }
