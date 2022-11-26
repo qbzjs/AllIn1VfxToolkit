@@ -6,7 +6,7 @@ using UnityEngine;
 namespace FairyGUIArchitecture
 {
     [System.Serializable]
-    public class ViewInfo
+    public struct ViewInfo
     {
         public ViewID ViewID => _viewID;
         public string PackageName => _packageName;

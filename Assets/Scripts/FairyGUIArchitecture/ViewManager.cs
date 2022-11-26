@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,6 +60,8 @@ namespace FairyGUIArchitecture
         /// <returns>The created view component.</returns>
         public GComponent CreateView(ViewID viewID, Dictionary<string, object> viewParameters)
         {
+            if (!ViewInfoExists(viewID)) return null;
+
             ViewInfo viewInfo = GetViewInfo(viewID);
             if (_activeViews.ContainsKey(viewID))
             {
@@ -82,9 +85,9 @@ namespace FairyGUIArchitecture
         /// <param name="viewID">The view ID of the view.</param>
         public void RemoveView(ViewID viewID)
         {
-            ViewInfo viewInfo = GetViewInfo(viewID);
-            if (viewInfo == null) return;
+            if (!ViewInfoExists(viewID)) return;
 
+            ViewInfo viewInfo = GetViewInfo(viewID);
             if (!_activeViews.ContainsKey(viewID))
             {
                 Debug.LogError($"ViewManager.RemoveView(): The view '{viewID.ToString()}' is not active!");
@@ -107,6 +110,20 @@ namespace FairyGUIArchitecture
         }
 
         /// <summary>
+        /// Returns true if the view info exists.
+        /// </summary>
+        private bool ViewInfoExists(ViewID viewID)
+        {
+            var viewInfos =
+                from viewInfo in _viewInfoList
+                where viewInfo.ViewID == viewID
+                select viewInfo;
+
+            // Returns true if there is any view info that matches viewInfo.ViewID == viewID
+            return viewInfos.Any();
+        }
+
+        /// <summary>
         /// Gets the view info of the view, such as the package name and the view component name.
         /// </summary>
         /// <param name="viewID">The view ID of the view.</param>
@@ -114,11 +131,6 @@ namespace FairyGUIArchitecture
         private ViewInfo GetViewInfo(ViewID viewID)
         {
             ViewInfo viewInfo = _viewInfoList.Find((x) => x.ViewID == viewID);
-            if (viewInfo is null)
-            {
-                Debug.LogError($"ViewManager.GetViewInfo(): There is no viewInfo that has the viewID '{viewID}'");
-                return null;
-            }
             return viewInfo;
         }
 
@@ -159,7 +171,7 @@ namespace FairyGUIArchitecture
             width = Mathf.CeilToInt(width / UIContentScaler.scaleFactor);
             height = Mathf.CeilToInt(height / UIContentScaler.scaleFactor);
             view.SetSize(width, height);
-            view.SetXY(0, 0, true);
+            view.SetXY(0, 0, topLeftValue: true);
         }
     }
 }
