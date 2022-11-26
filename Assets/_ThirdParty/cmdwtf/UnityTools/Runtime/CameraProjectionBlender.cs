@@ -22,6 +22,12 @@ namespace cmdwtf.UnityTools
         [Tooltip("The size the the camera should have in orthographic mode.")]
         public float orthographicSize = 4f;
 
+        [Header("Advanced Settings")]
+        [Tooltip("Set this to true if not intended to use the screen aspect ratio, eg. if using Render Textures")]
+        public bool useCustomAspectRatio = false;
+        [Tooltip("The custom aspect ratio to use if the Use Custom Aspect Ratio is set to true")]
+        public Vector2 customAspectRatio = new Vector2(1, 1);
+
         private bool BlendNeedsUpdate
             => (_blendCurve != null) ||
                (!Mathf.Approximately(_lastBlendValue, _blendValue)) ||
@@ -299,6 +305,10 @@ namespace cmdwtf.UnityTools
             // don't use the 'Screen' variables from functions while in editor gui...
             // you'll get some numbers you don't expect.
             _initialAspect = Screen.width / (float)Screen.height;
+            if (useCustomAspectRatio)
+            {
+                _initialAspect = customAspectRatio.x / customAspectRatio.y;
+            }
 
             _initialNearClip = _camera.nearClipPlane;
             _initialFarClip = _camera.farClipPlane;
