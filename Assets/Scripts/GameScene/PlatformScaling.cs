@@ -6,7 +6,7 @@ namespace GameScene
 {
     public class PlatformScaling : CustomMonoBehaviour
     {
-        [SerializeField] GameManager _gameManager;
+        GameManager _gameManager => GameManager.Instance;
 
         protected override void SubscribeToMessageHubEvents()
         {

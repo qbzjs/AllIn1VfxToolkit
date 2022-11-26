@@ -9,6 +9,8 @@ namespace GameScene
     public class GameManager : CustomMonoBehaviour
     {
         public static GameManager Instance { get; private set; }
+        public static int SizeReference => SIZE_REFERENCE;
+        public const int SIZE_REFERENCE = 10;
 
         public SnakeGame SnakeGameInfo => _snakeGame;
         public int GameSize => _snakeGameSize;

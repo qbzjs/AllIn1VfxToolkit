@@ -4,8 +4,9 @@ namespace GameScene
 {
     public class CameraHolder : CustomMonoBehaviour
     {
-        [SerializeField] GameManager _gameManager;
         [SerializeField] MeshRenderer _platformMeshRenderer;
+
+        GameManager _gameManager => GameManager.Instance;
 
         protected override void SubscribeToMessageHubEvents()
         {

@@ -10,13 +10,10 @@ namespace GameScene
     /// </summary>
     public class PerspectiveCameraHelper : CustomMonoBehaviour
     {
-        public static int SizeReference => SIZE_REFERENCE;
-        public const int SIZE_REFERENCE = 10;
-
-        [SerializeField] GameManager _gameManager;
-
         [Header("Perspective Camera Settings")]
         [SerializeField] float _zReference = -32f;
+
+        GameManager _gameManager => GameManager.Instance;
 
         protected override void SubscribeToMessageHubEvents()
         {
@@ -31,7 +28,7 @@ namespace GameScene
 
         public static float CalculateLocalZScaling(float zReference, int gameSize)
         {
-            return zReference * gameSize / SizeReference;
+            return zReference * gameSize / GameManager.SizeReference;
         }
 
         /// <summary>
