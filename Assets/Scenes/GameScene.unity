@@ -345,7 +345,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
-  _gameManager: {fileID: 1177546312}
   _platformMeshRenderer: {fileID: 260894445}
 --- !u!1001 &144349551
 PrefabInstance:
@@ -1270,7 +1269,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
-  _gameManager: {fileID: 1177546312}
   _platformMeshRenderer: {fileID: 260894445}
   _cameraHeight: 28
   _orthographicSizeFactor: 0.5
@@ -1369,7 +1367,7 @@ MonoBehaviour:
   _bodyCubePrefab: {fileID: 8290799120260657568, guid: 2f4b4a4911dcd4af986e999295435714, type: 3}
   _foodCubePrefab: {fileID: 2310218543477400548, guid: 57f0a63f860c24c5485f9557647c85c9, type: 3}
   _snakeGameDimension: 1
-  _snakeGameSize: 5
+  _snakeGameSize: 6
   _passThroughWalls: 1
   _debugMode: 1
   _useCustomSeed: 0
@@ -1681,7 +1679,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
-  _gameManager: {fileID: 1177546312}
   _platformMeshRenderer: {fileID: 2006889731}
   _cameraHeight: 20
   _orthographicSizeFactor: 0.5
@@ -2077,7 +2074,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
-  _gameManager: {fileID: 1177546312}
   _platformMeshRenderer: {fileID: 1390203906}
   _cameraHeight: 20
   _orthographicSizeFactor: 0.5
@@ -2197,7 +2193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868477715}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8125, y: -5, z: 0}
+  m_LocalPosition: {x: 2.310268, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2590,7 +2586,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
-  _gameManager: {fileID: 1177546312}
   _zReference: -32
 --- !u!23 &2006889731 stripped
 MeshRenderer:

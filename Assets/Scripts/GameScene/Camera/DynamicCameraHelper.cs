@@ -39,7 +39,9 @@ namespace GameScene
                 ? State.Orthographic
                 : State.Perspective;
 
+            _dynamicCamera.orthographic = _state == State.Orthographic ? true : false;
             _cameraProjectionBlender.orthographicSize = OrthoCameraHelper.CalculateFlatCameraOrthographicize(GameManager.Instance.GameSize, _orthographicSizeFactor);
+            _cameraProjectionBlender.UpdateInitialFields();
         }
 
         protected override void SubscribeToMessageHubEvents()
