@@ -56,6 +56,11 @@ namespace Snake4D
             return Utilities.GameSpaceToWorldSpace(gameSpacePosition);
         }
 
+        public int GetSnakeTailLength()
+        {
+            return _gameState.SnakeTailLength;
+        }
+
         public string DebugState()
         {
             string output = "";

@@ -30,8 +30,6 @@ namespace GameScene
 
             if (_mainCamera != null)
                 _mainCamera.orthographicSize = CalculateFlatCameraOrthographicize(_gameManager.GameSize, _orthographicSizeFactor);
-
-            DebugLog(transform.position);
         }
 
         public static Vector3 CalculateFlatCameraWorldPosition(MeshRenderer platformMeshRenderer, float cameraHeight)

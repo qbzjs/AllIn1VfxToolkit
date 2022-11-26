@@ -14,6 +14,8 @@ namespace Snake4D
         public Vector4Int PreviousSnakeFoodPosition => _snakeFood.GetPreviousPosition();
         public Vector4Int SnakeFoodPosition => _snakeFood.Position;
 
+        public int SnakeTailLength => _snakeBody.Count - 1;
+
         public bool GameOver { get; private set; }
 
         SnakeGameParameters _parameters;

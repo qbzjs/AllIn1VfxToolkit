@@ -1114,7 +1114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 770732134}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalPosition: {x: 0, y: 28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1135,6 +1135,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
+  _dynamicCamera: {fileID: 0}
+  _cameraProjectionBlender: {fileID: 822022397}
+  _blendDuration: 1
+  _orthoPositionRef: {fileID: 895580717}
+  _perspectivePositionRef: {fileID: 1990115740}
+  _delayInterval: 0.6
+  _transformTransitionDuration: 0.8
+  _targetFieldOfView: 37
+  _fovTransitionDuration: 0.8
 --- !u!1 &822022392
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,7 +1223,7 @@ Camera:
   far clip plane: 1000
   field of view: 37
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1258,8 +1267,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultBlendDuration: 1
-  fieldOfView: 37
-  orthographicSize: 5
+  fieldOfView: 45
+  orthographicSize: 6
   useCustomAspectRatio: 1
   customAspectRatio: {x: 1, y: 1}
 --- !u!1 &895580716
@@ -1406,7 +1415,7 @@ MonoBehaviour:
   _bodyCubePrefab: {fileID: 8290799120260657568, guid: 2f4b4a4911dcd4af986e999295435714, type: 3}
   _foodCubePrefab: {fileID: 2310218543477400548, guid: 57f0a63f860c24c5485f9557647c85c9, type: 3}
   _snakeGameDimension: 1
-  _snakeGameSize: 5
+  _snakeGameSize: 10
   _passThroughWalls: 1
   _debugMode: 1
   _useCustomSeed: 0

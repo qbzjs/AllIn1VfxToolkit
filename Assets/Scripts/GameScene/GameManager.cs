@@ -120,6 +120,13 @@ namespace GameScene
 
                     break;
                 }
+
+                //! Testing transition
+                if (_snakeGameDimension == Dimension.DimensionTwo && _snakeGame.GetSnakeTailLength() == 3)
+                {
+                    PublishMessageHubEvent<DynamicCameraHelper.RequestTransitionEvent>(new(DynamicCameraHelper.TransitionType.ToPerspective));
+                }
+                //!
             }
 
             DebugLog("Game Over!");
