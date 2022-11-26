@@ -17,6 +17,12 @@ public abstract class SceneInit : CustomMonoBehaviour
 
     protected virtual void CreateView(Dictionary<string, object> viewParameters)
     {
+        if (_viewID == ViewID.NONE)
+        {
+            DebugLog("ViewID is set to NONE. Not showing any UI.");
+            return;
+        }
+
         ViewManager.Instance.CreateView(_viewID, viewParameters);
     }
 }

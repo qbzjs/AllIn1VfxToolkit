@@ -2,22 +2,33 @@ using UnityEngine;
 
 namespace GameScene
 {
-    public class CameraManager : CustomMonoBehaviour
+    /// <summary>
+    /// Sets the position and orthographic size of the orthographic camera based on the platform and the game size.
+    /// </summary>
+    public class OrthoCameraHelper : CustomMonoBehaviour
     {
-        [SerializeField] Camera _mainCamera;
         [SerializeField] GameManager _gameManager;
         [SerializeField] MeshRenderer _platformMeshRenderer;
         [SerializeField] float _cameraHeight = 20f; // The intended fixed y position
         [SerializeField] float _orthographicSizeFactor = 1; // Converts game size to orthographic size
 
+        Camera _mainCamera;
+
         bool _isCameraSet = false;
+
+        protected override void Start()
+        {
+            _mainCamera = GetComponent<Camera>();
+        }
 
         private void LateUpdate()
         {
             if (!_isCameraSet)
             {
-                _mainCamera.transform.position = CalculateFlatCameraWorldPosition(_platformMeshRenderer, _cameraHeight);
-                _mainCamera.orthographicSize = CalculateFlatCameraOrthographicize(_gameManager.GameSize, _orthographicSizeFactor);
+                transform.position = CalculateFlatCameraWorldPosition(_platformMeshRenderer, _cameraHeight);
+
+                if (_mainCamera != null)
+                    _mainCamera.orthographicSize = CalculateFlatCameraOrthographicize(_gameManager.GameSize, _orthographicSizeFactor);
 
                 _isCameraSet = true;
             }
@@ -27,7 +38,6 @@ namespace GameScene
         {
             Vector3 cameraPosition = platformMeshRenderer.bounds.center;
             cameraPosition.y = cameraHeight;
-            // cameraPosition.y = _mainCamera.transform.position.y;
             return cameraPosition;
         }
 
