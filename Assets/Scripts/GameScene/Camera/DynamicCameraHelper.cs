@@ -10,6 +10,10 @@ namespace GameScene
         public enum TransitionType { ToPerspective, ToOrthographic }
         enum State { Orthographic, InTransition, Perspective }
 
+        [Header("Camera Settings")]
+        [SerializeField] Camera _dynamicCamera;
+        [SerializeField] float _orthographicSizeFactor;
+
         [Header("Blend Settings")]
         [SerializeField] cmdwtf.UnityTools.CameraProjectionBlender _cameraProjectionBlender;
         [SerializeField] float _blendDuration;
@@ -29,15 +33,33 @@ namespace GameScene
         protected override void Start()
         {
             base.Start();
+
             _state =
                 GameManager.Instance.GameDimension == Snake4D.Dimension.DimensionTwo
                 ? State.Orthographic
                 : State.Perspective;
+
+            _cameraProjectionBlender.orthographicSize = OrthoCameraHelper.CalculateFlatCameraOrthographicize(GameManager.Instance.GameSize, _orthographicSizeFactor);
         }
 
         protected override void SubscribeToMessageHubEvents()
         {
             SubscribeToMessageHubEvent<RequestTransitionEvent>((e) => Transition(e.transitionType));
+            SubscribeToMessageHubEvent<SetTransformEvent>((e) => SetTransform());
+        }
+
+        private void SetTransform()
+        {
+            if (GameManager.Instance.GameDimension == Snake4D.Dimension.DimensionTwo)
+            {
+                transform.position = _orthoPositionRef.position;
+                transform.localEulerAngles = Vector3.zero;
+            }
+            else
+            {
+                transform.position = _perspectivePositionRef.position;
+                transform.localEulerAngles = new Vector3(-45, 0, 0);
+            }
         }
 
         private void Transition(TransitionType transitionType)
@@ -81,6 +103,7 @@ namespace GameScene
             }
         }
 
+        public class SetTransformEvent { }
         public class RequestTransitionEvent
         {
             public TransitionType transitionType;

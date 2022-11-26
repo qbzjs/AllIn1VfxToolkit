@@ -35,7 +35,7 @@ namespace GameScene
         public static Vector3 CalculateFlatCameraWorldPosition(MeshRenderer platformMeshRenderer, float cameraHeight)
         {
             Vector3 cameraPosition = platformMeshRenderer.bounds.center;
-            cameraPosition.y = cameraHeight;
+            cameraPosition.y = cameraHeight; // TODO : This should scale with game size
             return cameraPosition;
         }
 

@@ -137,6 +137,7 @@ namespace GameScene
             PublishMessageHubEvent<CameraHolder.SetPositionEvent>(null);
             PublishMessageHubEvent<OrthoCameraHelper.InitOrthoCameraEvent>(null);
             PublishMessageHubEvent<PerspectiveCameraHelper.SetLocalZEvent>(null);
+            PublishMessageHubEvent<DynamicCameraHelper.SetTransformEvent>(null);
         }
 
         private void InitGameStage()
