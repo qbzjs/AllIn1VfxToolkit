@@ -6,19 +6,68 @@ using Game;
 
 public class GameViewModel : ViewModel
 {
-    UI_GameView _gameView;
+    UI_MainPage _mainPage;
 
     public GameViewModel(GComponent view, Dictionary<string, object> viewParameters)
     : base(view, viewParameters)
     {
-        _gameView = view as UI_GameView;
+        UI_GameView gameView = view as UI_GameView;
+        _mainPage = gameView.m_MainPage;
 
         Texture leftMapTexture = (Texture)viewParameters["leftMapTexture"];
         Texture rightMapTexture = (Texture)viewParameters["rightMapTexture"];
         Texture mainMapTexture = (Texture)viewParameters["mainMapTexture"];
 
-        _gameView.m_MainPage.m_MapView.m_LeftMap.texture = new NTexture(leftMapTexture);
-        _gameView.m_MainPage.m_MapView.m_RightMap.texture = new NTexture(rightMapTexture);
-        _gameView.m_MainPage.m_MainMap.texture = new NTexture(mainMapTexture);
+        _mainPage.m_MapView.m_LeftMap.texture = new NTexture(leftMapTexture);
+        _mainPage.m_MapView.m_RightMap.texture = new NTexture(rightMapTexture);
+        _mainPage.m_MainMap.texture = new NTexture(mainMapTexture);
+
+        _mainPage.m_LeftDPad.m_up.onClick.Add(() =>
+            MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
+                Snake4D.UserInputType.Y_Positive
+            ))
+        );
+
+        _mainPage.m_LeftDPad.m_down.onClick.Add(() =>
+            MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
+                Snake4D.UserInputType.Y_Negative
+            ))
+        );
+
+        _mainPage.m_LeftDPad.m_left.onClick.Add(() =>
+            MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
+                Snake4D.UserInputType.X_Negative
+            ))
+        );
+
+        _mainPage.m_LeftDPad.m_right.onClick.Add(() =>
+            MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
+                Snake4D.UserInputType.X_Positive
+            ))
+        );
+
+        _mainPage.m_RightDPad.m_up.onClick.Add(() =>
+            MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
+                Snake4D.UserInputType.Z_Positive
+            ))
+        );
+
+        _mainPage.m_RightDPad.m_down.onClick.Add(() =>
+            MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
+                Snake4D.UserInputType.Z_Negative
+            ))
+        );
+
+        _mainPage.m_RightDPad.m_left.onClick.Add(() =>
+            MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
+                Snake4D.UserInputType.W_Negative
+            ))
+        );
+
+        _mainPage.m_RightDPad.m_right.onClick.Add(() =>
+            MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
+                Snake4D.UserInputType.W_Positive
+            ))
+        );
     }
 }
