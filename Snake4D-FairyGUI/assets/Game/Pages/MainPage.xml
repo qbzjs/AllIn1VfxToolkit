@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1080,1920" bgColorEnabled="true" bgColor="#faedcd">
   <displayList>
-    <component id="n0_m9z9" name="MapView" src="m9z91" fileName="Components/MapView.xml" xy="0,829" size="1080,446">
-      <relation target="" sidePair="width-width,middle-middle"/>
+    <component id="n4_s9uy" name="MapView" src="m9z91" fileName="Components/MapView.xml" xy="0,827" size="1080,450" restrictSize="0,1425,0,0">
+      <relation target="" sidePair="width-width,center-center,middle-middle"/>
     </component>
-    <loader id="n1_kod3" name="MainMap" xy="175,49" size="730,730" aspect="true" url="ui://weqbl269m9z9d" fill="scaleFree">
-      <relation target="" sidePair="center-center,middle-middle"/>
+    <graph id="n9_s9uy" name="MainMapContainer" xy="0,0" size="1080,827" visible="false" type="rect">
+      <relation target="" sidePair="width-width,topext-top"/>
+      <relation target="n4_s9uy" sidePair="bottomext-top"/>
+    </graph>
+    <loader id="n1_kod3" name="MainMap" xy="180,54" size="720,720" aspect="true" url="ui://weqbl269m9z9d" fill="scaleFree">
+      <relation target="n9_s9uy" sidePair="center-center,middle-middle"/>
     </loader>
+    <component id="n6_s9uy" name="LeftDPad" src="s9uy5" fileName="Components/DPad.xml" xy="40,1370" size="480,480" restrictSize="0,480,0,0" aspect="true">
+      <relation target="" sidePair="left-left,bottom-bottom"/>
+    </component>
+    <component id="n7_s9uy" name="RightDPad" src="s9uy5" fileName="Components/DPad.xml" xy="560,1370" size="480,480" restrictSize="0,480,0,0" aspect="true">
+      <relation target="" sidePair="right-right,bottom-bottom"/>
+    </component>
   </displayList>
 </component>

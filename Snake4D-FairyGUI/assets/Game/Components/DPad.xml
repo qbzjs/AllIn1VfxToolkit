@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="720,720" bgColor="#333333">
+  <displayList>
+    <graph id="n0_s9uy" name="bg" xy="0,0" size="720,720" visible="false" type="rect" fillColor="#ff999999">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <component id="n2_s9uy" name="up" src="s9uy6" fileName="Components/DButton.xml" xy="232,0">
+      <relation target="" sidePair="width-width%,height-height%,center-center,top-top"/>
+    </component>
+    <component id="n3_s9uy" name="down" src="s9uy6" fileName="Components/DButton.xml" xy="232,464" pivot="0.5,0.5" rotation="180">
+      <relation target="" sidePair="width-width%,height-height%,center-center,bottom-bottom"/>
+    </component>
+    <component id="n4_s9uy" name="left" src="s9uy6" fileName="Components/DButton.xml" xy="0,232" pivot="0.5,0.5" rotation="270">
+      <relation target="" sidePair="width-width%,height-height%,middle-middle,left-left"/>
+    </component>
+    <component id="n5_s9uy" name="right" src="s9uy6" fileName="Components/DButton.xml" xy="464,232" pivot="0.5,0.5" rotation="90">
+      <relation target="" sidePair="width-width%,height-height%,middle-middle,right-right"/>
+    </component>
+  </displayList>
+</component>

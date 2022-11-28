@@ -5,10 +5,10 @@
       <relation target="" sidePair="width-width,height-height"/>
     </graph>
     <loader id="n0_m9z9" name="LeftMap" xy="58,0" size="450,450" url="ui://weqbl269m9z9d" fill="scaleFree">
-      <relation target="" sidePair="height-height,center-center,middle-middle"/>
+      <relation target="" sidePair="left-left%"/>
     </loader>
     <loader id="n2_m9z9" name="RightMap" xy="571,0" size="450,450" aspect="true" url="ui://weqbl269m9z9d" fill="scaleFree">
-      <relation target="" sidePair="height-height,center-center,middle-middle"/>
+      <relation target="" sidePair="right-right%"/>
     </loader>
   </displayList>
 </component>

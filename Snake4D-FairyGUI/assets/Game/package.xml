@@ -4,6 +4,9 @@
     <component id="m9z90" name="GameView.xml" path="/" exported="true"/>
     <component id="m9z91" name="MapView.xml" path="/Components/" exported="true"/>
     <component id="m9z92" name="MainPage.xml" path="/Pages/" exported="true"/>
+    <image id="s9uy4" name="DirectionalButton.png" path="/Images/" exported="true"/>
+    <component id="s9uy5" name="DPad.xml" path="/Components/" exported="true"/>
+    <component id="s9uy6" name="DButton.xml" path="/Components/" exported="true"/>
   </resources>
   <publish name="" genCode="true"/>
 </packageDescription>
