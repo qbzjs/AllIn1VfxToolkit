@@ -18,13 +18,6 @@ namespace Snake4D
 
         public bool GameOver { get; private set; }
 
-        SnakeGameParameters _parameters;
-        Dimension _dimension => _parameters.Dimension;
-        Vector4Int _size => _parameters.Size;
-        bool _passThroughWalls => _parameters.PassThroughWalls;
-
-        Vector4Int _currentInput;
-
         SnakeHead _snakeHead => _snakeBody.SnakeHead;
         SnakeBody _snakeBody;
 
@@ -32,7 +25,6 @@ namespace Snake4D
 
         public SnakeGameState(SnakeGameParameters parameters)
         {
-            _parameters = parameters;
             _snakeBody = new SnakeBody(parameters);
             _snakeFood = new SnakeFood(parameters, _snakeBody); // Must initiate snake body before initiating snake food
         }

@@ -1196,7 +1196,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -1422,7 +1422,7 @@ MonoBehaviour:
   _headCubePrefab: {fileID: 2889921201793651594, guid: 4f1980def0d514b2fb6fc8a4f38523fb, type: 3}
   _bodyCubePrefab: {fileID: 8290799120260657568, guid: 2f4b4a4911dcd4af986e999295435714, type: 3}
   _foodCubePrefab: {fileID: 2310218543477400548, guid: 57f0a63f860c24c5485f9557647c85c9, type: 3}
-  _snakeGameDimension: 2
+  _snakeGameDimension: 1
   _snakeGameSize: 8
   _passThroughWalls: 1
   _debugMode: 1

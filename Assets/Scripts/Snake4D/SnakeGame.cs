@@ -18,7 +18,7 @@ namespace Snake4D
         public SnakeGame(SnakeGameParameters parameters)
         {
             _parameters = parameters;
-            _gameState = new SnakeGameState(parameters);
+            _gameState = new SnakeGameState(_parameters);
         }
 
         public List<Vector3Int> GetPreviousSnakeBodyWorldSpacePositions(RenderPlane renderPlane)
@@ -88,9 +88,9 @@ namespace Snake4D
             _gameState.OnUserInput(inputType);
         }
 
-        private void SpawnFood()
+        public void UpdateDimension(Dimension newDimension)
         {
-
+            _parameters.Dimension = newDimension;
         }
     }
 }

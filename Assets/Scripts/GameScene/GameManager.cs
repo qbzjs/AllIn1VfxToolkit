@@ -13,8 +13,8 @@ namespace GameScene
         public const int SIZE_REFERENCE = 10;
 
         public SnakeGame SnakeGameInfo => _snakeGame;
-        public int GameSize => SnakeGameInfo.Size.x; // Assumes x == y == z == w
-        public Dimension GameDimension => SnakeGameInfo.GameDimension;
+        public int GameSize => SnakeGameInfo != null ? SnakeGameInfo.Size.x : _snakeGameSize; // Assumes x == y == z == w
+        public Dimension GameDimension => SnakeGameInfo != null ? SnakeGameInfo.GameDimension : _snakeGameDimension;
         public float UpdateInterval => _updateInterval;
         public GameObject HeadPrefab => _headCubePrefab;
         public GameObject BodyPrefab => _bodyCubePrefab;
@@ -134,6 +134,7 @@ namespace GameScene
                 //! Testing transition
                 if (GameDimension == Dimension.DimensionTwo && _snakeGame.GetSnakeTailLength() == 3)
                 {
+                    _snakeGame.UpdateDimension(Dimension.DimensionThree);
                     PublishMessageHubEvent<DynamicCameraHelper.RequestTransitionEvent>(new(DynamicCameraHelper.TransitionType.ToPerspective));
                 }
                 //!
