@@ -142,6 +142,6 @@ Material:
     - _Y_Min_Plane_Position: {r: 0, g: -0.5, b: 0, a: 0}
     - _Z_Max_Plane_Position: {r: 0, g: 0, b: -5, a: 0}
     - _Z_Min_Plane_Position: {r: 0, g: 0, b: 5, a: 0}
-    - _mainColor: {r: 1, g: 0, b: 0, a: 0}
+    - _mainColor: {r: 1, g: 0.31764707, b: 0, a: 0}
     - _xPlaneMinPosition: {r: -5, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
