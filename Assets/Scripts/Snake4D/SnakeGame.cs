@@ -5,6 +5,7 @@ namespace Snake4D
 {
     public class SnakeGame
     {
+        public Vector4Int Size => _size;
         public Dimension GameDimension => _dimension;
         public bool GameOver => _gameState.GameOver;
 

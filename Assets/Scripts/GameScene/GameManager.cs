@@ -13,8 +13,8 @@ namespace GameScene
         public const int SIZE_REFERENCE = 10;
 
         public SnakeGame SnakeGameInfo => _snakeGame;
-        public int GameSize => _snakeGameSize;
-        public Dimension GameDimension => _snakeGameDimension;
+        public int GameSize => SnakeGameInfo.Size.x; // Assumes x == y == z == w
+        public Dimension GameDimension => SnakeGameInfo.GameDimension;
         public float UpdateInterval => _updateInterval;
         public GameObject HeadPrefab => _headCubePrefab;
         public GameObject BodyPrefab => _bodyCubePrefab;
@@ -95,8 +95,16 @@ namespace GameScene
         {
             SubscribeToMessageHubEvent<UserInputEvent>((e) =>
             {
-                // DebugLog($"Received input of type '{e.InputType}'");
-                _inputBuffer.AddInput(e.InputType, _snakeGame.GameDimension);
+                bool validInput = _inputBuffer.AddInput(e.InputType, _snakeGame.GameDimension);
+
+                if (validInput)
+                {
+                    // DebugLog($"Input received! Input: {e.InputType}");
+
+#if (UNITY_ANDROID || UNITY_IOS)
+                    Handheld.Vibrate();
+#endif
+                }
             });
         }
 
@@ -124,7 +132,7 @@ namespace GameScene
                 }
 
                 //! Testing transition
-                if (_snakeGameDimension == Dimension.DimensionTwo && _snakeGame.GetSnakeTailLength() == 3)
+                if (GameDimension == Dimension.DimensionTwo && _snakeGame.GetSnakeTailLength() == 3)
                 {
                     PublishMessageHubEvent<DynamicCameraHelper.RequestTransitionEvent>(new(DynamicCameraHelper.TransitionType.ToPerspective));
                 }
