@@ -1,5 +1,6 @@
 namespace Snake4D
 {
+    //! DO NOT CHANGE THE ORDER
     public enum UserInputType
     {
         NONE = -1,
