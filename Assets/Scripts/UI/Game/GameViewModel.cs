@@ -22,49 +22,49 @@ public class GameViewModel : ViewModel
         _mainPage.m_MapView.m_RightMap.texture = new NTexture(rightMapTexture);
         _mainPage.m_MainMap.texture = new NTexture(mainMapTexture);
 
-        _mainPage.m_LeftDPad.m_up.onClick.Add(() =>
+        _mainPage.m_LeftDPad.m_up.onRollOver.Add(() =>
             MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
                 Snake4D.UserInputType.Y_Positive
             ))
         );
 
-        _mainPage.m_LeftDPad.m_down.onClick.Add(() =>
+        _mainPage.m_LeftDPad.m_down.onRollOver.Add(() =>
             MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
                 Snake4D.UserInputType.Y_Negative
             ))
         );
 
-        _mainPage.m_LeftDPad.m_left.onClick.Add(() =>
+        _mainPage.m_LeftDPad.m_left.onRollOver.Add(() =>
             MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
                 Snake4D.UserInputType.X_Negative
             ))
         );
 
-        _mainPage.m_LeftDPad.m_right.onClick.Add(() =>
+        _mainPage.m_LeftDPad.m_right.onRollOver.Add(() =>
             MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
                 Snake4D.UserInputType.X_Positive
             ))
         );
 
-        _mainPage.m_RightDPad.m_up.onClick.Add(() =>
+        _mainPage.m_RightDPad.m_up.onRollOver.Add(() =>
             MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
                 Snake4D.UserInputType.Z_Positive
             ))
         );
 
-        _mainPage.m_RightDPad.m_down.onClick.Add(() =>
+        _mainPage.m_RightDPad.m_down.onRollOver.Add(() =>
             MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
                 Snake4D.UserInputType.Z_Negative
             ))
         );
 
-        _mainPage.m_RightDPad.m_left.onClick.Add(() =>
+        _mainPage.m_RightDPad.m_left.onRollOver.Add(() =>
             MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
                 Snake4D.UserInputType.W_Negative
             ))
         );
 
-        _mainPage.m_RightDPad.m_right.onClick.Add(() =>
+        _mainPage.m_RightDPad.m_right.onRollOver.Add(() =>
             MessageHubSingleton.Instance.Publish<UserInputEvent>(new(
                 Snake4D.UserInputType.W_Positive
             ))

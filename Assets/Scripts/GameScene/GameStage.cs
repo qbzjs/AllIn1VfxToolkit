@@ -73,11 +73,11 @@ namespace GameScene
             _isInit = true;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (!_isInit) return;
 
-            _elapsedTimeBetweenUpdateInterval += Time.deltaTime;
+            _elapsedTimeBetweenUpdateInterval += Time.fixedDeltaTime;
             float interpolationRatio = _elapsedTimeBetweenUpdateInterval / _updateInterval;
 
             if (_enableLerpPosition)

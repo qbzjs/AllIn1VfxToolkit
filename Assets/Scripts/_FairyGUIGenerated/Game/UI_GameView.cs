@@ -7,6 +7,7 @@ namespace Game
 {
     public partial class UI_GameView : GComponent
     {
+        public GGraph m_bg;
         public UI_MainPage m_MainPage;
         public const string URL = "ui://wdu27ktim9z90";
 
@@ -19,7 +20,8 @@ namespace Game
         {
             base.ConstructFromXML(xml);
 
-            m_MainPage = (UI_MainPage)GetChildAt(0);
+            m_bg = (GGraph)GetChildAt(0);
+            m_MainPage = (UI_MainPage)GetChildAt(1);
         }
     }
 }

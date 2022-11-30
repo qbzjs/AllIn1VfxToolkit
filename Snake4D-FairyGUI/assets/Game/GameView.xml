@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="1080,1920" bgColorEnabled="true" bgColor="#faedcd">
+<component size="1080,1920" bgColor="#faedcd">
   <displayList>
+    <graph id="n6_q96f" name="bg" xy="0,0" size="1080,1920" type="rect" fillColor="#fffaedcd">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
     <component id="n5_m9z9" name="MainPage" src="m9z92" fileName="Pages/MainPage.xml" xy="0,0">
       <relation target="" sidePair="width-width,height-height"/>
     </component>

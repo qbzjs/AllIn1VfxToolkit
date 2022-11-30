@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641228, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465791, g: 0.49641317, b: 0.57481784, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1215,7 +1215,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
+  m_BackGroundColor: {r: 0.98039216, g: 0.92941177, b: 0.8039216, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1417,7 +1417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
-  _updateInterval: 0.15
+  _updateInterval: 0.2
   _bufferCapacity: 3
   _headCubePrefab: {fileID: 2889921201793651594, guid: 4f1980def0d514b2fb6fc8a4f38523fb, type: 3}
   _bodyCubePrefab: {fileID: 8290799120260657568, guid: 2f4b4a4911dcd4af986e999295435714, type: 3}
