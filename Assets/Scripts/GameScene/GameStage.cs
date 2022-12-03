@@ -14,6 +14,10 @@ namespace GameScene
         [Header("Tween Position Settings")]
         [SerializeField] bool _enableTweenPosition;
         [SerializeField] Ease _tweenPositionEase = Ease.Linear;
+        [SerializeField] bool _enableTweenSizeWhenWarp;
+        [SerializeField] float _warpSizeFactor = 0.5f;
+        [SerializeField] Ease _tweenWarpSizeEaseIn = Ease.InQuad;
+        [SerializeField] Ease _tweenWarpSizeEaseOut = Ease.OutQuad;
 
         [Header("Tween Direction Settings")]
         [SerializeField] bool _enableTweenDirection;
@@ -22,6 +26,7 @@ namespace GameScene
 
         [Header("Tween Food Settings")]
         [SerializeField] bool _enableTweenFoodSize;
+        [SerializeField] float _spawnFoodsizeFactor = 0.5f;
         [SerializeField] Ease _tweenFoodEaseIn = Ease.InQuad;
         [SerializeField] Ease _tweenFoodEaseOut = Ease.OutQuad;
 
@@ -178,6 +183,18 @@ namespace GameScene
                     _snakePartClones[i].SetActive(true);
                     _snakePartClones[i].transform.localPosition = _snakePartClonePreviousPositions[i];
                     _snakePartClones[i].transform.DOLocalMove(_snakePartCloneCurrentPositions[i], _updateInterval).SetEase(_tweenPositionEase);
+
+                    if (_enableTweenSizeWhenWarp)
+                    {
+                        Vector3 originalScale = GameManager.Instance.BodyPrefab.transform.localScale;
+                        if (i == 0) originalScale = GameManager.Instance.HeadPrefab.transform.localScale;
+
+                        _snakePartClones[i].transform.localScale = originalScale;
+                        _snakePartClones[i].transform.DOScale(originalScale * _warpSizeFactor, _updateInterval).SetEase(_tweenWarpSizeEaseOut);
+
+                        _snakeBodyCubes[i].transform.localScale = originalScale * _warpSizeFactor;
+                        _snakeBodyCubes[i].transform.DOScale(originalScale, _updateInterval).SetEase(_tweenWarpSizeEaseIn); ;
+                    }
                 }
 
                 // Tween Move
@@ -308,14 +325,14 @@ namespace GameScene
                 if (_enableTweenFoodSize)
                 {
                     Vector3 originalScale = GameManager.Instance.FoodPrefab.transform.localScale;
-                    _snakeFood.transform.localScale = originalScale / 2;
+                    _snakeFood.transform.localScale = originalScale * _spawnFoodsizeFactor;
                     _snakeFood.transform.DOScale(originalScale, _updateInterval).SetEase(_tweenFoodEaseOut);
 
                     _snakeFoodClone.SetActive(true);
                     _snakeFoodClone.transform.SetParent(_snakeFood.transform.parent);
                     _snakeFoodClone.transform.localPosition = _snakeFoodPreviousPosition;
                     _snakeFoodClone.transform.localScale = originalScale;
-                    _snakeFoodClone.transform.DOScale(originalScale / 2, _updateInterval).SetEase(_tweenFoodEaseIn); ;
+                    _snakeFoodClone.transform.DOScale(originalScale * _spawnFoodsizeFactor, _updateInterval).SetEase(_tweenFoodEaseIn); ;
                 }
             }
         }
