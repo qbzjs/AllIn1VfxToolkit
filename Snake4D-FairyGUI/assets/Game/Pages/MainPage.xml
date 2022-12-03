@@ -4,7 +4,7 @@
     <component id="n4_s9uy" name="MapView" src="m9z91" fileName="Components/MapView.xml" xy="0,827" size="1080,450" restrictSize="0,1425,0,0">
       <relation target="" sidePair="width-width,center-center,middle-middle"/>
     </component>
-    <graph id="n9_s9uy" name="MainMapContainer" xy="0,0" size="1080,827" visible="false" type="rect">
+    <graph id="n9_s9uy" name="MainMapContainer" xy="0,0" size="1080,827" visible="false" type="rect" lineColor="#00000000" fillColor="#00ffffff">
       <relation target="" sidePair="width-width,topext-top"/>
       <relation target="n4_s9uy" sidePair="bottomext-top"/>
     </graph>
@@ -16,6 +16,9 @@
     </component>
     <component id="n7_s9uy" name="RightDPad" src="s9uy5" fileName="Components/DPad.xml" xy="560,1370" size="480,480" restrictSize="0,480,0,0" aspect="true">
       <relation target="" sidePair="right-right,bottom-bottom"/>
+    </component>
+    <component id="n10_km3q" name="n10" src="km3q8" fileName="Components/PauseButton.xml" xy="925,45" size="125,125" aspect="true">
+      <relation target="" sidePair="right-right,top-top"/>
     </component>
   </displayList>
 </component>
