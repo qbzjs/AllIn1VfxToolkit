@@ -280,13 +280,13 @@ namespace GameScene
                 // Assumed a material that has "_X_Max_Plane_Position" will also have the rest of the parameters
                 if (!materialInstance.HasVector("_X_Max_Plane_Position")) continue;
 
-                materialInstance.SetVector("_X_Max_Plane_Position", new Vector3(transform.position.x - 0.5f, 0, 0));
-                materialInstance.SetVector("_X_Min_Plane_Position", new Vector3(transform.position.x - 0.5f + GameManager.Instance.GameSize, 0, 0));
+                materialInstance.SetVector("_X_Max_Plane_Position", new Vector3(transform.position.x - 0.5f - BUFFER, 0, 0));
+                materialInstance.SetVector("_X_Min_Plane_Position", new Vector3(transform.position.x - 0.5f + GameManager.Instance.GameSize + BUFFER, 0, 0));
 
                 materialInstance.SetVector("_Y_Max_Plane_Position", new Vector3(0, -0.5f + GameManager.Instance.GameSize + BUFFER, 0));
 
-                materialInstance.SetVector("_Z_Max_Plane_Position", new Vector3(0, 0, transform.position.z - 0.5f));
-                materialInstance.SetVector("_Z_Min_Plane_Position", new Vector3(0, 0, transform.position.z - 0.5f + GameManager.Instance.GameSize));
+                materialInstance.SetVector("_Z_Max_Plane_Position", new Vector3(0, 0, transform.position.z - 0.5f - BUFFER));
+                materialInstance.SetVector("_Z_Min_Plane_Position", new Vector3(0, 0, transform.position.z - 0.5f + GameManager.Instance.GameSize + BUFFER));
             }
         }
 
