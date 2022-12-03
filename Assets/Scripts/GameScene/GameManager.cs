@@ -19,6 +19,7 @@ namespace GameScene
         public GameObject HeadPrefab => _headCubePrefab;
         public GameObject BodyPrefab => _bodyCubePrefab;
         public GameObject FoodPrefab => _foodCubePrefab;
+        public ObjectPool PortalObjectPool => _portalObjectPool;
 
         [Header("Game Manager")]
         [SerializeField] float _updateInterval;
@@ -26,6 +27,7 @@ namespace GameScene
         [SerializeField] GameObject _headCubePrefab;
         [SerializeField] GameObject _bodyCubePrefab;
         [SerializeField] GameObject _foodCubePrefab;
+        [SerializeField] ObjectPool _portalObjectPool;
 
         [Header("Snake Game Parameters")]
         [SerializeField] Dimension _snakeGameDimension;

@@ -184,23 +184,66 @@ namespace GameScene
                     _snakePartClones[i].transform.localPosition = _snakePartClonePreviousPositions[i];
                     _snakePartClones[i].transform.DOLocalMove(_snakePartCloneCurrentPositions[i], _updateInterval).SetEase(_tweenPositionEase);
 
-                    if (_enableTweenSizeWhenWarp)
-                    {
-                        Vector3 originalScale = GameManager.Instance.BodyPrefab.transform.localScale;
-                        if (i == 0) originalScale = GameManager.Instance.HeadPrefab.transform.localScale;
-
-                        _snakePartClones[i].transform.localScale = originalScale;
-                        _snakePartClones[i].transform.DOScale(originalScale * _warpSizeFactor, _updateInterval).SetEase(_tweenWarpSizeEaseOut);
-
-                        _snakeBodyCubes[i].transform.localScale = originalScale * _warpSizeFactor;
-                        _snakeBodyCubes[i].transform.DOScale(originalScale, _updateInterval).SetEase(_tweenWarpSizeEaseIn); ;
-                    }
+                    HandlePortalSpawnWhenWarp(i);
+                    HandleTweenSizeWhenWarp(i);
                 }
 
                 // Tween Move
                 _snakeBodyCubes[i].transform.localPosition = _snakeBodyPreviousPositions[i];
                 _snakeBodyCubes[i].transform.DOLocalMove(_snakeBodyCurrentPositions[i], _updateInterval).SetEase(_tweenPositionEase);
             }
+        }
+
+        private void HandleTweenSizeWhenWarp(int i)
+        {
+            if (_enableTweenSizeWhenWarp)
+            {
+                Vector3 originalScale = GameManager.Instance.BodyPrefab.transform.localScale;
+                if (i == 0) originalScale = GameManager.Instance.HeadPrefab.transform.localScale;
+
+                _snakePartClones[i].transform.localScale = originalScale;
+                _snakePartClones[i].transform.DOScale(originalScale * _warpSizeFactor, _updateInterval).SetEase(_tweenWarpSizeEaseOut);
+
+                _snakeBodyCubes[i].transform.localScale = originalScale * _warpSizeFactor;
+                _snakeBodyCubes[i].transform.DOScale(originalScale, _updateInterval).SetEase(_tweenWarpSizeEaseIn);
+            }
+        }
+
+        private void HandlePortalSpawnWhenWarp(int i)
+        {
+            const float DISTANCE_FACTOR = 0.65f; // Make sure platform gives sufficient space for prtal to spawn, ie. platform y = -0.66f
+
+            float gameSize = GameManager.Instance.GameSize;
+            // Map the position to a color, so that the portal at that position will always have the same color
+            Color color = new Color(_snakeBodyCurrentPositions[i].x / gameSize, _snakeBodyCurrentPositions[i].y / gameSize, _snakeBodyCurrentPositions[i].z / gameSize);
+
+            Vector3 spawnLocalPosition_In = _snakePartClonePreviousPositions[i] + DISTANCE_FACTOR * (Vector3)_snakeBodyCurrentDirections[i];
+            SpawnPortal(spawnLocalPosition_In, _snakeBodyCurrentDirections[i], color);
+
+            Vector3 spawnLocalPosition_Out = _snakeBodyCurrentPositions[i] - DISTANCE_FACTOR * (Vector3)_snakeBodyCurrentDirections[i];
+            SpawnPortal(spawnLocalPosition_Out, _snakeBodyCurrentDirections[i], color);
+        }
+
+        private void SpawnPortal(Vector3 spawnLocalPosition, Vector3 currentDirection, Color portalColor)
+        {
+            Vector3 rotation = Vector3.zero;
+            if (currentDirection.y != 0) rotation.x = 90;
+            if (currentDirection.x != 0) rotation.y = 90;
+
+            GameObject portal = GameManager.Instance.PortalObjectPool.TakeFromPool();
+            portal.transform.SetParent(this.transform);
+            portal.transform.localPosition = spawnLocalPosition;
+            portal.transform.localEulerAngles = rotation;
+
+            SpriteRenderer spriteRenderer = portal.GetComponentInChildren<SpriteRenderer>();
+            if (spriteRenderer != null) spriteRenderer.color = portalColor;
+
+            Sequence portalSequence = DOTween.Sequence();
+            portalSequence
+                .Append(portal.transform.DOScale(Vector3.one, _updateInterval).SetEase(Ease.InOutQuad))
+                .AppendInterval(_updateInterval * 2)
+                .Append(portal.transform.DOScale(Vector3.zero, _updateInterval).SetEase(Ease.InOutQuad))
+                .AppendCallback(() => GameManager.Instance.PortalObjectPool.ReturnToPool(portal));
         }
 
         private void InstantiateSnakeCorners()
