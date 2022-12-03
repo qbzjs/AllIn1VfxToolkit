@@ -51,7 +51,7 @@ namespace Snake4D
             _position = GetPredictedPosition();
 
             // Regular non-warped movement
-            if ((_position - _previousPosition).magnitude == 1)
+            if ((_position - _previousPosition).sqrMagnitude == 1)
             {
                 _direction = (_position - _previousPosition);
             }
@@ -61,10 +61,11 @@ namespace Snake4D
             {
                 // Assumes always warp to the opposite side
                 Vector4Int direction = _position - _previousPosition;
-                direction.x = -1 * UnityEngine.Mathf.RoundToInt(direction.x / direction.magnitude);
-                direction.y = -1 * UnityEngine.Mathf.RoundToInt(direction.y / direction.magnitude);
-                direction.z = -1 * UnityEngine.Mathf.RoundToInt(direction.z / direction.magnitude);
-                direction.w = -1 * UnityEngine.Mathf.RoundToInt(direction.w / direction.magnitude);
+                float magnitude = direction.magnitude;
+                direction.x = -1 * UnityEngine.Mathf.RoundToInt(direction.x / magnitude);
+                direction.y = -1 * UnityEngine.Mathf.RoundToInt(direction.y / magnitude);
+                direction.z = -1 * UnityEngine.Mathf.RoundToInt(direction.z / magnitude);
+                direction.w = -1 * UnityEngine.Mathf.RoundToInt(direction.w / magnitude);
                 _direction = direction;
             }
         }

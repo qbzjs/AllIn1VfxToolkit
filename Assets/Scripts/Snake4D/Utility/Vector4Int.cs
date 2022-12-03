@@ -24,6 +24,7 @@ namespace Snake4D
         public int w;
 
         public float magnitude => CalculateMagnitude();
+        public float sqrMagnitude => CalculateSquareMagnitude();
 
         /// <summary>
         /// Creates a new vector with given x component and sets y, z and w to zero.
@@ -175,14 +176,19 @@ namespace Snake4D
             return ToVector3Int(this);
         }
 
-        private float CalculateMagnitude()
+        private float CalculateSquareMagnitude()
         {
             float x2 = x * x;
             float y2 = y * y;
             float z2 = z * z;
             float w2 = w * w;
 
-            return Mathf.Sqrt(x2 + y2 + z2 + w2);
+            return (x2 + y2 + z2 + w2);
+        }
+
+        private float CalculateMagnitude()
+        {
+            return Mathf.Sqrt(CalculateSquareMagnitude());
         }
     }
 }

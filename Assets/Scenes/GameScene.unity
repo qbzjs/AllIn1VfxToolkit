@@ -371,7 +371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableCornerClones
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableLerpPosition
@@ -379,7 +379,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableLerpDirection
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableTweenFoodSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableTweenPosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableTweenDirection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150330, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: m_Name
@@ -979,7 +991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableCornerClones
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableLerpPosition
@@ -987,7 +999,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableLerpDirection
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableTweenFoodSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableTweenPosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableTweenDirection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150330, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: m_Name
@@ -1478,7 +1502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
-  _updateInterval: 0.1
+  _updateInterval: 0.15
   _bufferCapacity: 3
   _headCubePrefab: {fileID: 2889921201793651594, guid: dced5f3f267387643afe1a9452e5b34f, type: 3}
   _bodyCubePrefab: {fileID: 8290799120260657568, guid: d1b98b4eaa45a0e46b22cc5523ceaa9d, type: 3}
@@ -2945,8 +2969,12 @@ PrefabInstance:
       value: MainPlatform
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
-      propertyPath: _enableCornerClones
+      propertyPath: _tweenPositionEase
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableCornerClones
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableLerpPosition
@@ -2954,7 +2982,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableLerpDirection
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableTweenFoodSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableTweenPosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _enableTweenDirection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _onlyLerpHeadDirection
