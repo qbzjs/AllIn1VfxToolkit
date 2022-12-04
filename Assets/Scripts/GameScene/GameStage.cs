@@ -23,6 +23,8 @@ namespace GameScene
         [SerializeField] bool _enableTweenDirection;
         [SerializeField] Ease _tweenDirectionEase = Ease.Linear;
         [SerializeField] bool _onlyTweenHeadDirection;
+        [SerializeField] bool _tweenSizeWhenRotating;
+        [SerializeField] float _rotatingSizeFactor = 0.85f;
 
         [Header("Tween Food Settings")]
         [SerializeField] bool _enableTweenFoodSize;
@@ -177,6 +179,9 @@ namespace GameScene
                         // Finish pre-rotated rotation
                         if (currentCrossProduct != Vector3.zero && futureCrossProduct == Vector3.zero)
                         {
+                            if (_tweenSizeWhenRotating)
+                                TweenResizeSnakeBodyPart(i, 1f, _updateInterval);
+
                             TweenRotateSnakeBodyPart(i, currentCrossProduct, 45f, _updateInterval);
                         }
 
@@ -190,6 +195,9 @@ namespace GameScene
                         // Pre-rotate before actually rotating
                         else if (currentCrossProduct == Vector3.zero && futureCrossProduct != Vector3.zero)
                         {
+                            if (_tweenSizeWhenRotating)
+                                TweenResizeSnakeBodyPart(i, _rotatingSizeFactor, _updateInterval);
+
                             TweenRotateSnakeBodyPart(i, futureCrossProduct, 45f, _updateInterval);
                         }
                     }
@@ -207,6 +215,18 @@ namespace GameScene
                     .Join(_snakePartClones[i].transform.DOBlendableRotateBy(crossProduct * degrees, duration).SetEase(_tweenDirectionEase));
 
                 return parallelRotationSequence;
+            }
+
+            Tween TweenResizeSnakeBodyPart(int i, float scaleFactor, float duration)
+            {
+                Vector3 originalScale = GameManager.Instance.BodyPrefab.transform.localScale;
+
+                Sequence resizeSequence = DOTween.Sequence();
+                resizeSequence
+                    .Append(_snakeBodyCubes[i].transform.DOScale(originalScale * scaleFactor, duration))
+                    .Join(_snakePartClones[i].transform.DOScale(originalScale * scaleFactor, duration));
+
+                return resizeSequence;
             }
         }
 
