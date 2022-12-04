@@ -379,7 +379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _tweenDirectionEase
-      value: 18
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableLerpDirection
@@ -942,7 +942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _tweenDirectionEase
-      value: 18
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableLerpDirection
@@ -1496,7 +1496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDebugLogs: 1
-  _updateInterval: 0.1
+  _updateInterval: 0.3
   _bufferCapacity: 3
   _headCubePrefab: {fileID: 2889921201793651594, guid: dced5f3f267387643afe1a9452e5b34f, type: 3}
   _bodyCubePrefab: {fileID: 8290799120260657568, guid: d1b98b4eaa45a0e46b22cc5523ceaa9d, type: 3}
@@ -2863,7 +2863,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _tweenDirectionEase
-      value: 18
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableLerpDirection

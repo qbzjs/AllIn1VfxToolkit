@@ -153,14 +153,49 @@ namespace GameScene
             }
             else
             {
-                Vector3 crossProduct = Vector3.Cross(_snakeBodyPreviousDirections[i], _snakeBodyCurrentDirections[i]);
-                if (_enableTweenDirection && crossProduct != Vector3.zero && !(i != 0 && _onlyTweenHeadDirection))
+                if (_enableTweenDirection)
                 {
-                    _snakeBodyCubes[i].transform.DOBlendableRotateBy(crossProduct * 90, _updateInterval).SetEase(_tweenDirectionEase);
+                    // currentDirection is defined as (currentPosition - previousPosition)
+                    // And all snake body parts are initially in the previous position, tweening towards the current position
 
-                    // Rotate the clones even if they are not active, so when they are turned active there will not be any visual glitches
-                    _snakePartClones[i].transform.DOBlendableRotateBy(crossProduct * 90, _updateInterval).SetEase(_tweenDirectionEase);
+                    Vector3 previousDirection = _snakeBodyPreviousDirections[i];
+                    Vector3 currentDirection = _snakeBodyCurrentDirections[i];
+                    Vector3 crossProduct = Vector3.Cross(previousDirection, currentDirection);
+
+                    // Head direction handling
+                    if (i == 0 && crossProduct != Vector3.zero) // Non-zero cross product => Not the same direction, have rotation
+                    {
+                        TweenRotateSnakeBodyPart(i, crossProduct, 90f);
+                    }
+
+                    // Body direction handling
+                    else if (i > 0 && !_onlyTweenHeadDirection)
+                    {
+                        Vector3 futureDirection = _snakeBodyCurrentDirections[i - 1];
+                        Vector3 futureCrossProduct = Vector3.Cross(currentDirection, futureDirection);
+
+                        //! This calculation only works for 2D!! not 3D!
+                        // Pre-rotate by 45 degrees before actually turning
+                        if (futureCrossProduct != Vector3.zero)
+                        {
+                            TweenRotateSnakeBodyPart(i, futureCrossProduct, 45f);
+                        }
+
+                        // Finish the rotation by 45 degrees when actually turning
+                        if (crossProduct != Vector3.zero)
+                        {
+                            TweenRotateSnakeBodyPart(i, crossProduct, 45f);
+                        }
+                    }
                 }
+            }
+
+            void TweenRotateSnakeBodyPart(int i, Vector3 crossProduct, float degrees)
+            {
+                _snakeBodyCubes[i].transform.DOBlendableRotateBy(crossProduct * degrees, _updateInterval).SetEase(_tweenDirectionEase);
+
+                // Rotate the clones even if they are not active, so when they are turned active there will not be any visual glitches
+                _snakePartClones[i].transform.DOBlendableRotateBy(crossProduct * degrees, _updateInterval).SetEase(_tweenDirectionEase);
             }
         }
 
