@@ -160,12 +160,12 @@ namespace GameScene
 
                     Vector3 previousDirection = _snakeBodyPreviousDirections[i];
                     Vector3 currentDirection = _snakeBodyCurrentDirections[i];
-                    Vector3 crossProduct = Vector3.Cross(previousDirection, currentDirection);
+                    Vector3 currentCrossProduct = Vector3.Cross(previousDirection, currentDirection);
 
                     // Head direction handling
-                    if (i == 0 && crossProduct != Vector3.zero) // Non-zero cross product => Not the same direction, have rotation
+                    if (i == 0 && currentCrossProduct != Vector3.zero) // Non-zero cross product => Not the same direction, have rotation
                     {
-                        TweenRotateSnakeBodyPart(i, crossProduct, 90f);
+                        TweenRotateSnakeBodyPart(i, currentCrossProduct, 90f, _updateInterval);
                     }
 
                     // Body direction handling
@@ -174,28 +174,39 @@ namespace GameScene
                         Vector3 futureDirection = _snakeBodyCurrentDirections[i - 1];
                         Vector3 futureCrossProduct = Vector3.Cross(currentDirection, futureDirection);
 
-                        //! This calculation only works for 2D!! not 3D!
-                        // Pre-rotate by 45 degrees before actually turning
-                        if (futureCrossProduct != Vector3.zero)
+                        // Finish pre-rotated rotation
+                        if (currentCrossProduct != Vector3.zero && futureCrossProduct == Vector3.zero)
                         {
-                            TweenRotateSnakeBodyPart(i, futureCrossProduct, 45f);
+                            TweenRotateSnakeBodyPart(i, currentCrossProduct, 45f, _updateInterval);
                         }
 
-                        // Finish the rotation by 45 degrees when actually turning
-                        if (crossProduct != Vector3.zero)
+                        // Finish pre-rotated rotation + Pre-rotate before actually rotating
+                        else if (currentCrossProduct != Vector3.zero && futureCrossProduct != Vector3.zero)
                         {
-                            TweenRotateSnakeBodyPart(i, crossProduct, 45f);
+                            TweenRotateSnakeBodyPart(i, currentCrossProduct, 45f, _updateInterval / 2)
+                                .OnComplete(() => TweenRotateSnakeBodyPart(i, futureCrossProduct, 45f, _updateInterval / 2));
+                        }
+
+                        // Pre-rotate before actually rotating
+                        else if (currentCrossProduct == Vector3.zero && futureCrossProduct != Vector3.zero)
+                        {
+                            TweenRotateSnakeBodyPart(i, futureCrossProduct, 45f, _updateInterval);
                         }
                     }
                 }
             }
 
-            void TweenRotateSnakeBodyPart(int i, Vector3 crossProduct, float degrees)
+            Tween TweenRotateSnakeBodyPart(int i, Vector3 crossProduct, float degrees, float duration)
             {
-                _snakeBodyCubes[i].transform.DOBlendableRotateBy(crossProduct * degrees, _updateInterval).SetEase(_tweenDirectionEase);
+                Sequence parallelRotationSequence = DOTween.Sequence();
+                parallelRotationSequence
+                    // Rotate the snake parts
+                    .Append(_snakeBodyCubes[i].transform.DOBlendableRotateBy(crossProduct * degrees, duration).SetEase(_tweenDirectionEase))
 
-                // Rotate the clones even if they are not active, so when they are turned active there will not be any visual glitches
-                _snakePartClones[i].transform.DOBlendableRotateBy(crossProduct * degrees, _updateInterval).SetEase(_tweenDirectionEase);
+                    // Rotate the clones even if they are not active, so when they are turned active there will not be any visual glitches
+                    .Join(_snakePartClones[i].transform.DOBlendableRotateBy(crossProduct * degrees, duration).SetEase(_tweenDirectionEase));
+
+                return parallelRotationSequence;
             }
         }
 
