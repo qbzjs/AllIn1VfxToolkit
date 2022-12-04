@@ -41,6 +41,7 @@ namespace GameScene
         [Header("Onion Settings")]
         [SerializeField] bool _enableOnion;
         [SerializeField][Range(0, 1)] float _onionOpacity = 0.3f;
+        [SerializeField][Range(0, 1)] float _foodOnionOpacity = 0.7f;
 
         [Header("Corner Settings")]
         [SerializeField] bool _enableCornerClones;
@@ -63,6 +64,7 @@ namespace GameScene
 
         List<GameObject> _snakePartCornerClones = new List<GameObject>();
 
+        Vector4Int _snakeFoodCurrentGamePosition;
         Vector3 _snakeFoodPreviousPosition;
         Vector3 _snakeFoodCurrentPosition;
 
@@ -157,27 +159,8 @@ namespace GameScene
             if (i == 0) return;
 
             // Assumes that the target child with the desired MeshRenderer is higher in the hierarchy
-            Vector4Int headGameSpacePosition = _snakeBodyCurrentGameSpacePositions[0];
             Vector4Int snakePartGameSpacePosition = _snakeBodyCurrentGameSpacePositions[i];
-
-            float distance = 0;
-            if (_renderPlane == RenderPlane.XY)
-            {
-                float wDistance = Mathf.Abs(headGameSpacePosition.w - snakePartGameSpacePosition.w);
-                float zDistance = Mathf.Abs(headGameSpacePosition.z - snakePartGameSpacePosition.z);
-                distance = wDistance + zDistance;
-            }
-            else if (_renderPlane == RenderPlane.ZW)
-            {
-                float xDistance = Mathf.Abs(headGameSpacePosition.x - snakePartGameSpacePosition.x);
-                float yDistance = Mathf.Abs(headGameSpacePosition.y - snakePartGameSpacePosition.y);
-                distance = xDistance + yDistance;
-            }
-            else if (_renderPlane == RenderPlane.All)
-            {
-                float wDistance = Mathf.Abs(headGameSpacePosition.w - snakePartGameSpacePosition.w);
-                distance = wDistance;
-            }
+            float distance = GameDistanceWithSnakeHead(snakePartGameSpacePosition);
 
             Material materialInstance = _snakeBodyCubes[i].GetComponentInChildren<MeshRenderer>().material;
             Material cloneMaterialInstance = _snakePartClones[i].GetComponentInChildren<MeshRenderer>().material;
@@ -192,6 +175,31 @@ namespace GameScene
                 materialInstance.DOFloat(_onionOpacity, "_opacity", _updateInterval);
                 cloneMaterialInstance.DOFloat(_onionOpacity, "_opacity", _updateInterval);
             }
+        }
+
+        private float GameDistanceWithSnakeHead(Vector4Int gamePositionToCompare)
+        {
+            float distance = 0;
+            Vector4Int headGameSpacePosition = _snakeBodyCurrentGameSpacePositions[0];
+            if (_renderPlane == RenderPlane.XY)
+            {
+                float wDistance = Mathf.Abs(headGameSpacePosition.w - gamePositionToCompare.w);
+                float zDistance = Mathf.Abs(headGameSpacePosition.z - gamePositionToCompare.z);
+                distance = wDistance + zDistance;
+            }
+            else if (_renderPlane == RenderPlane.ZW)
+            {
+                float xDistance = Mathf.Abs(headGameSpacePosition.x - gamePositionToCompare.x);
+                float yDistance = Mathf.Abs(headGameSpacePosition.y - gamePositionToCompare.y);
+                distance = xDistance + yDistance;
+            }
+            else if (_renderPlane == RenderPlane.All)
+            {
+                float wDistance = Mathf.Abs(headGameSpacePosition.w - gamePositionToCompare.w);
+                distance = wDistance;
+            }
+
+            return distance;
         }
 
         private void HandleCornerClone(int i)
@@ -512,8 +520,25 @@ namespace GameScene
             int foodYPosition = 0;
             if (_overrideFoodHeight) foodYPosition = _overrideFoodYPosition;
 
+            _snakeFoodCurrentGamePosition = _snakeGame.GetCurrentSnakeFoodGameSpacePosition();
             _snakeFoodCurrentPosition = _snakeGame.GetCurrentSnakeFoodWorldSpacePosition(_renderPlane, foodYPosition);
             _snakeFoodPreviousPosition = _snakeGame.GetPreviousSnakeFoodWorldSpacePosition(_renderPlane, foodYPosition);
+
+            if (_enableOnion)
+            {
+                float distance = GameDistanceWithSnakeHead(_snakeFoodCurrentGamePosition);
+                if (distance == 0)
+                {
+                    _snakeFood.GetComponent<Renderer>().material.DOColor(GameManager.Instance.FoodColor, "_BaseColor", _updateInterval);
+                    _snakeFoodClone.GetComponent<Renderer>().material.DOColor(GameManager.Instance.FoodColor, "_BaseColor", _updateInterval);
+                }
+                else
+                {
+                    Color color = new Color(GameManager.Instance.FoodColor.r, GameManager.Instance.FoodColor.g, GameManager.Instance.FoodColor.b, _foodOnionOpacity);
+                    _snakeFood.GetComponent<Renderer>().material.DOColor(color, "_BaseColor", _updateInterval);
+                    _snakeFoodClone.GetComponent<Renderer>().material.DOColor(color, "_BaseColor", _updateInterval);
+                }
+            }
 
             if (_snakeFood.transform.localPosition != _snakeFoodCurrentPosition)
             {

@@ -20,6 +20,7 @@ namespace GameScene
         public GameObject BodyPrefab => _bodyCubePrefab;
         public GameObject FoodPrefab => _foodCubePrefab;
         public ObjectPool PortalObjectPool => _portalObjectPool;
+        public Color FoodColor => FoodPrefab.GetComponent<Renderer>().sharedMaterial.GetColor("_BaseColor");
 
         [Header("Game Manager")]
         [SerializeField] float _updateInterval;

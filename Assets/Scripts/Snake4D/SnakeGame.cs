@@ -26,6 +26,11 @@ namespace Snake4D
             return _gameState.CurrentSnakeBodyPositions;
         }
 
+        public Vector4Int GetCurrentSnakeFoodGameSpacePosition()
+        {
+            return _gameState.SnakeFoodPosition;
+        }
+
         public List<Vector3Int> GetPreviousSnakeBodyWorldSpacePositions(RenderPlane renderPlane)
         {
             List<Vector4Int> positions = _gameState.PreviousSnakeBodyPositions;
