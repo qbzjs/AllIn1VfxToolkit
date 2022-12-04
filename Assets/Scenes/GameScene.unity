@@ -2847,7 +2847,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4779572517319391040, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.66
+      value: -0.71
       objectReference: {fileID: 0}
     - target: {fileID: 4779572517319391041, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _gameManager
@@ -2896,6 +2896,10 @@ PrefabInstance:
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _onlyLerpHeadDirection
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _tweenSizeWhenRotating
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableTweenSizeWhenWarp

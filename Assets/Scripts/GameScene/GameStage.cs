@@ -157,8 +157,6 @@ namespace GameScene
             if (i == 0) return;
 
             // Assumes that the target child with the desired MeshRenderer is higher in the hierarchy
-            MeshRenderer snakePartMeshRenderer = _snakeBodyCubes[i].GetComponentInChildren<MeshRenderer>();
-            Material materialInstance = snakePartMeshRenderer.material;
             Vector4Int headGameSpacePosition = _snakeBodyCurrentGameSpacePositions[0];
             Vector4Int snakePartGameSpacePosition = _snakeBodyCurrentGameSpacePositions[i];
 
@@ -181,10 +179,19 @@ namespace GameScene
                 distance = wDistance;
             }
 
+            Material materialInstance = _snakeBodyCubes[i].GetComponentInChildren<MeshRenderer>().material;
+            Material cloneMaterialInstance = _snakePartClones[i].GetComponentInChildren<MeshRenderer>().material;
+
             if (distance == 0)
+            {
                 materialInstance.DOFloat(1f, "_opacity", _updateInterval);
+                cloneMaterialInstance.DOFloat(1f, "_opacity", _updateInterval);
+            }
             else if (distance != 0)
+            {
                 materialInstance.DOFloat(_onionOpacity, "_opacity", _updateInterval);
+                cloneMaterialInstance.DOFloat(_onionOpacity, "_opacity", _updateInterval);
+            }
         }
 
         private void HandleCornerClone(int i)
@@ -353,7 +360,7 @@ namespace GameScene
 
         private void HandlePortalSpawnWhenWarp(int i)
         {
-            const float DISTANCE_FACTOR = 0.65f; // Make sure platform gives sufficient space for prtal to spawn, ie. platform y = -0.66f
+            const float DISTANCE_FACTOR = 0.7f; // Make sure platform gives sufficient space for prtal to spawn
 
             float gameSize = GameManager.Instance.GameSize;
             // Map the position to a color, so that the portal at that position will always have the same color
@@ -472,7 +479,7 @@ namespace GameScene
 
         private void SetupMaterialClipping(GameObject gameObjectToSetup)
         {
-            const float BUFFER = 0.1f;
+            const float BUFFER = 0.08f;
 
             Renderer[] renderers = gameObjectToSetup.GetComponentsInChildren<Renderer>();
 
