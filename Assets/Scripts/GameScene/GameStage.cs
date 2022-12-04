@@ -40,6 +40,7 @@ namespace GameScene
 
         [Header("Onion Settings")]
         [SerializeField] bool _enableOnion;
+        [SerializeField][Range(0, 1)] float _onionOpacity = 0.3f;
 
         [Header("Corner Settings")]
         [SerializeField] bool _enableCornerClones;
@@ -183,7 +184,7 @@ namespace GameScene
             if (distance == 0)
                 materialInstance.DOFloat(1f, "_opacity", _updateInterval);
             else if (distance != 0)
-                materialInstance.DOFloat(0.25f, "_opacity", _updateInterval);
+                materialInstance.DOFloat(_onionOpacity, "_opacity", _updateInterval);
         }
 
         private void HandleCornerClone(int i)
