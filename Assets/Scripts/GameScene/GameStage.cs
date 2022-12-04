@@ -32,6 +32,14 @@ namespace GameScene
         [SerializeField] Ease _tweenFoodEaseIn = Ease.InQuad;
         [SerializeField] Ease _tweenFoodEaseOut = Ease.OutQuad;
 
+        [Header("Override Height Settings")]
+        [SerializeField] bool _overrideSnakeHeadHeight = true;
+        [SerializeField] int _overrideSnakeHeadYPosition = 2;
+        [SerializeField] bool _overrideFoodHeight = true;
+        [SerializeField] int _overrideFoodYPosition = 1;
+
+        [Header("Onion Settings")]
+        [SerializeField] bool _enableOnion;
 
         [Header("Corner Settings")]
         [SerializeField] bool _enableCornerClones;
@@ -41,6 +49,7 @@ namespace GameScene
 
         List<GameObject> _snakeBodyCubes = new List<GameObject>();
 
+        List<Vector4Int> _snakeBodyCurrentGameSpacePositions = new List<Vector4Int>();
         List<Vector3Int> _snakeBodyPreviousPositions = new List<Vector3Int>();
         List<Vector3Int> _snakeBodyCurrentPositions = new List<Vector3Int>();
 
@@ -98,6 +107,11 @@ namespace GameScene
             {
                 _snakeBodyCubes[i].transform.localPosition = _snakeBodyCurrentPositions[i];
             }
+
+            if (_renderPlane != RenderPlane.All)
+            {
+                _snakeBodyCubes[0].transform.localPosition = new Vector3(_snakeBodyCurrentPositions[0].x, 2, _snakeBodyCurrentPositions[0].z);
+            }
         }
 
         private void SetSnakeBodyDirections()
@@ -127,13 +141,52 @@ namespace GameScene
 
             for (int i = 0; i < _snakeBodyCurrentPositions.Count; i++)
             {
-                HandleSnakePartPositions(i);
-                HandleSnakePartDirections(i);
-                HandleCornerClones(i);
+                HandleSnakePartPosition(i);
+                HandleSnakePartDirection(i);
+                HandleCornerClone(i);
+                HandleOnionSkin(i);
             }
         }
 
-        private void HandleCornerClones(int i)
+        private void HandleOnionSkin(int i)
+        {
+            if (!_enableOnion) return;
+
+            // The snake head does not change color
+            if (i == 0) return;
+
+            // Assumes that the target child with the desired MeshRenderer is higher in the hierarchy
+            MeshRenderer snakePartMeshRenderer = _snakeBodyCubes[i].GetComponentInChildren<MeshRenderer>();
+            Material materialInstance = snakePartMeshRenderer.material;
+            Vector4Int headGameSpacePosition = _snakeBodyCurrentGameSpacePositions[0];
+            Vector4Int snakePartGameSpacePosition = _snakeBodyCurrentGameSpacePositions[i];
+
+            float distance = 0;
+            if (_renderPlane == RenderPlane.XY)
+            {
+                float wDistance = Mathf.Abs(headGameSpacePosition.w - snakePartGameSpacePosition.w);
+                float zDistance = Mathf.Abs(headGameSpacePosition.z - snakePartGameSpacePosition.z);
+                distance = wDistance + zDistance;
+            }
+            else if (_renderPlane == RenderPlane.ZW)
+            {
+                float xDistance = Mathf.Abs(headGameSpacePosition.x - snakePartGameSpacePosition.x);
+                float yDistance = Mathf.Abs(headGameSpacePosition.y - snakePartGameSpacePosition.y);
+                distance = xDistance + yDistance;
+            }
+            else if (_renderPlane == RenderPlane.All)
+            {
+                float wDistance = Mathf.Abs(headGameSpacePosition.w - snakePartGameSpacePosition.w);
+                distance = wDistance;
+            }
+
+            if (distance == 0)
+                materialInstance.DOFloat(1f, "_opacity", _updateInterval);
+            else if (distance != 0)
+                materialInstance.DOFloat(0.25f, "_opacity", _updateInterval);
+        }
+
+        private void HandleCornerClone(int i)
         {
             // Handling when turning corners
             if (_snakeBodyCurrentDirections[i] != _snakeBodyPreviousDirections[i] && _enableCornerClones)
@@ -147,7 +200,7 @@ namespace GameScene
             }
         }
 
-        private void HandleSnakePartDirections(int i)
+        private void HandleSnakePartDirection(int i)
         {
             if (!_enableTweenDirection)
             {
@@ -230,7 +283,7 @@ namespace GameScene
             }
         }
 
-        private void HandleSnakePartPositions(int i)
+        private void HandleSnakePartPosition(int i)
         {
             if (!_enableTweenPosition)
             {
@@ -247,16 +300,38 @@ namespace GameScene
                     _snakePartCloneCurrentPositions[i] = _snakePartClonePreviousPositions[i] + _snakeBodyCurrentDirections[i];
 
                     _snakePartClones[i].SetActive(true);
-                    _snakePartClones[i].transform.localPosition = _snakePartClonePreviousPositions[i];
-                    _snakePartClones[i].transform.DOLocalMove(_snakePartCloneCurrentPositions[i], _updateInterval).SetEase(_tweenPositionEase);
+
+                    // Tween Move Clone
+                    if (_overrideSnakeHeadHeight && _renderPlane != RenderPlane.All && i == 0)
+                    {
+                        Vector3 previousPosition = new Vector3(_snakePartClonePreviousPositions[i].x, _overrideSnakeHeadYPosition, _snakePartClonePreviousPositions[i].z);
+                        Vector3 currentPosition = new Vector3(_snakePartCloneCurrentPositions[i].x, _overrideSnakeHeadYPosition, _snakePartCloneCurrentPositions[i].z);
+                        _snakePartClones[i].transform.localPosition = previousPosition;
+                        _snakePartClones[i].transform.DOLocalMove(currentPosition, _updateInterval).SetEase(_tweenPositionEase);
+                    }
+                    else
+                    {
+                        _snakePartClones[i].transform.localPosition = _snakePartClonePreviousPositions[i];
+                        _snakePartClones[i].transform.DOLocalMove(_snakePartCloneCurrentPositions[i], _updateInterval).SetEase(_tweenPositionEase);
+                    }
 
                     HandlePortalSpawnWhenWarp(i);
                     HandleTweenSizeWhenWarp(i);
                 }
 
                 // Tween Move
-                _snakeBodyCubes[i].transform.localPosition = _snakeBodyPreviousPositions[i];
-                _snakeBodyCubes[i].transform.DOLocalMove(_snakeBodyCurrentPositions[i], _updateInterval).SetEase(_tweenPositionEase);
+                if (_overrideSnakeHeadHeight && _renderPlane != RenderPlane.All && i == 0)
+                {
+                    Vector3 previousPosition = new Vector3(_snakeBodyPreviousPositions[i].x, _overrideSnakeHeadYPosition, _snakeBodyPreviousPositions[i].z);
+                    Vector3 currentPosition = new Vector3(_snakeBodyCurrentPositions[i].x, _overrideSnakeHeadYPosition, _snakeBodyCurrentPositions[i].z);
+                    _snakeBodyCubes[i].transform.localPosition = previousPosition;
+                    _snakeBodyCubes[i].transform.DOLocalMove(currentPosition, _updateInterval).SetEase(_tweenPositionEase);
+                }
+                else
+                {
+                    _snakeBodyCubes[i].transform.localPosition = _snakeBodyPreviousPositions[i];
+                    _snakeBodyCubes[i].transform.DOLocalMove(_snakeBodyCurrentPositions[i], _updateInterval).SetEase(_tweenPositionEase);
+                }
             }
         }
 
@@ -365,6 +440,7 @@ namespace GameScene
 
         private void GetSnakeBodyPositions()
         {
+            _snakeBodyCurrentGameSpacePositions = _snakeGame.GetCurrentSnakeBodyGameSpacePositions();
             _snakeBodyPreviousPositions = _snakeGame.GetPreviousSnakeBodyWorldSpacePositions(_renderPlane);
             _snakeBodyCurrentPositions = _snakeGame.GetCurrentSnakeBodyWorldSpacePositions(_renderPlane);
         }
@@ -424,8 +500,12 @@ namespace GameScene
             }
 
             // TODO : If game over, still make clone but also destroy the food
-            _snakeFoodCurrentPosition = _snakeGame.GetCurrentSnakeFoodWorldSpacePosition(_renderPlane);
-            _snakeFoodPreviousPosition = _snakeGame.GetPreviousSnakeFoodWorldSpacePosition(_renderPlane);
+
+            int foodYPosition = 0;
+            if (_overrideFoodHeight) foodYPosition = _overrideFoodYPosition;
+
+            _snakeFoodCurrentPosition = _snakeGame.GetCurrentSnakeFoodWorldSpacePosition(_renderPlane, foodYPosition);
+            _snakeFoodPreviousPosition = _snakeGame.GetPreviousSnakeFoodWorldSpacePosition(_renderPlane, foodYPosition);
 
             if (_snakeFood.transform.localPosition != _snakeFoodCurrentPosition)
             {

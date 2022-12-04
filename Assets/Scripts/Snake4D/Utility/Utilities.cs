@@ -132,7 +132,7 @@ namespace Snake4D
         /// <param name="gameSpacePosition"></param>
         /// <param name="renderPlane"></param>
         /// <returns></returns>
-        public static Vector3Int GameSpaceToWorldSpace(Vector4Int gameSpacePosition, RenderPlane renderPlane)
+        public static Vector3Int GameSpaceToWorldSpace(Vector4Int gameSpacePosition, RenderPlane renderPlane, int yPosition = 0)
         {
             switch (renderPlane)
             {
@@ -140,10 +140,10 @@ namespace Snake4D
                     return new Vector3Int(gameSpacePosition.x, gameSpacePosition.z, gameSpacePosition.y);
 
                 case RenderPlane.XY:
-                    return new Vector3Int(gameSpacePosition.x, 0, gameSpacePosition.y);
+                    return new Vector3Int(gameSpacePosition.x, yPosition, gameSpacePosition.y);
 
                 case RenderPlane.ZW:
-                    return new Vector3Int(gameSpacePosition.w, 0, gameSpacePosition.z);
+                    return new Vector3Int(gameSpacePosition.w, yPosition, gameSpacePosition.z);
             }
 
             throw new System.InvalidOperationException();
@@ -205,12 +205,12 @@ namespace Snake4D
             throw new System.InvalidOperationException();
         }
 
-        public static List<Vector3Int> Convert4DVectorsToWorldSpace(List<Vector4Int> positions, RenderPlane renderPlane)
+        public static List<Vector3Int> Convert4DVectorsToWorldSpace(List<Vector4Int> positions, RenderPlane renderPlane, int yPosition = 0)
         {
             List<Vector3Int> worldSpacePositions = new List<Vector3Int>();
             foreach (Vector4Int position in positions)
             {
-                worldSpacePositions.Add(Utilities.GameSpaceToWorldSpace(position, renderPlane));
+                worldSpacePositions.Add(Utilities.GameSpaceToWorldSpace(position, renderPlane, yPosition));
             }
 
             return worldSpacePositions;
