@@ -135,10 +135,16 @@ namespace GameScene
                 }
 
                 //! Testing transition
-                if (GameDimension == Dimension.DimensionTwo && _snakeGame.GetSnakeTailLength() == 3)
+                if (GameDimension == Dimension.DimensionTwo && _snakeGame.GetSnakeTailLength() == 2)
                 {
                     _snakeGame.UpdateDimension(Dimension.DimensionThree);
                     PublishMessageHubEvent<DynamicCameraHelper.RequestTransitionEvent>(new(DynamicCameraHelper.TransitionType.ToPerspective));
+                }
+
+                if (GameDimension == Dimension.DimensionThree && _snakeGame.GetSnakeTailLength() == 4)
+                {
+                    _snakeGame.UpdateDimension(Dimension.DimensionFour);
+                    PublishMessageHubEvent<OrthoCameraHelper.TransitionTo4DViewEvent>(null);
                 }
                 //!
             }
