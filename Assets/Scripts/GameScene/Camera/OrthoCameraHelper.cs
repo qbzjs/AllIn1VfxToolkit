@@ -15,8 +15,11 @@ namespace GameScene
         [Header("ZW Plane Settings")]
         [SerializeField] bool _isZWPlane = false;
         [SerializeField] MeshRenderer _originReference;
-        [SerializeField] float _transitionDuration;
+        [SerializeField] float _transition4DDuration;
+        [SerializeField] float _transitionBlockDuration;
         [SerializeField] GameObject _platformExtension;
+        [SerializeField] GameObject _block4D;
+        [SerializeField] GameObject _block3D;
 
         GameManager _gameManager => GameManager.Instance;
         Camera _mainCamera;
@@ -29,6 +32,7 @@ namespace GameScene
         protected override void SubscribeToMessageHubEvents()
         {
             SubscribeToMessageHubEvent<InitOrthoCameraEvent>((e) => InitOrthoCamera());
+            SubscribeToMessageHubEvent<TransitionTo3DViewEvent>((e) => { if (_isZWPlane) TransitionTo3DView(); });
             SubscribeToMessageHubEvent<TransitionTo4DViewEvent>((e) => { if (_isZWPlane) TransitionTo4DView(); });
         }
 
@@ -38,18 +42,23 @@ namespace GameScene
                 transform.position = CalculateOrthoCameraWorldPosition(_platformMeshRenderer, _cameraHeight, _gameManager.GameSize);
             else if (_gameManager.GameDimension == Snake4D.Dimension.DimensionThree)
                 Set3DView();
-
-            // TODO : 2D view?
             else if (_gameManager.GameDimension == Snake4D.Dimension.DimensionTwo)
-                Set3DView();
+                Set2DView();
 
             if (_mainCamera != null)
                 _mainCamera.orthographicSize = CalculateFlatCameraOrthographicize(_gameManager.GameSize, _orthographicSizeFactor);
         }
 
+        private void Set2DView()
+        {
+            _block3D.SetActive(true);
+            Set3DView();
+        }
+
         private void Set3DView()
         {
             _platformExtension.SetActive(true);
+            _block4D.SetActive(true);
 
             Vector3 platformCenter = _platformMeshRenderer.bounds.center;
             Vector3 originCenter = _originReference.bounds.center;
@@ -59,11 +68,27 @@ namespace GameScene
             transform.position = targetPosition;
         }
 
+        private void TransitionTo3DView()
+        {
+            _block3D.transform.DOLocalMoveZ(100, _transitionBlockDuration).SetEase(Ease.OutQuad)
+                .OnComplete(() => _block3D.SetActive(false));
+        }
+
         private void TransitionTo4DView()
         {
-            DebugLog("TransitionTo4DView...");
             Vector3 targetPosition = CalculateOrthoCameraWorldPosition(_platformMeshRenderer, _cameraHeight, _gameManager.GameSize);
-            transform.DOMove(targetPosition, _transitionDuration).SetEase(Ease.InOutQuad);
+            Sequence tweenSequence = DOTween.Sequence();
+            tweenSequence
+                // Move camera
+                .Append(transform.DOMove(targetPosition, _transition4DDuration).SetEase(Ease.InOutQuad))
+
+                // Move block
+                .Append(_block4D.transform.DOLocalMoveX(100, _transitionBlockDuration).SetEase(Ease.OutQuad))
+                .OnComplete(() =>
+                {
+                    _block4D.SetActive(false);
+                    _platformExtension.SetActive(false);
+                });
         }
 
         public static Vector3 CalculateOrthoCameraWorldPosition(MeshRenderer referenceMeshRenderer, float cameraHeight, int gameSize)
@@ -83,6 +108,7 @@ namespace GameScene
         /// </summary>
         public class InitOrthoCameraEvent { }
 
+        public class TransitionTo3DViewEvent { }
         public class TransitionTo4DViewEvent { }
     }
 }

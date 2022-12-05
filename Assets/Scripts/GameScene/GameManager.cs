@@ -27,6 +27,8 @@ namespace GameScene
         [Header("Game Manager")]
         [SerializeField] float _updateInterval;
         [SerializeField] int _bufferCapacity;
+        [SerializeField] int _lengthToTransitionTo3D;
+        [SerializeField] int _lengthToTransitionTo4D;
         [SerializeField] GameObject _headCubePrefab;
         [SerializeField] GameObject _bodyCubePrefab;
         [SerializeField] GameObject _foodCubePrefab;
@@ -139,13 +141,14 @@ namespace GameScene
                 }
 
                 //! Testing transition
-                if (GameDimension == Dimension.DimensionTwo && _snakeGame.GetSnakeTailLength() == 2)
+                if (GameDimension == Dimension.DimensionTwo && _snakeGame.GetSnakeTailLength() == _lengthToTransitionTo3D)
                 {
                     _snakeGame.UpdateDimension(Dimension.DimensionThree);
+                    PublishMessageHubEvent<OrthoCameraHelper.TransitionTo3DViewEvent>(null);
                     PublishMessageHubEvent<DynamicCameraHelper.RequestTransitionEvent>(new(DynamicCameraHelper.TransitionType.ToPerspective));
                 }
 
-                if (GameDimension == Dimension.DimensionThree && _snakeGame.GetSnakeTailLength() == 4)
+                if (GameDimension == Dimension.DimensionThree && _snakeGame.GetSnakeTailLength() == _lengthToTransitionTo4D)
                 {
                     _snakeGame.UpdateDimension(Dimension.DimensionFour);
                     PublishMessageHubEvent<OrthoCameraHelper.TransitionTo4DViewEvent>(null);
