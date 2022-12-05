@@ -401,6 +401,10 @@ PrefabInstance:
       propertyPath: _enableTweenDirection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _tweenSizeWhenRotating
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150330, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: m_Name
       value: XYGameStage
@@ -966,6 +970,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableTweenDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _tweenSizeWhenRotating
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150330, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
