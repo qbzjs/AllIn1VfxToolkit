@@ -20,6 +20,8 @@ namespace GameScene
         public GameObject BodyPrefab => _bodyCubePrefab;
         public GameObject FoodPrefab => _foodCubePrefab;
         public ObjectPool PortalObjectPool => _portalObjectPool;
+        public Color BodyColor => _bodyColor;
+        public Color OnionColor => _onionColor;
         public Color FoodColor => FoodPrefab.GetComponent<Renderer>().sharedMaterial.GetColor("_BaseColor");
 
         [Header("Game Manager")]
@@ -29,6 +31,8 @@ namespace GameScene
         [SerializeField] GameObject _bodyCubePrefab;
         [SerializeField] GameObject _foodCubePrefab;
         [SerializeField] ObjectPool _portalObjectPool;
+        [SerializeField] Color _bodyColor;
+        [SerializeField] Color _onionColor;
 
         [Header("Snake Game Parameters")]
         [SerializeField] Dimension _snakeGameDimension;

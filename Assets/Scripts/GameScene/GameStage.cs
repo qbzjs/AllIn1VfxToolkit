@@ -169,11 +169,17 @@ namespace GameScene
             {
                 materialInstance.DOFloat(1f, "_opacity", _updateInterval);
                 cloneMaterialInstance.DOFloat(1f, "_opacity", _updateInterval);
+
+                materialInstance.DOColor(GameManager.Instance.BodyColor, "_mainColor", _updateInterval);
+                cloneMaterialInstance.DOColor(GameManager.Instance.BodyColor, "_mainColor", _updateInterval);
             }
             else if (distance != 0)
             {
                 materialInstance.DOFloat(_onionOpacity, "_opacity", _updateInterval);
                 cloneMaterialInstance.DOFloat(_onionOpacity, "_opacity", _updateInterval);
+
+                materialInstance.DOColor(GameManager.Instance.OnionColor, "_mainColor", _updateInterval);
+                cloneMaterialInstance.DOColor(GameManager.Instance.OnionColor, "_mainColor", _updateInterval);
             }
         }
 

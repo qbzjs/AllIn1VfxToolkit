@@ -1514,6 +1514,8 @@ MonoBehaviour:
   _bodyCubePrefab: {fileID: 8290799120260657568, guid: d1b98b4eaa45a0e46b22cc5523ceaa9d, type: 3}
   _foodCubePrefab: {fileID: 2310218543477400548, guid: 80ae21e7f5a8b2a46b97e8d24881f54e, type: 3}
   _portalObjectPool: {fileID: 1017692750}
+  _bodyColor: {r: 0.99215686, g: 0.7529412, b: 0.49411765, a: 1}
+  _onionColor: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
   _snakeGameDimension: 1
   _snakeGameSize: 7
   _passThroughWalls: 1
