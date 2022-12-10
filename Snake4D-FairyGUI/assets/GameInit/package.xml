@@ -3,6 +3,12 @@
   <resources>
     <component id="t2dr0" name="GameInitView.xml" path="/" exported="true"/>
     <component id="m9z92" name="StartPage.xml" path="/Pages/" exported="true"/>
+    <image id="ohdl3" name="PlayIcon.png" path="/Images/"/>
+    <component id="ohdl4" name="PlayButton.xml" path="/Components/" exported="true"/>
+    <image id="ohdl5" name="ThemeIcon.png" path="/Images/"/>
+    <component id="ohdl6" name="ThemeIcon.xml" path="/Components/" exported="true"/>
+    <image id="ohdl7" name="SettingsIcon.png" path="/Images/"/>
+    <component id="ohdl8" name="SettingsButton.xml" path="/Components/" exported="true"/>
   </resources>
   <publish name="" genCode="true"/>
 </packageDescription>

@@ -14,6 +14,7 @@
     <font id="m9z9b" name="Roboto-Thin.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
     <font id="m9z9c" name="Roboto-Black.ttf" path="/Fonts/Roboto/" exported="true" renderMode="" samplePointSize="16"/>
     <image id="m9z9d" name="WireframeRectangle.png" path="/Images/" exported="true"/>
+    <image id="ohdle" name="WireframeEllipse.png" path="/Images/" exported="true"/>
   </resources>
   <publish name="" genCode="true"/>
 </packageDescription>

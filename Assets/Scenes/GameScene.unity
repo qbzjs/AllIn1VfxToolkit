@@ -130,6 +130,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 740525042, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
+      propertyPath: Items.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 740525042, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
+      propertyPath: Items.Array.data[1].c.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 740525042, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
+      propertyPath: Items.Array.data[2].c.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 740525042, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
+      propertyPath: Items.Array.data[12].c.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 740525042, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
+      propertyPath: Items.Array.data[0].valid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 740525042, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
+      propertyPath: Items.Array.data[1].valid
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740525042, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
+      propertyPath: Items.Array.data[2].valid
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740525042, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
+      propertyPath: Items.Array.data[12].valid
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4057196039408037712, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -177,6 +209,10 @@ PrefabInstance:
     - target: {fileID: 4057196039408037713, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
       propertyPath: m_Name
       value: ViewManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057196039408037719, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
+      propertyPath: ignoreOrientation
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfb92c4055f424b27ad0456b7a79a554, type: 3}
@@ -1385,10 +1421,10 @@ MonoBehaviour:
   _cameraHeight: 28
   _orthographicSizeFactor: 0.5
   _block3D: {fileID: 0}
+  _transitionBlockDuration: 0
   _isZWPlane: 0
   _originReference: {fileID: 0}
   _transition4DDuration: 0
-  _transitionBlockDuration: 0
   _platformExtension: {fileID: 0}
   _block4D: {fileID: 0}
 --- !u!1 &937731576
@@ -2108,10 +2144,10 @@ MonoBehaviour:
   _cameraHeight: 20
   _orthographicSizeFactor: 0.5
   _block3D: {fileID: 1977019483}
+  _transitionBlockDuration: 4
   _isZWPlane: 0
   _originReference: {fileID: 0}
   _transition4DDuration: 0
-  _transitionBlockDuration: 4
   _platformExtension: {fileID: 0}
   _block4D: {fileID: 0}
 --- !u!1 &1736702379
@@ -2593,10 +2629,10 @@ MonoBehaviour:
   _cameraHeight: 20
   _orthographicSizeFactor: 0.5
   _block3D: {fileID: 1051522557}
+  _transitionBlockDuration: 4
   _isZWPlane: 1
   _originReference: {fileID: 1268587639}
   _transition4DDuration: 0.5
-  _transitionBlockDuration: 4
   _platformExtension: {fileID: 1782669168}
   _block4D: {fileID: 1283990999}
 --- !u!1 &1868477715

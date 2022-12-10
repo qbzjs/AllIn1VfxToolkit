@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="400,400" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1_ohdl" name="n1" src="ohdl3" fileName="Images/PlayIcon.png" xy="0,0" pivot="0.5,0.5" size="400,400" aspect="true">
+      <gearSize controller="button" pages="1" values="450,450,1,1" default="400,400,1,1" tween="true" duration=".2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+  </displayList>
+  <Button/>
+</component>

@@ -4,5 +4,15 @@
     <text id="n0_m9z9" name="Title" xy="156,1100" size="767,154" font="ui://weqbl269m9z9a" fontSize="120" color="#6c4b2c" align="center" vAlign="middle" autoSize="shrink" singleLine="true" text="Snake 4D">
       <relation target="" sidePair="width-width%,center-center,bottom-bottom"/>
     </text>
+    <component id="n1_ohdl" name="PlayButton" src="ohdl4" fileName="Components/PlayButton.xml" xy="340,1350">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
+    </component>
+    <component id="n2_ohdl" name="ThemeIcon" src="ohdl6" fileName="Components/ThemeIcon.xml" xy="74,1641">
+      <relation target="" sidePair="left-left,bottom-bottom"/>
+    </component>
+    <component id="n3_ohdl" name="SettingsButton" src="ohdl8" fileName="Components/SettingsButton.xml" xy="826,1641">
+      <relation target="" sidePair="right-right,bottom-bottom"/>
+    </component>
+    <image id="n4_ohdl" name="IconWireframe" src="ohdle" fileName="Images/WireframeEllipse.png" pkg="weqbl269" xy="165,159" size="750,750" aspect="true"/>
   </displayList>
 </component>
