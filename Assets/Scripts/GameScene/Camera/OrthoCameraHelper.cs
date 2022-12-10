@@ -12,14 +12,16 @@ namespace GameScene
         [SerializeField] float _cameraHeight = 20f; // The intended fixed y position
         [SerializeField] float _orthographicSizeFactor = 1; // Converts game size to orthographic size
 
+        [Header("Both Plane Settings")]
+        [SerializeField] GameObject _block3D;
+        [SerializeField] float _transitionBlockDuration;
+
         [Header("ZW Plane Settings")]
         [SerializeField] bool _isZWPlane = false;
         [SerializeField] MeshRenderer _originReference;
         [SerializeField] float _transition4DDuration;
-        [SerializeField] float _transitionBlockDuration;
         [SerializeField] GameObject _platformExtension;
         [SerializeField] GameObject _block4D;
-        [SerializeField] GameObject _block3D;
 
         GameManager _gameManager => GameManager.Instance;
         Camera _mainCamera;
@@ -32,18 +34,18 @@ namespace GameScene
         protected override void SubscribeToMessageHubEvents()
         {
             SubscribeToMessageHubEvent<InitOrthoCameraEvent>((e) => InitOrthoCamera());
-            SubscribeToMessageHubEvent<TransitionTo3DViewEvent>((e) => { if (_isZWPlane) TransitionTo3DView(); });
-            SubscribeToMessageHubEvent<TransitionTo4DViewEvent>((e) => { if (_isZWPlane) TransitionTo4DView(); });
+            SubscribeToMessageHubEvent<TransitionTo3DViewEvent>((e) => TransitionTo3DView());
+            SubscribeToMessageHubEvent<TransitionTo4DViewEvent>((e) => TransitionTo4DView());
         }
 
         private void InitOrthoCamera()
         {
-            if (!_isZWPlane || _gameManager.GameDimension == Snake4D.Dimension.DimensionFour)
+            if (_gameManager.GameDimension == Snake4D.Dimension.DimensionFour)
                 transform.position = CalculateOrthoCameraWorldPosition(_platformMeshRenderer, _cameraHeight, _gameManager.GameSize);
-            else if (_gameManager.GameDimension == Snake4D.Dimension.DimensionThree)
-                Set3DView();
             else if (_gameManager.GameDimension == Snake4D.Dimension.DimensionTwo)
                 Set2DView();
+            else if (_gameManager.GameDimension == Snake4D.Dimension.DimensionThree)
+                Set3DView();
 
             if (_mainCamera != null)
                 _mainCamera.orthographicSize = CalculateFlatCameraOrthographicize(_gameManager.GameSize, _orthographicSizeFactor);
@@ -51,12 +53,17 @@ namespace GameScene
 
         private void Set2DView()
         {
+            if (!_isZWPlane)
+                transform.position = CalculateOrthoCameraWorldPosition(_platformMeshRenderer, _cameraHeight, _gameManager.GameSize);
+
             _block3D.SetActive(true);
             Set3DView();
         }
 
         private void Set3DView()
         {
+            if (!_isZWPlane) return;
+
             _platformExtension.SetActive(true);
             _block4D.SetActive(true);
 
@@ -76,6 +83,8 @@ namespace GameScene
 
         private void TransitionTo4DView()
         {
+            if (!_isZWPlane) return;
+
             Vector3 targetPosition = CalculateOrthoCameraWorldPosition(_platformMeshRenderer, _cameraHeight, _gameManager.GameSize);
             Sequence tweenSequence = DOTween.Sequence();
             tweenSequence
