@@ -374,6 +374,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _onionOpacity
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableCornerClones
       value: 0
       objectReference: {fileID: 0}
@@ -943,6 +947,10 @@ PrefabInstance:
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _renderPlane
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
+      propertyPath: _onionOpacity
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4779572518245150328, guid: 7284d15e4d9cc4b9285427aacc28a803, type: 3}
       propertyPath: _enableCornerClones
